@@ -1,0 +1,19 @@
+spring:
+  main:
+    banner-mode: off
+  config:
+    import: classpath:/config/exception_text.yaml,classpath:/config/security.yaml, classpath:/config/database-dev.yml
+
+logging:
+  level:
+    org:
+      springframework:
+        security: TRACE
+    root: ERROR
+
+
+server:
+  port: 8083
+  error:
+    whitelabel:
+      enabled: false
