@@ -8,9 +8,8 @@ logging:
   level:
     org:
       springframework:
-        security: TRACE
+        security: DEBUG
     root: ERROR
-
 
 server:
   port: 8083
