@@ -28,6 +28,7 @@ public class ApiKeyAuthenticationConfiguration {
                 .sessionManagement(session -> session
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(request -> request
+                        .requestMatchers("/api/users/login").permitAll()
                         .anyRequest().authenticated())
                 .addFilterBefore((ApiKeyAuthenticationFilter) context.getBean("apiKeyAuthenticationFilter"), UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling(ex -> ex
