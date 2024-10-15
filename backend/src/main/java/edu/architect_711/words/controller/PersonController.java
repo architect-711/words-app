@@ -19,4 +19,9 @@ public class PersonController {
         return personService.getPrimaryData(HEADER_API_KEY);
     }
 
+    @GetMapping("/login")
+    public ResponseEntity<?> login(@RequestBody final PersonDto personDto) {
+        return personService.login(personDto);
+    }
+
 }
