@@ -19,4 +19,9 @@ public interface AuthoritiesRepository extends JpaRepository<Authorities, Long> 
         value = "SELECT authorities.api_key FROM authorities LIMIT 1"
     )
     Optional<String> findRandomApiKey();
+    @Query(
+            value = "SELECT api_key FROM authorities WHERE user_id = ?1",
+            nativeQuery = true
+    )
+    Optional<String> findApiKeyByUserId(final Long userId);
 }
