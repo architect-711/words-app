@@ -1,15 +1,10 @@
-spring:
-  main:
-    banner-mode: off
-  config:
-    import: classpath:/config/exception_text.yaml,classpath:/config/security.yaml, classpath:/config/database-dev.yml
-
 logging:
   level:
     org:
       springframework:
         security: DEBUG
     root: ERROR
+    edu.architect_711.words.startup: INFO
 
 server:
   port: 8083
