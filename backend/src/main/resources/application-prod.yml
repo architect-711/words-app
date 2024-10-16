@@ -1,0 +1,10 @@
+logging:
+    level:
+        org:
+            springframework:
+                security: DEBUG
+        root: ERROR
+        edu.architect_711.words.startup: INFO
+
+server:
+    port: 8083
