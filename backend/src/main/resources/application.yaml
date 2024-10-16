@@ -2,3 +2,7 @@ spring:
     profiles:
         default: dev
         active: dev
+    main:
+        banner-mode: off
+    config:
+        import: classpath:/config/exception_text.yaml,classpath:/config/security.yaml, classpath:/config/database-dev.yml
