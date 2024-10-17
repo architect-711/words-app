@@ -2,7 +2,6 @@ package edu.architect_711.words.exception;
 
 import java.util.HashMap;
 
-import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import static org.springframework.http.HttpStatus.*;

@@ -1,10 +1,6 @@
 package edu.architect_711.words.security.filter;
 
 import java.io.IOException;
-import java.nio.file.AccessDeniedException;
-import java.util.function.Consumer;
-import java.util.function.Predicate;
-import java.util.function.Supplier;
 
 import edu.architect_711.words.exception.DetailedAuthenticationException;
 import edu.architect_711.words.security.auth_entry_point.ApiKeyAuthenticationEntryPoint;
