@@ -5,7 +5,6 @@ import java.io.OutputStream;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.architect_711.words.exception.BaseExceptionDescription;
-import edu.architect_711.words.exception.DefaultExceptionResponseDescription;
 import edu.architect_711.words.exception.DetailedAuthenticationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.AuthenticationException;
