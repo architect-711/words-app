@@ -1,6 +1,10 @@
 logging:
   level:
     org:
+      hibernate:
+        orm:
+          jdbc:
+            bind: TRACE
       springframework:
         security: DEBUG
     root: ERROR
