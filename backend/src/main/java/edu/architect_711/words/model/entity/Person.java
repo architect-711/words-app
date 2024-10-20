@@ -8,7 +8,7 @@ import lombok.NonNull;
 @NoArgsConstructor
 @Data @Entity @Table(name = "users")
 public class Person {
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(unique = true, nullable = false, length = 16)
     private String username;
