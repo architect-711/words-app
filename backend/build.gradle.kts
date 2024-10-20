@@ -27,6 +27,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("org.springframework.boot:spring-boot-starter-web")
+	implementation("io.hypersistence:hypersistence-utils-hibernate-63:3.8.3") // Postgres is the ORM database, and can't accept enums/array of enums pure, it helps.
 
 	compileOnly("org.projectlombok:lombok")
 
