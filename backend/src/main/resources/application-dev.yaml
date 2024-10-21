@@ -11,7 +11,6 @@ logging:
     edu.architect_711.words.startup: INFO
 
 server:
-  port: 8083
   error:
     whitelabel:
       enabled: false
