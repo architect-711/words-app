@@ -1,0 +1,20 @@
+services:
+    spring_backend:
+        image: $DOCKER_REGISTRY/$SPRING_IMAGE_NAME
+        env_file:
+            - .env
+        depends_on:
+            - $POSTGRES_SERVICE_NAME
+        build: ./backend
+        ports:
+            - $SPRING_HOST_PORT:$SPRING_DOCKER_PORT
+    postgresdb:
+        env_file:
+            - .env
+        image: postgres:16.4-alpine
+        environment:
+            - POSTGRES_USER=$POSTGRES_ROOT_USERNAME
+            - POSTGRES_PASSWORD=$POSTGRES_ROOT_PASSWORD
+            - POSTGRES_DB=$POSTGRES_DEFAULT_DB
+        ports: 
+            - $POSTGRES_HOST_PORT:$POSTGRES_DOCKER_PORT
