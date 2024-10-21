@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres
-    username: postgres
-    password: asdf
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${POSTGRES_ROOT_USERNAME} 
+    password: ${POSTGRES_ROOT_PASSWORD} 
     driverClassName: org.postgresql.Driver
   sql:
     init:
@@ -11,6 +11,7 @@ spring:
     show-sql: true
     properties:
       hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
     hibernate:
       ddl-auto: none
