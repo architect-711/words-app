@@ -5,4 +5,6 @@ spring:
     main:
         banner-mode: off
     config:
-        import: classpath:/config/exception_text.yaml,classpath:/config/security.yaml, classpath:/config/database-dev.yml
+        import:
+            classpath:/config/security.yaml, 
+            classpath:/config/database.yml
