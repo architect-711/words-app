@@ -2,6 +2,3 @@ api:
   security:
     key:
       title: x-api-key
-    login:
-      page:
-        /login
