@@ -6,5 +6,9 @@ logging:
         root: ERROR
         edu.architect_711.words.startup: INFO
 
-server:
-    port: 8083
+# Variables from .env file. For Docker only
+spring:
+    datasource:
+        url: ${SPRING_DATASOURCE_URL}
+        username: ${POSTGRES_ROOT_USERNAME}
+        password: ${POSTGRES_ROOT_PASSWORD}
