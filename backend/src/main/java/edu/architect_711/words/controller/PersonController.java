@@ -9,17 +9,17 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/${api.root_path}/${api.endpoints.users.root_path}")
 @AllArgsConstructor
 public class PersonController {
     private final PersonService personService;
 
-    @GetMapping("/primary_data")
+    @GetMapping("/${api.endpoints.users.sprouts.info}")
     public ResponseEntity<PersonDto> getData(@RequestHeader(name = "${api.security.key.title:x-api-key}") final String HEADER_API_KEY) {
         return personService.getPrimaryData(HEADER_API_KEY);
     }
 
-    @GetMapping("/login")
+    @PostMapping("/${api.endpoints.users.sprouts.login}")
     public ResponseEntity<?> login(@RequestBody final PersonDto personDto) {
         return personService.login(personDto);
     }
