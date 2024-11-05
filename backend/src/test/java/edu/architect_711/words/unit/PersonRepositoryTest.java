@@ -13,7 +13,7 @@ import org.springframework.test.context.ActiveProfiles;
 import java.util.List;
 
 import static edu.architect_711.words.model.mapper.PersonMapper.fromListToPerson;
-import static edu.architect_711.words.unit.UnitTestEntitiesConfiguration.getTestPeople;
+import static edu.architect_711.words.unit.configuration.UnitTestEntitiesConfiguration.getTestPeople;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
