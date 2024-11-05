@@ -2,6 +2,7 @@ package edu.architect_711.words.unit;
 
 import edu.architect_711.words.model.entity.Person;
 import edu.architect_711.words.model.entity.Word;
+import edu.architect_711.words.model.mapper.WordMapper;
 import edu.architect_711.words.repository.PersonRepository;
 import edu.architect_711.words.repository.WordsRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,8 +16,8 @@ import org.springframework.test.context.ActiveProfiles;
 import java.util.Optional;
 
 import static edu.architect_711.words.model.mapper.PersonMapper.fromListToPerson;
-import static edu.architect_711.words.unit.UnitTestEntitiesConfiguration.getTestPeople;
-import static edu.architect_711.words.unit.UnitTestEntitiesConfiguration.getTestWords;
+import static edu.architect_711.words.unit.configuration.UnitTestEntitiesConfiguration.getTestPeople;
+import static edu.architect_711.words.unit.configuration.UnitTestEntitiesConfiguration.getTestWords;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -69,7 +70,7 @@ public class WordsRepositoryTest {
     }
 
     private Word getWordToBeSaved() {
-       final Word word =  getTestWords().getFirst();
+       final Word word = WordMapper.toEntity(getTestWords().getFirst(), getFirstPerson());
        word.setPerson(getFirstPerson());
 
        return word;
