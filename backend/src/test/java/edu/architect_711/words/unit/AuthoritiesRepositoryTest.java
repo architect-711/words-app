@@ -9,6 +9,7 @@ import edu.architect_711.words.model.mapper.PersonMapper;
 import edu.architect_711.words.repository.AuthoritiesRepository;
 import edu.architect_711.words.repository.PersonRepository;
 import edu.architect_711.words.service.utils.TestApiKeyGenerator;
+import edu.architect_711.words.unit.utils.TestEntitySaver;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,11 +20,10 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static edu.architect_711.words.unit.configuration.UnitTestEntitiesConfiguration.getTestAuthoritiesDTOs;
-import static edu.architect_711.words.unit.configuration.UnitTestEntitiesConfiguration.getTestPeople;
+import static edu.architect_711.words.unit.configuration.UnitTestEntitiesConfiguration.getTestPeopleDTOs;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -38,6 +38,8 @@ public class AuthoritiesRepositoryTest {
     @Autowired private TestApiKeyGenerator testApiKeyGenerator;
     @Autowired private PersonRepository personRepository;
 
+    private final TestEntitySaver<Authorities, AuthoritiesDto> testEntitySaver = new TestEntitySaver<>(getTestAuthoritiesDTOs(), this::save);
+
     @BeforeEach
     public void cleanDatabase() {
         authoritiesRepository.deleteAll();
@@ -45,7 +47,7 @@ public class AuthoritiesRepositoryTest {
 
     @Test
     public void saveAll() {
-        final List<Authorities> savedAuthorities = saveAuthorities();
+        final List<Authorities> savedAuthorities = testEntitySaver.saveAll();
 
         assertThat(savedAuthorities).isNotNull();
 
@@ -54,7 +56,7 @@ public class AuthoritiesRepositoryTest {
 
     @Test
     public void deleteById() {
-        final Long savedOneId = saveAuthorities().getFirst().getId();
+        final Long savedOneId = testEntitySaver.saveAll().getFirst().getId();
 
         authoritiesRepository.deleteById(savedOneId);
 
@@ -64,7 +66,7 @@ public class AuthoritiesRepositoryTest {
 
     @Test
     public void updateById() {
-        final Authorities saved = saveAuthorities().getFirst();
+        final Authorities saved = testEntitySaver.saveAll().getFirst();
 
         final PersonRole role = saved.getRole().equals(PersonRole.USER) ? PersonRole.ADMIN : PersonRole.USER;
         saved.setRole(role);
@@ -74,22 +76,13 @@ public class AuthoritiesRepositoryTest {
         assertEquals(authoritiesRepository.findById(saved.getId()).orElseThrow().getRole(), role);
     }
 
-    public List<Authorities> saveAuthorities() {
-        final ArrayList<Authorities> readyAuthorities = new ArrayList<>(getTestAuthoritiesDTOs().size());
+    private Authorities save(final AuthoritiesDto dto, final int INDEX) {
+        final Person person = personRepository.save(PersonMapper.toPerson(getTestPeopleDTOs().get(INDEX)));
 
-        for (byte counter = 0; counter < getTestAuthoritiesDTOs().size(); counter++) {
-            readyAuthorities.add(save(getTestAuthoritiesDTOs().get(counter), personRepository.save(PersonMapper.toPerson(getTestPeople().get(counter))).getUsername()));
-        }
+        dto.setUserId(person.getId());
+        dto.setApiKey(testApiKeyGenerator.generate());
 
-        return readyAuthorities;
+        return authoritiesRepository.save(AuthoritiesMapper.toEntity(dto, person));
     }
 
-    private Authorities save(final AuthoritiesDto authoritiesDto, final String USERNAME) {
-        final Person person = personRepository.findByUsername(USERNAME).orElseThrow();
-
-        authoritiesDto.setUserId(person.getId());
-        authoritiesDto.setApiKey(testApiKeyGenerator.generate());
-
-        return authoritiesRepository.save(AuthoritiesMapper.toEntity(authoritiesDto, person));
-    }
 }

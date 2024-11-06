@@ -1,7 +1,10 @@
 package edu.architect_711.words.unit;
 
+import edu.architect_711.words.model.dto.PersonDto;
 import edu.architect_711.words.model.entity.Person;
+import edu.architect_711.words.model.mapper.PersonMapper;
 import edu.architect_711.words.repository.PersonRepository;
+import edu.architect_711.words.unit.utils.TestEntitySaver;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +16,7 @@ import org.springframework.test.context.ActiveProfiles;
 import java.util.List;
 
 import static edu.architect_711.words.model.mapper.PersonMapper.fromListToPerson;
-import static edu.architect_711.words.unit.configuration.UnitTestEntitiesConfiguration.getTestPeople;
+import static edu.architect_711.words.unit.configuration.UnitTestEntitiesConfiguration.getTestPeopleDTOs;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -24,6 +27,8 @@ public class PersonRepositoryTest {
     @Autowired
     private PersonRepository personRepository;
 
+    private final TestEntitySaver<Person, PersonDto> testEntitySaver = new TestEntitySaver<>(getTestPeopleDTOs(), this::save);
+
     @BeforeEach
     public void setUp() {
         personRepository.deleteAll();
@@ -31,7 +36,7 @@ public class PersonRepositoryTest {
 
     @Test
     public void saveAll() {
-        List<Person> savedPeople = personRepository.saveAll(getMappedTestPeople());
+        List<Person> savedPeople = testEntitySaver.saveAll(); // personRepository.saveAll(getMappedTestPeople());
 
         assertThat(savedPeople).isNotEmpty();
         assertThat(savedPeople).isNotNull();
@@ -42,7 +47,7 @@ public class PersonRepositoryTest {
 
     @Test
     public void deleteOne() {
-        final Person savedPerson = saveFirst();
+        final Person savedPerson = testEntitySaver.saveAll().getFirst();
 
         personRepository.deleteById(savedPerson.getId());
         final Person deletedPerson = personRepository.findByUsername(savedPerson.getUsername()).orElse(null);
@@ -53,7 +58,7 @@ public class PersonRepositoryTest {
     @Test
     public void updateOne() {
         final String NEW_WORD_PASSWORD = "1234";
-        final Person savedPerson = saveFirst();
+        final Person savedPerson = testEntitySaver.saveAll().getFirst();
 
         assertThat(personRepository.findByUsername(savedPerson.getUsername())).isPresent();
 
@@ -66,16 +71,12 @@ public class PersonRepositoryTest {
 
     @Test
     public void shouldThrowException__violatesUniqueConstraint() {
-        personRepository.save(getMappedTestPeople().getFirst());
+        final List<Person> savedPeople = testEntitySaver.saveAll();
 
-        assertThrows(DataIntegrityViolationException.class, () -> personRepository.save(getMappedTestPeople().getFirst()));
+        assertThrows(DataIntegrityViolationException.class, () -> personRepository.save(PersonMapper.toPerson(getTestPeopleDTOs().getFirst())));
     }
 
-    private Person saveFirst() {
-        return personRepository.save(getMappedTestPeople().getFirst());
-    }
-
-    private List<Person> getMappedTestPeople() {
-        return fromListToPerson(getTestPeople());
+    private Person save(final PersonDto dto, final int INDEX) {
+        return personRepository.save(fromListToPerson(getTestPeopleDTOs()).get(INDEX));
     }
 }
