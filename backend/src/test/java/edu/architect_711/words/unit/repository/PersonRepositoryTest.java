@@ -1,4 +1,4 @@
-package edu.architect_711.words.unit;
+package edu.architect_711.words.unit.repository;
 
 import edu.architect_711.words.model.dto.PersonDto;
 import edu.architect_711.words.model.entity.Person;
