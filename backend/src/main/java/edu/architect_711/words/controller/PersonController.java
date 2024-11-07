@@ -15,8 +15,8 @@ public class PersonController {
     private final PersonService personService;
 
     @GetMapping("/${api.endpoints.users.sprouts.info}")
-    public ResponseEntity<PersonDto> getData(@RequestHeader(name = "${api.security.key.title:x-api-key}") final String HEADER_API_KEY) {
-        return personService.getPrimaryData(HEADER_API_KEY);
+    public ResponseEntity<PersonDto> info() {
+        return personService.info();
     }
 
     @PostMapping("/${api.endpoints.users.sprouts.login}")
