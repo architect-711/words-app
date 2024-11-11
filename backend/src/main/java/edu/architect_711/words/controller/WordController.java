@@ -34,7 +34,7 @@ public class WordController {
         return wordService.update(wordDto);
     }
 
-    @DeleteMapping("/${api.endpoints.words.sprouts.delete}")
+    @DeleteMapping("/${api.endpoints.words.sprouts.delete}/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") final Long id) {
         return wordService.delete(id);
     }
