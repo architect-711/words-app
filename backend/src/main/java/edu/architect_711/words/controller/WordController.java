@@ -7,10 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
 @RequestMapping("/${api.root_path}/${api.endpoints.words.root_path}")
@@ -33,10 +29,9 @@ public class WordController {
 
     @PutMapping("/${api.endpoints.words.sprouts.update}")
     public ResponseEntity<WordDto> update(
-        @PathVariable("id") final Long id, 
         @RequestBody final WordDto wordDto
     ) {
-        return wordService.update(id, wordDto);
+        return wordService.update(wordDto);
     }
 
     @DeleteMapping("/${api.endpoints.words.sprouts.delete}")

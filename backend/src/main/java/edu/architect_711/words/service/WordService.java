@@ -1,19 +1,17 @@
 package edu.architect_711.words.service;
 
-import java.util.List;
-import java.util.Optional;
-
-import edu.architect_711.words.service.utils.WordsSaver;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
-
 import edu.architect_711.words.model.dto.WordDto;
 import edu.architect_711.words.model.entity.Word;
 import edu.architect_711.words.model.mapper.WordMapper;
 import edu.architect_711.words.repository.WordsRepository;
+import edu.architect_711.words.service.utils.WordsSaver;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service @RequiredArgsConstructor @Slf4j
 public class WordService {
@@ -30,22 +28,12 @@ public class WordService {
         return ResponseEntity.ok(wordsSaver.save(wordDtos));
     }
 
-    // TODO works incorrectly
-    public ResponseEntity<WordDto> update(final Long id, final WordDto wordDto) {
-        if (id != wordDto.getId())
-            throw new IllegalArgumentException("Passed in body id isn't equals to path id.");
+    public ResponseEntity<WordDto> update(final WordDto wordDto) {
+        final Word word = wordsRepository.findById(wordDto.getId()).orElseThrow(() -> new IllegalArgumentException("Word not found"));
 
-        final Optional<Word> optionalWord = wordsRepository.findById(id);
+        word.setTitle(wordDto.getTitle());
         
-        if (optionalWord.isEmpty())
-            throw new IllegalArgumentException("Word not found");
-
-        final Word existingWord = optionalWord.get();
-
-        existingWord.setTitle(wordDto.getTitle());
-        
-        // should not save, since it's auto-synschronized
-        return ResponseEntity.ok(WordMapper.toDto(wordsRepository.save(existingWord)));
+        return ResponseEntity.ok(WordMapper.toDto(wordsRepository.save(word)));
     }
 
     public ResponseEntity<?> delete(final Long id) {
