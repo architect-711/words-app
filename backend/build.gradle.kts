@@ -5,7 +5,6 @@ plugins {
 }
 
 group = "edu.architect-711"
-version = System.getenv("WORDS_APP_VERSION") ?: "1.0.0"
 
 java {
 	toolchain {
