@@ -14,16 +14,14 @@ import edu.architect_711.words.repository.WordsRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
-import java.util.List;
-
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
-import org.springframework.context.annotation.Profile;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
 
-@Component @RequiredArgsConstructor @Profile("dev") @Slf4j @Transactional
+import java.util.List;
+
+@Component @RequiredArgsConstructor @Slf4j @Transactional
 public class DatabaseInitFiller implements ApplicationRunner {
     private final PersonRepository personRepository;
     private final AuthoritiesRepository authoritiesRepository;
