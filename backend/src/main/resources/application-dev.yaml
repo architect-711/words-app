@@ -11,7 +11,7 @@ logging:
     edu.architect_711.words.startup: INFO
 
 server:
-  port: ${SPRING_BACKEND_PORT}
+  port: ${SPRING_DEV_PORT}
   error:
     whitelabel:
       enabled: false
@@ -19,6 +19,6 @@ server:
 # Custom variables
 spring:
   datasource:
-    url: ${SPRING_DATASOURCE_URL}
-    username: ${POSTGRES_USERNAME}
-    password: ${POSTGRES_PASSWORD}
+    url: ${SPRING_DATASOURCE_DEV_URL}
+    username: ${POSTGRES_ROOT_DEV_USERNAME}
+    password: ${POSTGRES_ROOT_DEV_PASSWORD}
