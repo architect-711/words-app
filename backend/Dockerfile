@@ -1,11 +1,18 @@
 FROM openjdk:24-jdk-slim
 
-ARG PROJECT_DEST_FOLDER /usr/lib/words-app/backend
+ARG PROJECT_DEST_FOLDER=/usr/lib/words-app/backend
 
-COPY /build/libs/*.jar $PROJECT_DEST_FOLDER/*.jar
+ARG BUILD_NAME=words_application-1.0.0.jar
+ENV JAR_NAME=$BUILD_NAME
+
+ARG JAR_PROGRAM_ARGUMENS
+ENV ARGS=$JAR_PROGRAM_ARGUMENS
+
+COPY /build/libs/$BUILD_NAME $PROJECT_DEST_FOLDER/$BUILD_NAME
+COPY .env $PROJECT_DEST_FOLDER/.env
 
 WORKDIR $PROJECT_DEST_FOLDER
 
-ENTRYPOINT ["java"]
+RUN echo "fucking args ${JAR_PROGRAM_ARGUMENS}"
 
-CMD ["-jar", "*.jar"]
+ENTRYPOINT java -jar $JAR_NAME $ARGS
