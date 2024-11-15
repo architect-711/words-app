@@ -5,7 +5,10 @@ services:
             - .env
         depends_on:
             - $POSTGRES_SERVICE_NAME
-        build: ./backend
+        build: 
+            context: ./backend
+            args:
+                - JAR_PROGRAM_ARGUMENS=--spring.profiles.active=prod
         ports:
             - $SPRING_HOST_PROD_PORT:$SPRING_DOCKER_PROD_PORT
     postgresdb:
