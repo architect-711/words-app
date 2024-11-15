@@ -6,7 +6,6 @@ logging:
         root: ERROR
         edu.architect_711.words.startup: INFO
 
-# Variables from .env file. For Docker only
 spring:
     datasource:
         url: ${SPRING_DATASOURCE_PROD_URL}

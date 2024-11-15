@@ -18,6 +18,8 @@ server:
 
 # Custom variables
 spring:
+  jpa:
+    show-sql: true
   datasource:
     url: ${SPRING_DATASOURCE_DEV_URL}
     username: ${POSTGRES_ROOT_DEV_USERNAME}
