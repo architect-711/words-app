@@ -1,4 +1,4 @@
-FROM openjdk:24-jdk-slim
+FROM openjdk:24-oraclelinux9
 
 ARG PROJECT_DEST_FOLDER=/usr/lib/words-app/backend
 
