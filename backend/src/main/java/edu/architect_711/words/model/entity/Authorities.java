@@ -1,5 +1,6 @@
 package edu.architect_711.words.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import edu.architect_711.words.model.dto.PersonAuthorities;
 import edu.architect_711.words.model.dto.PersonRole;
 import io.hypersistence.utils.hibernate.type.array.EnumArrayType;
@@ -20,11 +21,13 @@ public class Authorities {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "user_id", nullable = false)
-    private Long userId;
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false, unique = true)
+    @JsonIgnore
+    private Person person;
 
-    @Column(name = "api_key", nullable = false)
-    private String api_key;
+    @Column(name = "api_key", length = 128, nullable = false, unique = true)
+    private String api_key; 
 
     @Column(nullable = false, name = "authorities", columnDefinition = "user_authorities[]")
     @Type(
@@ -41,8 +44,8 @@ public class Authorities {
     @Enumerated(EnumType.STRING)
     private PersonRole role;
 
-    public Authorities(Long userId, String api_key, PersonAuthorities[] authorities, PersonRole role) {
-        this.userId = userId;
+    public Authorities(Person person, String api_key, PersonAuthorities[] authorities, PersonRole role) {
+        this.person = person;
         this.api_key = api_key;
         this.authorities = authorities;
         this.role = role;

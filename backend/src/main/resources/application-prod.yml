@@ -6,5 +6,8 @@ logging:
         root: ERROR
         edu.architect_711.words.startup: INFO
 
-server:
-    port: 8083
+spring:
+    datasource:
+        url: ${SPRING_DATASOURCE_PROD_URL}
+        username: ${POSTGRES_ROOT_PROD_USERNAME}
+        password: ${POSTGRES_ROOT_PROD_PASSWORD}

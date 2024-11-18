@@ -1,0 +1,7 @@
+spring:
+    datasource:
+        url: ${SPRING_DATASOURCE_DEV_URL}
+        username: ${POSTGRES_ROOT_DEV_USERNAME}
+        password: ${POSTGRES_ROOT_DEV_PASSWORD}
+    jpa:
+        show-sql: true
