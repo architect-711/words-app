@@ -4,7 +4,9 @@ import edu.architect_711.words.model.dto.PersonDto;
 import edu.architect_711.words.model.entity.Person;
 import edu.architect_711.words.model.mapper.PersonMapper;
 import edu.architect_711.words.repository.PersonRepository;
+import edu.architect_711.words.startup.EnvConfigurationLoader;
 import edu.architect_711.words.unit.utils.TestEntitySaver;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,11 @@ public class PersonRepositoryTest {
     private PersonRepository personRepository;
 
     private final TestEntitySaver<Person, PersonDto> testEntitySaver = new TestEntitySaver<>(getTestPeopleDTOs(), this::save);
+
+    @BeforeAll
+    public static void loadEnv() {
+        EnvConfigurationLoader.loadEnvConfiguration();
+    }
 
     @BeforeEach
     public void setUp() {
