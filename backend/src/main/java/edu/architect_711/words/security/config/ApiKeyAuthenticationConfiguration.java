@@ -3,6 +3,7 @@ package edu.architect_711.words.security.config;
 import edu.architect_711.words.security.filter.ApiKeyAuthenticationFilter;
 
 import edu.architect_711.words.security.auth_entry_point.ApiKeyAuthenticationEntryPoint;
+import edu.architect_711.words.service.utils.ConfigurationURICollector;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -18,6 +19,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class ApiKeyAuthenticationConfiguration {
     private final ApplicationContext context;
     private final ApiKeyAuthenticationEntryPoint apiKeyAuthenticationEntryPoint;
+    private final ConfigurationURICollector configurationURLCollector;
 
     @Bean
     public SecurityFilterChain securityFilterChainAllAuthenticated(HttpSecurity http) throws Exception {
@@ -28,8 +30,9 @@ public class ApiKeyAuthenticationConfiguration {
                 .sessionManagement(session -> session
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(request -> request
+                        .requestMatchers(configurationURLCollector.buildURI("api.endpoints.users.sprouts.login")).permitAll()
                         .anyRequest().authenticated())
-                .addFilterBefore((ApiKeyAuthenticationFilter) context.getBean("apiKeyAuthenticationFilter"), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(context.getBean(ApiKeyAuthenticationFilter.class), UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling(ex -> ex
                     .authenticationEntryPoint(apiKeyAuthenticationEntryPoint))
                 .build();

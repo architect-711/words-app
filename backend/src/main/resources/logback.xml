@@ -1,0 +1,36 @@
+<configuration debug="false">
+    <!-- Disable Logback's logs on startup -->
+    <statusListener class="ch.qos.logback.core.status.NopStatusListener" />
+
+    <!--            Extremely graceful for Tom Hombergs: https://reflectoring.io/logging-format-logback/-->
+    <property name="DEFAULT_LOG_PATTERN" value="%d{yyyy-MM-dd} | %d{HH:mm:ss.SSS} | %-20.20thread | %5p | %-60.60logger{50} | %m%n"/>
+    <property name="LOG_DIR_TITLE" value="logs"/>
+    <property name="LOG_FILE_TITLE" value="app"/>
+
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>${LOG_DIR_TITLE}/${LOG_FILE_TITLE}.log</file>
+        <append>false</append> <!-- This will overwrite the log file -->
+        <encoder>
+            <pattern>${DEFAULT_LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${DEFAULT_LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <springProfile name="prod">
+        <root level="INFO">
+            <appender-ref ref="FILE"/>
+        </root>
+    </springProfile>
+
+    <springProfile name="dev">
+        <root level="DEBUG">
+            <appender-ref ref="CONSOLE"/>
+        </root>
+    </springProfile>
+
+</configuration>

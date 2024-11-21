@@ -1,13 +1,10 @@
 package edu.architect_711.words.security.filter;
 
 import java.io.IOException;
-import java.nio.file.AccessDeniedException;
-import java.util.function.Consumer;
-import java.util.function.Predicate;
-import java.util.function.Supplier;
 
 import edu.architect_711.words.exception.DetailedAuthenticationException;
 import edu.architect_711.words.security.auth_entry_point.ApiKeyAuthenticationEntryPoint;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.lang.NonNull;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -30,6 +27,14 @@ public class ApiKeyAuthenticationFilter extends OncePerRequestFilter {
     private final ApiKeyAuthenticationManager manager;
     private final ApiKeyAuthenticationService apiKeyAuthenticationService;
     private final ApiKeyAuthenticationEntryPoint apiKeyAuthenticationEntryPoint;
+
+    @Value("${api.security.login.page:/login}")
+    private String loginPageTitle;
+
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+        return request.getRequestURI().contains(loginPageTitle);
+    }
 
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
