@@ -1,14 +1,12 @@
 package edu.architect_711.words;
 
-import edu.architect_711.words.startup.EnvConfigurationLoader;
-import org.springframework.boot.SpringApplication;
+import edu.architect_711.words.startup.EnvironmentVariablesLoader;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 
 @SpringBootApplication
 public class WordsApplication {
 	public static void main(String[] args) {
-		EnvConfigurationLoader.loadEnvConfiguration(); // IMPORTANT!!!!! Look in docs why
-
-		SpringApplication.run(WordsApplication.class, args);
+		new SpringApplicationBuilder(WordsApplication.class).listeners(new EnvironmentVariablesLoader()).run(args);
 	}
 }

@@ -6,9 +6,8 @@ import edu.architect_711.words.model.entity.Word;
 import edu.architect_711.words.model.mapper.WordMapper;
 import edu.architect_711.words.repository.PersonRepository;
 import edu.architect_711.words.repository.WordsRepository;
-import edu.architect_711.words.startup.EnvConfigurationLoader;
+import edu.architect_711.words.unit.configuration.BaseUnitTest;
 import edu.architect_711.words.unit.utils.TestEntitySaver;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,17 +28,12 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @DataJpaTest
 @ActiveProfiles("test")
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class WordsRepositoryTest {
+public class WordsRepositoryTest extends BaseUnitTest {
 
     @Autowired private WordsRepository wordsRepository;
     @Autowired private PersonRepository personRepository;
 
     private final TestEntitySaver<Word, WordDto> testEntitySaver = new TestEntitySaver<>(getTestWordsDTOs(), this::save);
-
-    @BeforeAll
-    public static void loadEnv() {
-        EnvConfigurationLoader.loadEnvConfiguration();
-    }
 
     @BeforeEach
     public void setUp() {

@@ -9,9 +9,8 @@ import edu.architect_711.words.model.mapper.PersonMapper;
 import edu.architect_711.words.repository.AuthoritiesRepository;
 import edu.architect_711.words.repository.PersonRepository;
 import edu.architect_711.words.service.utils.TestApiKeyGenerator;
-import edu.architect_711.words.startup.EnvConfigurationLoader;
+import edu.architect_711.words.unit.configuration.BaseUnitTest;
 import edu.architect_711.words.unit.utils.TestEntitySaver;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -35,17 +34,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @DataJpaTest
 @ActiveProfiles("test")
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class AuthoritiesRepositoryTest {
+public class AuthoritiesRepositoryTest extends BaseUnitTest {
     @Autowired private AuthoritiesRepository authoritiesRepository;
     @Autowired private TestApiKeyGenerator testApiKeyGenerator;
     @Autowired private PersonRepository personRepository;
 
     private final TestEntitySaver<Authorities, AuthoritiesDto> testEntitySaver = new TestEntitySaver<>(getTestAuthoritiesDTOs(), this::save);
-
-    @BeforeAll
-    public static void loadEnv() {
-        EnvConfigurationLoader.loadEnvConfiguration();
-    }
 
     @BeforeEach
     public void cleanDatabase() {
