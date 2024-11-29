@@ -6,6 +6,4 @@ spring:
         banner-mode: off
     config:
         import:
-            classpath:/config/security.yaml, 
-            classpath:/config/database.yml,
-            classpath:/config/api.yml
+            classpath:/config/database.yml
