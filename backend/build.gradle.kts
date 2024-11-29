@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "edu.architect-711"
-version = System.getenv("APP_VERSION") ?: "1.0.0"
+version = project.findProperty("APP_VERSION") ?: "0.0.0"
 
 java {
 	toolchain {
@@ -25,7 +25,10 @@ repositories {
 
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-	implementation("org.springframework.boot:spring-boot-starter-security")
+	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-validation
+	implementation("org.springframework.boot:spring-boot-starter-validation:3.4.0")
+
+//	implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("io.hypersistence:hypersistence-utils-hibernate-63:3.8.3") // Postgres is the ORM database, and can't accept enums/array of enums pure, it helps.
 
@@ -36,10 +39,14 @@ dependencies {
 	annotationProcessor("org.projectlombok:lombok")
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
-	testImplementation("org.springframework.security:spring-security-test")
+//	testImplementation("org.springframework.security:spring-security-test")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
 tasks.withType<Test> {
 	useJUnitPlatform()
+}
+
+tasks.jar {
+	enabled = false
 }
