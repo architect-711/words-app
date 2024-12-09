@@ -8,7 +8,8 @@ services:
         build: 
             context: ./backend
             args:
-                - JAR_PROGRAM_ARGUMENS=--spring.profiles.active=prod
+                - APP_NAME=$APP_BUILD_NAME
+                - APP_VERSION=$APP_VERSION
         ports:
             - $SPRING_HOST_PROD_PORT:$SPRING_DOCKER_PROD_PORT
     postgresdb:
@@ -21,3 +22,8 @@ services:
             - POSTGRES_DB=$POSTGRES_DEFAULT_DB
         ports: 
             - $POSTGRES_HOST_PROD_PORT:$POSTGRES_DOCKER_PROD_PORT
+        volumes:
+            - dbdata:/var/lib/postgresql/data
+
+volumes:
+    dbdata:
