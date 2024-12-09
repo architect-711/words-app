@@ -8,7 +8,6 @@ logging:
       springframework:
         security: DEBUG
     root: ERROR
-    edu.architect_711.words.startup: INFO
 
 server:
   port: ${SPRING_DEV_PORT}
