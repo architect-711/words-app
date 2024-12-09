@@ -9,33 +9,34 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/${api.root_path}/${api.endpoints.words.root_path}")
+@RequestMapping("/api/words")
 @RequiredArgsConstructor
 public class WordController {
     private final WordService wordService;
 
-    @GetMapping("/${api.endpoints.words.sprouts.read}")
+    @GetMapping
     public ResponseEntity<List<WordDto>> read(
-            @RequestParam(name = "size", defaultValue = "5") final Integer size,
-            @RequestParam(name = "page", defaultValue = "0") final Integer page
+            @RequestParam(name = "size", defaultValue = "5") Integer size,
+            @RequestParam(name = "page", defaultValue = "0") Integer page
     ) {
         return wordService.read(size, page);
     }
 
-    @PostMapping("/${api.endpoints.words.sprouts.create}")
-    public ResponseEntity<List<WordDto>> create(@RequestBody final List<WordDto> wordDtos) {
-        return wordService.create(wordDtos);
+    @PostMapping
+    public ResponseEntity<WordDto> create(@RequestBody WordDto wordDto) {
+        return wordService.create(wordDto);
     }
 
-    @PutMapping("/${api.endpoints.words.sprouts.update}")
+    @PutMapping("/{id}")
     public ResponseEntity<WordDto> update(
-        @RequestBody final WordDto wordDto
+        @RequestBody WordDto wordDto,
+        @PathVariable("id") Long id
     ) {
-        return wordService.update(wordDto);
+        return wordService.update(wordDto, id);
     }
 
-    @DeleteMapping("/${api.endpoints.words.sprouts.delete}/{id}")
-    public ResponseEntity<?> delete(@PathVariable("id") final Long id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable("id") Long id) {
         return wordService.delete(id);
     }
     
