@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    driverClassName: org.postgresql.Driver
+    initialization-mode: always
+  sql:
+    init:
+      mode: always
+  jpa:
+    hibernate:
+      ddl-auto: none

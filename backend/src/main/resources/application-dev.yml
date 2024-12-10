@@ -1,23 +1,15 @@
 logging:
   level:
-    org:
-      hibernate:
-        orm:
-          jdbc:
-            bind: TRACE
-      springframework:
-        security: DEBUG
+    org.hibernate.orm.jdbc.bind: TRACE
     root: ERROR
 
 server:
   port: ${SPRING_DEV_PORT}
-  error:
-    whitelabel:
-      enabled: false
+  error.whitelabel.enabled: false
 
-# Custom variables
 spring:
   jpa:
+    properties.hibernate.format_sql: true
     show-sql: true
   datasource:
     url: ${SPRING_DATASOURCE_DEV_URL}
