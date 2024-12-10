@@ -6,10 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data @AllArgsConstructor @NoArgsConstructor
-public class PersonDto {
-    @NotBlank(message = "Username can't be blank")
-    private String username;
-
-    @NotBlank(message = "Password can't be blank")
-    private String password;
+public class WordLanguageDto {
+    @NotBlank(message = "Title cannot be blank")
+    private String title;
 }

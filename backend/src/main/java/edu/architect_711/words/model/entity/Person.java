@@ -5,14 +5,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
-@NoArgsConstructor
-@Data @Entity @Table(name = "users")
+@NoArgsConstructor @Data @Entity @Table(name = "person")
 public class Person {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(unique = true, nullable = false, length = 16)
+
+    @Column(unique = true, nullable = false)
     private String username;
-    @Column(nullable = false, length = 128)
+
+    @Column(nullable = false)
     private String password;
 
     public Person(@NonNull String username, @NonNull String password) {

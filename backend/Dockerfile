@@ -1,18 +1,29 @@
 FROM openjdk:24-oraclelinux9
 
-ARG PROJECT_DEST_FOLDER=/usr/lib/words-app/backend
+# Need during both states
+ARG APP_NAME
+ENV APP_NAME_ENV=$APP_NAME
 
-ARG BUILD_NAME=words_application-1.0.0.jar
-ENV JAR_NAME=$BUILD_NAME
 
-ARG JAR_PROGRAM_ARGUMENS
-ENV ARGS=$JAR_PROGRAM_ARGUMENS
+# Needed only on build
+ARG DEST_FOLDER=/opt/words-app/backend
+ARG APP_VERSION
 
-COPY /build/libs/$BUILD_NAME $PROJECT_DEST_FOLDER/$BUILD_NAME
-COPY .env $PROJECT_DEST_FOLDER/.env
 
-WORKDIR $PROJECT_DEST_FOLDER
+# Metadata for image
+LABEL author="https://github.com/architect-711"
+LABEL version=$APP_VERSION
+LABEL docs="https://app.weeek.net/ws/688666/kb/19"
 
-RUN echo "fucking args ${JAR_PROGRAM_ARGUMENS}"
 
-ENTRYPOINT java -jar $JAR_NAME $ARGS
+# Copy build file
+COPY /build/libs/$APP_NAME $DEST_FOLDER/$APP_NAME
+
+# Copy env file. ps: .env file must be in the same folder
+COPY .env $DEST_FOLDER/.env
+
+# Set working directory
+WORKDIR $DEST_FOLDER
+
+# Run app
+ENTRYPOINT ["sh", "-c", "java -jar $APP_NAME_ENV --spring.profiles.active=prod"]
