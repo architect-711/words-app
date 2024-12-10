@@ -24,22 +24,26 @@ repositories {
 }
 
 dependencies {
-	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+	// Database
+	implementation("org.springframework.boot:spring-boot-starter-data-jpa") // the orm specification, that adds required interfaces and how to use this tools
+	runtimeOnly("org.postgresql:postgresql") // the database itself
+
+	// validation
 	implementation("org.springframework.boot:spring-boot-starter-validation:3.4.0")
+
+	// Spring AOP
 	implementation("org.springframework.boot:spring-boot-starter-aop:3.4.0")
-//	implementation("org.springframework.boot:spring-boot-starter-security")
+
+	// For web (controllers, etc)
 	implementation("org.springframework.boot:spring-boot-starter-web")
-	implementation("io.hypersistence:hypersistence-utils-hibernate-63:3.8.3") // Postgres is the ORM database, and can't accept enums/array of enums pure, it helps.
 
+	// Get rid off boilerplate code
 	compileOnly("org.projectlombok:lombok")
-
-	runtimeOnly("org.postgresql:postgresql")
-
 	annotationProcessor("org.projectlombok:lombok")
 
-	testImplementation("org.springframework.boot:spring-boot-starter-test")
-//	testImplementation("org.springframework.security:spring-security-test")
-	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+	// testing
+	testImplementation("org.springframework.boot:spring-boot-starter-test") // main test library
+	testRuntimeOnly("org.junit.platform:junit-platform-launcher") // Junit
 }
 
 tasks.withType<Test> {
