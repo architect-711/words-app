@@ -1,9 +1,8 @@
 spring:
-    profiles:
-        default: dev
-        active: dev
-    main:
-        banner-mode: off
-    config:
-        import:
-            classpath:database.yml,error.yml
+  profiles:
+    default: dev
+    active: dev
+  main:
+    banner-mode: off
+  config:
+    import: classpath:config/database.yml,config/error.yml
