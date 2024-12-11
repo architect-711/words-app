@@ -27,12 +27,9 @@ public class WordController {
         return wordService.create(wordDto);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<WordDto> update(
-        @RequestBody WordDto wordDto,
-        @PathVariable("id") Long id
-    ) {
-        return wordService.update(wordDto, id);
+    @PutMapping
+    public ResponseEntity<WordDto> update(@RequestBody WordDto wordDto) {
+        return wordService.update(wordDto);
     }
 
     @DeleteMapping("/{id}")
