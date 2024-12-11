@@ -1,4 +1,5 @@
 spring:
+  jackson.deserialization.fail-on-unknown-properties: true
   profiles:
     default: dev
     active: dev
