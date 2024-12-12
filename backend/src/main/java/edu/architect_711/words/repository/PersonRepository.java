@@ -8,11 +8,6 @@ import java.util.Optional;
 
 public interface PersonRepository extends JpaRepository<Person, Long> {
     Optional<Person> findByUsername(final String username);
-    @Query(
-        nativeQuery = true,
-        value = "SELECT users.id, users.username, users.password FROM authorities JOIN users ON authorities.user_id = users.id AND authorities.api_key = ?1"
-    )
-    Optional<Person> findPersonByApiKey(final String apiKey);
 
     @Query(
             nativeQuery = true,

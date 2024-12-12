@@ -1,0 +1,16 @@
+# The WordsApp backend
+
+## Documentation
+[Here](https://app.weeek.net/ws/688666/kb/11)
+
+## How to run app
+By default when running via docker compose the app runs with prod profile.
+### In prod mode
+1. You should have java (jdk) installed
+1. Pull source code and go to the project root fodler: `words-app`
+2. Set env vars:
+    * `BACKEND_DATASOURCE_LOCAL_URL=jdbc:postgresql://<HOST>:<PORT>/<DATABASE>` - you need to specify the postgres connection string. Usually HOST is `localhost`, PORT is `5432` and the DATABASE is `postgres`
+    * `POSTGRES_LOCAL_USERNAME=<USERNAME>` - your postgres user. Note that app will fail if specified user hasn't got enough privileges above <DATABASE>
+    * `POSTGRES_LOCAL_PASSWORD=<PASSWORD>` - your user's password
+    * `BACKEND_LOCAL_PORT=<PORT>` - the port app should start on.
+3. To start full process of building app (including testing, making build file) run: `./docker_compose_run.sh`. Otherwise, if you done it previously, run `docker compose up` 
