@@ -12,6 +12,7 @@ ARG APP_VERSION
 
 # Metadata for image
 LABEL author="https://github.com/architect-711"
+LABEL source_code="https://github.com/architect-711/words-app"
 LABEL version=$APP_VERSION
 LABEL docs="https://app.weeek.net/ws/688666/kb/19"
 
@@ -20,7 +21,7 @@ LABEL docs="https://app.weeek.net/ws/688666/kb/19"
 COPY /build/libs/$APP_NAME $DEST_FOLDER/$APP_NAME
 
 # Copy env file. ps: .env file must be in the same folder
-COPY .env $DEST_FOLDER/.env
+COPY .env $DEST_FOLDER/.env 
 
 # Set working directory
 WORKDIR $DEST_FOLDER
