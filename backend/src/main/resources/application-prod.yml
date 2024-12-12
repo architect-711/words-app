@@ -1,10 +1,9 @@
 logging:
   level:
-    org.springframework.security: DEBUG
     root: ERROR
 
 spring:
   datasource:
-    url: ${SPRING_DATASOURCE_PROD_URL}
-    username: ${POSTGRES_ROOT_PROD_USERNAME}
-    password: ${POSTGRES_ROOT_PROD_PASSWORD}
+    url: ${BACKEND_DATASOURCE_DOCKER_URL}
+    username: ${POSTGRES_DOCKER_USERNAME}
+    password: ${POSTGRES_DOCKER_PASSWORD}

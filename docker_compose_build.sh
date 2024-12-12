@@ -11,7 +11,7 @@ cp .env backend/.env
 source .env
 
 # Build app
-cd "backend" && ./gradlew clean build -PAPP_VERSION="${APP_VERSION}" && cd ".."
+cd "backend" && ./gradlew clean build -PBACKEND_VERSION="${BACKEND_VERSION}" && cd ".."
 
 # Build services
 docker compose build

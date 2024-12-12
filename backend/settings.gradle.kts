@@ -1,1 +1,1 @@
-rootProject.name = System.getenv("APP_NAME") ?: "words_application"
+rootProject.name = System.getenv("BACKEND_NAME") ?: "words_application"

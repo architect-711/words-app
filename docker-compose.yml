@@ -1,27 +1,27 @@
 services:
     spring_backend:
-        image: $DOCKER_REGISTRY/$SPRING_IMAGE_NAME
+        image: $DOCKER_REGISTRY/$BACKEND_IMAGE_NAME
         env_file:
             - .env
         depends_on:
-            - $POSTGRES_SERVICE_NAME
+            - postgresdb
         build: 
             context: ./backend
             args:
-                - APP_NAME=$APP_BUILD_NAME
-                - APP_VERSION=$APP_VERSION
+                - APP_NAME=$BACKEND_BUILD_NAME
+                - APP_VERSION=$BACKEND_VERSION
         ports:
-            - $SPRING_HOST_PROD_PORT:$SPRING_DOCKER_PROD_PORT
+            - 8081:8080
     postgresdb:
         env_file:
             - .env
         image: postgres:16.4-alpine
         environment:
-            - POSTGRES_USER=$POSTGRES_ROOT_PROD_USERNAME
-            - POSTGRES_PASSWORD=$POSTGRES_ROOT_PROD_PASSWORD
-            - POSTGRES_DB=$POSTGRES_DEFAULT_DB
+            - POSTGRES_USER=$POSTGRES_DOCKER_USERNAME
+            - POSTGRES_PASSWORD=$POSTGRES_DOCKER_PASSWORD
+            - POSTGRES_DB=$POSTGRES_DB
         ports: 
-            - $POSTGRES_HOST_PROD_PORT:$POSTGRES_DOCKER_PROD_PORT
+            - $POSTGRES_LOCAL_PORT:$POSTGRES_DOCKER_PORT
         volumes:
             - dbdata:/var/lib/postgresql/data
 
