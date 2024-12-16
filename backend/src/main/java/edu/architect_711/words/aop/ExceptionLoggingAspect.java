@@ -1,6 +1,9 @@
 package edu.architect_711.words.aop;
 
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.Arrays;
+
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -28,7 +31,8 @@ public class ExceptionLoggingAspect {
     }
 
     private void printRawException() {
-        ((Throwable) joinPoint.getArgs()[0]).printStackTrace();
+        Throwable throwable = ((Throwable) joinPoint.getArgs()[0]);
+        log.error("Exception: ", throwable);
     }
 
 }
