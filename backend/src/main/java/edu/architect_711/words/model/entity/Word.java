@@ -1,5 +1,7 @@
 package edu.architect_711.words.model.entity;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,9 +23,13 @@ public class Word {
     @JoinColumn(name = "language_id", nullable = false)
     private WordLanguage language;
 
+    @Column(columnDefinition = "timestamp")
+    private LocalDateTime localDateTime;
+
     public Word(Person person, String title, WordLanguage language) {
         this.person = person;
         this.title = title;
         this.language = language;
+        this.localDateTime = LocalDateTime.now(); 
     }
 }
