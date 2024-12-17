@@ -8,6 +8,7 @@ import edu.architect_711.words.model.mapper.WordMapper;
 import edu.architect_711.words.model.validation_groups.WordValidationGroups;
 import edu.architect_711.words.repository.WordsRepository;
 import edu.architect_711.words.service.utils.RepositorySafeSearcher;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
@@ -28,7 +29,8 @@ public class WordService implements WordMapper {
         return ResponseEntity.ok(foundWords.stream().map(this::wordEntityToDto).toList());
     }
 
-    public ResponseEntity<WordDto> create(@Validated(WordValidationGroups.Create.class) WordDto wordDto) {
+    @Validated(WordValidationGroups.Create.class)
+    public ResponseEntity<WordDto> create(@Valid WordDto wordDto) {
         Person person = safeSearcher.findPersonById(wordDto.getUserId());
         WordLanguage wordLanguage = safeSearcher.findWordLanguageByTitle(wordDto.getLanguage());
 
@@ -37,7 +39,8 @@ public class WordService implements WordMapper {
         ));
     }
 
-    public ResponseEntity<WordDto> update(@Validated(WordValidationGroups.Update.class) WordDto wordDto) {
+    @Validated(WordValidationGroups.Update.class)
+    public ResponseEntity<WordDto> update(@Valid WordDto wordDto) {
         WordLanguage wordLanguage = safeSearcher.findWordLanguageByTitle(wordDto.getLanguage());
 
         Word foundWord = safeSearcher.findWordById(wordDto.getId());
