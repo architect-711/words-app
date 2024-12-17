@@ -11,6 +11,6 @@ public interface WordMapper {
     }
 
     default WordDto wordEntityToDto(Word word) {
-        return new WordDto(word.getId(), word.getPerson().getId(), word.getTitle(), word.getLanguage().getTitle());
+        return new WordDto(word.getId(), word.getPerson().getId(), word.getTitle(), word.getLanguage().getTitle(), word.getLocalDateTime());
     }
 }
