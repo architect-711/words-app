@@ -18,9 +18,4 @@ public class WordLanguageController {
         return wordLanguageService.read();
     }
 
-    @PostMapping
-    public ResponseEntity<WordLanguageDto> create(@RequestBody WordLanguageDto wordLanguageDto) {
-        return wordLanguageService.create(wordLanguageDto);
-    }
-
 }
