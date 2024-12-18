@@ -3,7 +3,6 @@ package edu.architect_711.words.service;
 import edu.architect_711.words.model.dto.WordLanguageDto;
 import edu.architect_711.words.model.mapper.WordLanguageMapper;
 import edu.architect_711.words.repository.WordLanguagesRepository;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -14,12 +13,6 @@ import java.util.List;
 @Service @RequiredArgsConstructor @Validated
 public class WordLanguageService implements WordLanguageMapper {
     private final WordLanguagesRepository wordLanguagesRepository;
-
-    public ResponseEntity<WordLanguageDto> create(@Valid WordLanguageDto wordLanguage) {
-        return ResponseEntity.ok(wordLanguageEntityToDto(
-                wordLanguagesRepository.save(wordLanguageDtoToEntity(wordLanguage))
-        ));
-    }
 
     public ResponseEntity<List<WordLanguageDto>> read() {
         return ResponseEntity.ok(wordLanguagesRepository.findAll().stream().map(this::wordLanguageEntityToDto).toList());

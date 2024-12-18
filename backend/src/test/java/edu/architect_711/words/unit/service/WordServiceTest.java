@@ -27,15 +27,13 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class WordServiceTest {
     @Autowired private WordService wordService;
     @Autowired private PersonService personService;
-    @Autowired private WordLanguageService wordLanguageService;
 
-    private static final String TEST_LANGUAGE_NAME = "german";
+    private static final String TEST_LANGUAGE_NAME = "German";
     private static final String TEST_WORD_TITLE = String.valueOf(Integer.MAX_VALUE);
     private static final LocalDateTime TEST_LOCAL_DATE_TIME = LocalDateTime.now();
 
     @BeforeAll
     public void setup() {
-        wordLanguageService.create(new WordLanguageDto(TEST_LANGUAGE_NAME));
         personService.create(new PersonDto("username", "password"));
     }
 

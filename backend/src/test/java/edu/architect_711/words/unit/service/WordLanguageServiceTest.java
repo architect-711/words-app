@@ -15,9 +15,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class WordLanguageServiceTest implements WordLanguageMapper {
@@ -25,15 +23,6 @@ public class WordLanguageServiceTest implements WordLanguageMapper {
     @InjectMocks private WordLanguageService service;
 
     private final Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
-
-    @Test
-    public void successfully_save() {
-        WordLanguageDto dto = new WordLanguageDto("sex");
-
-        when(repository.save(wordLanguageDtoToEntity(dto))).thenReturn(wordLanguageDtoToEntity(dto));
-
-        assertDoesNotThrow(() -> service.create(dto));
-    }
 
     @Test
     public void throw_on_invalid_field() {
