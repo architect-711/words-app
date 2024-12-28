@@ -2,9 +2,7 @@ package edu.architect_711.words.unit.service;
 
 import edu.architect_711.words.model.dto.PersonDto;
 import edu.architect_711.words.model.dto.WordDto;
-import edu.architect_711.words.model.dto.WordLanguageDto;
 import edu.architect_711.words.service.PersonService;
-import edu.architect_711.words.service.WordLanguageService;
 import edu.architect_711.words.service.WordService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.ConstraintViolationException;
@@ -40,7 +38,7 @@ public class WordServiceTest {
     // id and localDateTime MUST be null
     @Test
     public void should_fail_validation_create() {
-        WordDto wordDto = new WordDto(1L, 1L, TEST_WORD_TITLE, TEST_LANGUAGE_NAME, TEST_LOCAL_DATE_TIME);
+        WordDto wordDto = new WordDto(1L, 1L, TEST_WORD_TITLE, "test", TEST_LANGUAGE_NAME, TEST_LOCAL_DATE_TIME);
 
         assertThrows(ConstraintViolationException.class, () -> wordService.create(wordDto));
     }
@@ -48,7 +46,7 @@ public class WordServiceTest {
     // the userId MUST be null
     @Test
     public void should_fail_validation_update() {
-        WordDto wordDto = new WordDto(1L, 1L, TEST_WORD_TITLE, TEST_LANGUAGE_NAME, TEST_LOCAL_DATE_TIME);
+        WordDto wordDto = new WordDto(1L, 1L, TEST_WORD_TITLE, "test", TEST_LANGUAGE_NAME, TEST_LOCAL_DATE_TIME);
 
         assertThrows(ConstraintViolationException.class, () -> wordService.create(wordDto));
     }
@@ -56,7 +54,7 @@ public class WordServiceTest {
     @Test
     @Transactional // for some reason it saves from InvalidDataAccessApiUsageException
     public void should_save() {
-        WordDto wordDto = new WordDto(null, 1L, TEST_WORD_TITLE, TEST_LANGUAGE_NAME, null);
+        WordDto wordDto = new WordDto(null, 1L, TEST_WORD_TITLE, "test", TEST_LANGUAGE_NAME, null);
 
         assertDoesNotThrow(() -> wordService.create(wordDto));
     }
