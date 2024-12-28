@@ -2,8 +2,11 @@ logging:
   level:
     root: ERROR
 
+server:
+  port: 8080
+
 spring:
   datasource:
-    url: ${BACKEND_DATASOURCE_DOCKER_URL}
-    username: ${POSTGRES_DOCKER_USERNAME}
-    password: ${POSTGRES_DOCKER_PASSWORD}
+    url: ${BACKEND_DATASOURCE_PROD_URL}
+    username: ${POSTGRES_PROD_USERNAME}
+    password: ${POSTGRES_PROD_PASSWORD}
