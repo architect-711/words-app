@@ -14,6 +14,9 @@ public class Word {
     @Column(nullable = false, unique = true)
     private String title;
 
+    @Column(nullable = false, name = "word_translation")
+    private String wordTranslation;
+
     // cascade necessity is unknown as of now.
     @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JoinColumn(name = "person_id", nullable = false)
@@ -26,9 +29,10 @@ public class Word {
     @Column(columnDefinition = "timestamp")
     private LocalDateTime localDateTime;
 
-    public Word(Person person, String title, WordLanguage language) {
+    public Word(Person person, String title, String wordTranslation, WordLanguage language) {
         this.person = person;
         this.title = title;
+        this.wordTranslation = wordTranslation;
         this.language = language;
         this.localDateTime = LocalDateTime.now(); 
     }

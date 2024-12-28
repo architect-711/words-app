@@ -47,6 +47,7 @@ public class WordService implements WordMapper {
 
         foundWord.setTitle(wordDto.getTitle());
         foundWord.setLanguage(wordLanguage);
+        foundWord.setWordTranslation(wordDto.getWordTranslation());
 
         return ResponseEntity.ok(wordEntityToDto(wordsRepository.save(foundWord)));
     }
