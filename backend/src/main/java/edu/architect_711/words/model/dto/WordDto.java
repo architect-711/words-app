@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 /**
  * <h1>What a hell is going on?</h1>
  * <br> <br>
- * There are fields: id, userId, title, language, localDateTime
+ * There are fields: id, userId, title, wordTranslation, language, localDateTime
  * <br> <br>
  * When called the `create` method in service, the only fields `id` and `localDateTime` can be null
  * <br>
@@ -46,6 +46,12 @@ public class WordDto {
                 WordValidationGroups.Update.class
     })
     private String title;
+
+    @NotBlank(message = "Word translation cannot be blank.", groups = {
+            WordValidationGroups.Create.class,
+            WordValidationGroups.Update.class
+    })
+    private String wordTranslation;
 
     @NotBlank(message = "Language cannot be blank", groups = {
             WordValidationGroups.Create.class,
