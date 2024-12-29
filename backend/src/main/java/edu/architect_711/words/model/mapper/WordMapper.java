@@ -11,6 +11,7 @@ public interface WordMapper {
                 person,
                 wordDto.getTitle(),
                 wordDto.getWordTranslation(),
+                wordDto.getWordDescription(),
                 language
         );
     }
@@ -21,6 +22,7 @@ public interface WordMapper {
                 word.getPerson().getId(),
                 word.getTitle(),
                 word.getWordTranslation(),
+                word.getWordDescription(),
                 word.getLanguage().getTitle(),
                 word.getLocalDateTime());
     }
