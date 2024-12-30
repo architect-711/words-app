@@ -1,4 +1,4 @@
-insert into languages (title) values 
+insert into languages (title) values
 ('Afrikaans'),
 ('Albanian'),
 ('Amharic'),
@@ -104,4 +104,5 @@ insert into languages (title) values
 ('Uzbek'),
 ('Vietnamese'),
 ('Wolof'),
-('Yoruba');
+('Yoruba')
+on conflict do nothing;

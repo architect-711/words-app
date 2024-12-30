@@ -1,7 +1,7 @@
 spring:
   datasource:
-    url: ${SPRING_DATASOURCE_DEV_URL}
-    username: ${POSTGRES_ROOT_DEV_USERNAME}
-    password: ${POSTGRES_ROOT_DEV_PASSWORD}
+    url: ${BACKEND_DATASOURCE_LOCAL_URL}
+    username: ${POSTGRES_LOCAL_USERNAME}
+    password: ${POSTGRES_LOCAL_PASSWORD}
   jpa:
     show-sql: true

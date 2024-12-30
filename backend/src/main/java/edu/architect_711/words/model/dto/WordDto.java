@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 /**
  * <h1>What a hell is going on?</h1>
  * <br> <br>
- * There are fields: id, userId, title, language, localDateTime
+ * There are some fields. And depending on validation group some of them must be omitted
  * <br> <br>
  * When called the `create` method in service, the only fields `id` and `localDateTime` can be null
  * <br>
@@ -47,6 +47,18 @@ public class WordDto {
     })
     private String title;
 
+    @NotBlank(message = "Word translation cannot be blank.", groups = {
+            WordValidationGroups.Create.class,
+            WordValidationGroups.Update.class
+    })
+    private String wordTranslation;
+
+    @NotBlank(message = "Word description cannot be blank.", groups = {
+            WordValidationGroups.Create.class,
+            WordValidationGroups.Update.class
+    })
+    private String wordDescription;
+
     @NotBlank(message = "Language cannot be blank", groups = {
             WordValidationGroups.Create.class,
             WordValidationGroups.Update.class
@@ -54,12 +66,9 @@ public class WordDto {
     private String language;
 
     @Null(
-            message = "Date must be null",
-            groups = WordValidationGroups.Create.class
-    )
-    @NotNull(
-            message = "Date can't be null",
-            groups = WordValidationGroups.Update.class
-    )
+            message = "Date must be null", groups = {
+            WordValidationGroups.Create.class,
+            WordValidationGroups.Update.class
+    })
     private LocalDateTime localDateTime;
 }

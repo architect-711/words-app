@@ -1,29 +1,40 @@
 services:
     spring_backend:
-        image: $DOCKER_REGISTRY/$BACKEND_IMAGE_NAME
+        image: "${DOCKER_REGISTRY}/${BACKEND_IMAGE_NAME}"
         env_file:
+            - .env.production
             - .env
         depends_on:
-            - postgresdb
+            - postgres_prod_db
         build: 
             context: ./backend
             args:
-                - APP_NAME=$BACKEND_BUILD_NAME
-                - APP_VERSION=$BACKEND_VERSION
+                - APP_NAME=${BACKEND_BUILD_NAME}
+                - APP_VERSION=${BACKEND_VERSION}
         ports:
-            - 8081:8080
-    postgresdb:
-        env_file:
-            - .env
-        image: postgres:16.4-alpine
+            - "8081:8080"
+    postgres_prod_db:
+        image: postgres:16.4-alpine3.20
         environment:
-            - POSTGRES_USER=$POSTGRES_DOCKER_USERNAME
-            - POSTGRES_PASSWORD=$POSTGRES_DOCKER_PASSWORD
-            - POSTGRES_DB=$POSTGRES_DB
+            - POSTGRES_USER=${POSTGRES_PROD_USERNAME}
+            - POSTGRES_PASSWORD=${POSTGRES_PROD_PASSWORD}
+            - POSTGRES_DB=words_app_db
         ports: 
-            - $POSTGRES_LOCAL_PORT:$POSTGRES_DOCKER_PORT
+            - "5433:5432"
         volumes:
-            - dbdata:/var/lib/postgresql/data
+            - prod_db_volume:/var/lib/postgresql/data
+    postgres_local_db:
+        image: postgres:16.4-alpine3.20
+        restart: no
+        environment:
+            - POSTGRES_USER=${POSTGRES_LOCAL_USERNAME}
+            - POSTGRES_PASSWORD=${POSTGRES_LOCAL_PASSWORD}
+            - POSTGRES_DB=words_app_db
+        ports:
+            - "5434:5432"
+        volumes:
+            - local_db_volume:/var/lib/postgresql/data
 
 volumes:
-    dbdata:
+    prod_db_volume:
+    local_db_volume:

@@ -28,6 +28,9 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa") // the orm specification, that adds required interfaces and how to use this tools
 	runtimeOnly("org.postgresql:postgresql") // the database itself
 
+	// https://mvnrepository.com/artifact/org.flywaydb/flyway-database-postgresql
+	runtimeOnly("org.flywaydb:flyway-database-postgresql:11.1.0") // db migration tool
+
 	// validation
 	implementation("org.springframework.boot:spring-boot-starter-validation:3.4.0")
 
