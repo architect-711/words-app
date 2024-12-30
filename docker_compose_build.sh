@@ -5,7 +5,7 @@ source ./build_utils.sh
 function prepare_docker() {
     # clean everything
     docker compose down
-    docker volume rm words-app_local_db_volume words-app_prod_db_volume 2> /dev/null || true
+    docker volume rm words-app_local_db_volume 2> /dev/null || true
 }
 
 function build_spring() {
