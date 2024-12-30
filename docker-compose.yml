@@ -18,7 +18,7 @@ services:
         environment:
             - POSTGRES_USER=${POSTGRES_PROD_USERNAME}
             - POSTGRES_PASSWORD=${POSTGRES_PROD_PASSWORD}
-            - POSTGRES_DB=${POSTGRES_DB}
+            - POSTGRES_DB=words_app_db
         ports: 
             - "5433:5432"
         volumes:
@@ -29,7 +29,7 @@ services:
         environment:
             - POSTGRES_USER=${POSTGRES_LOCAL_USERNAME}
             - POSTGRES_PASSWORD=${POSTGRES_LOCAL_PASSWORD}
-            - POSTGRES_DB=${POSTGRES_DB}
+            - POSTGRES_DB=words_app_db
         ports:
             - "5434:5432"
         volumes:
