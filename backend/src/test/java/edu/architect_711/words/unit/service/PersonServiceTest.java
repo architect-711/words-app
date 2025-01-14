@@ -2,60 +2,56 @@ package edu.architect_711.words.unit.service;
 
 import edu.architect_711.words.model.dto.PersonDto;
 import edu.architect_711.words.model.mapper.PersonMapper;
-import edu.architect_711.words.repository.PersonRepository;
 import edu.architect_711.words.service.PersonService;
-import jakarta.validation.ConstraintViolation;
-import jakarta.validation.Validation;
-import jakarta.validation.Validator;
+import jakarta.validation.ConstraintViolationException;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Profile;
 
-import java.util.Set;
+import java.util.Date;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-@ExtendWith(MockitoExtension.class)
+@SpringBootTest
+@Profile("test")
 public class PersonServiceTest implements PersonMapper {
-    @Mock
-    private PersonRepository personRepository;
-    @InjectMocks
-    private PersonService personService;
+    @Autowired private PersonService personService;
 
-   private final Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
-
+    /**
+     * Should successfully save new person
+     * */
     @Test
     public void should_save_new_person() {
-        PersonDto correctLayout = new PersonDto("username", "password");
-
-        setupSaving(correctLayout);
-
+        PersonDto correctLayout = new PersonDto(new Date().toString(), "password");
         PersonDto savedPerson = personService.create(correctLayout).getBody();
 
         assertNotNull(savedPerson);
     }
 
+    /**
+     * Throw NPE on null fields
+     * */
     @Test
     public void npe_on_null_username() {
-        PersonDto brokenLayout = new PersonDto(null, "");
+        PersonDto nullUsername = new PersonDto(null, "");
+        PersonDto nullPassword = new PersonDto("", null);
 
-        assertThrows(NullPointerException.class, () -> personService.create(brokenLayout));
+        assertThrows(ConstraintViolationException.class, () -> personService.create(nullUsername));
+        assertThrows(ConstraintViolationException.class, () -> personService.create(nullPassword));
     }
 
+    /**
+     * Throws exception on blank fields
+     * */
     @Test
     public void throw_error_on_blank_field() {
-        PersonDto brokenPerson = new PersonDto("     ", "");
+        PersonDto blankUsername = new PersonDto("     ", "");
+        PersonDto blankPassword = new PersonDto("", "     ");
 
-        Set<ConstraintViolation<PersonDto>> violations = validator.validate(brokenPerson);
-
-        assertFalse(violations.isEmpty());
-    }
-
-    private void setupSaving(PersonDto dto) {
-        when(personRepository.save(personDtoToEntity(dto))).thenReturn(personDtoToEntity(dto));
+        assertThrows(Exception.class, () -> personService.create(blankPassword));
+        assertThrows(Exception.class, () -> personService.create(blankUsername));
     }
 
 }
