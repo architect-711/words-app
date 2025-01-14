@@ -6,11 +6,10 @@ import edu.architect_711.words.repository.WordLanguagesRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 
-@Service @RequiredArgsConstructor @Validated
+@Service @RequiredArgsConstructor
 public class WordLanguageService implements WordLanguageMapper {
     private final WordLanguagesRepository wordLanguagesRepository;
 
