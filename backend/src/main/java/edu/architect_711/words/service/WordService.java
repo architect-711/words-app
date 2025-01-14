@@ -34,12 +34,9 @@ public class WordService implements WordMapper {
         Person person = safeSearcher.findPersonById(wordDto.getUserId());
         WordLanguage wordLanguage = safeSearcher.findWordLanguageByTitle(wordDto.getLanguage());
 
-        return ResponseEntity.ok(wordEntityToDto(
-                wordsRepository.save(wordDtoToEntity(wordDto, person, wordLanguage))
-        ));
+        return buildOkResponse(wordsRepository.save(wordDtoToEntity(wordDto, person, wordLanguage)));
     }
 
-    @Validated(WordValidationGroups.Update.class)
     public ResponseEntity<WordDto> update(@Valid WordDto wordDto) {
         WordLanguage wordLanguage = safeSearcher.findWordLanguageByTitle(wordDto.getLanguage());
 
@@ -50,12 +47,16 @@ public class WordService implements WordMapper {
         foundWord.setWordTranslation(wordDto.getWordTranslation());
         foundWord.setWordDescription(wordDto.getWordDescription());
 
-        return ResponseEntity.ok(wordEntityToDto(wordsRepository.save(foundWord)));
+        return buildOkResponse(wordsRepository.save(foundWord));
     }
 
     public ResponseEntity<?> delete(Long id) {
         wordsRepository.deleteById(id);
 
         return ResponseEntity.ok().build();
+    }
+
+    private ResponseEntity<WordDto> buildOkResponse(Word word) {
+        return ResponseEntity.ok(wordEntityToDto(word));
     }
 }
