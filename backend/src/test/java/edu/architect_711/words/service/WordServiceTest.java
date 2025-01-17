@@ -1,8 +1,9 @@
-package edu.architect_711.words.unit.service;
+package edu.architect_711.words.service;
 
 import edu.architect_711.words.model.dto.PersonDto;
 import edu.architect_711.words.model.dto.WordDto;
 import edu.architect_711.words.model.entity.Person;
+import edu.architect_711.words.model.entity.Role;
 import edu.architect_711.words.model.mapper.PersonMapper;
 import edu.architect_711.words.repository.PersonRepository;
 import edu.architect_711.words.service.PersonService;
@@ -41,11 +42,13 @@ public class WordServiceTest implements PersonMapper {
     public void setup() {
         savedPersonOnStartup = personRepository
                 .findFirst()
-                .orElseGet(() -> personDtoToEntity(Objects.requireNonNull(
+                .orElseGet(() -> toEntity(Objects.requireNonNull(
                         personService.create(new PersonDto(
+                                1L,
                                 new Date().toString(),
-                                "password")).getBody()
-                )));
+                                "password",
+                                Role.USER
+                        )).getBody())));
     }
 
     /**

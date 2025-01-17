@@ -1,6 +1,7 @@
-package edu.architect_711.words.unit.service;
+package edu.architect_711.words.service;
 
 import edu.architect_711.words.model.dto.PersonDto;
+import edu.architect_711.words.model.entity.Role;
 import edu.architect_711.words.model.mapper.PersonMapper;
 import edu.architect_711.words.service.PersonService;
 import jakarta.validation.ConstraintViolationException;
@@ -24,7 +25,7 @@ public class PersonServiceTest implements PersonMapper {
      * */
     @Test
     public void should_save_new_person() {
-        PersonDto correctLayout = new PersonDto(new Date().toString(), "password");
+        PersonDto correctLayout = new PersonDto(1L, new Date().toString(), "password", Role.USER);
         PersonDto savedPerson = personService.create(correctLayout).getBody();
 
         assertNotNull(savedPerson);
@@ -35,8 +36,8 @@ public class PersonServiceTest implements PersonMapper {
      * */
     @Test
     public void npe_on_null_username() {
-        PersonDto nullUsername = new PersonDto(null, "");
-        PersonDto nullPassword = new PersonDto("", null);
+        PersonDto nullUsername = new PersonDto(null, null, " ", null);
+        PersonDto nullPassword = new PersonDto(null, " ", " ", Role.USER);
 
         assertThrows(ConstraintViolationException.class, () -> personService.create(nullUsername));
         assertThrows(ConstraintViolationException.class, () -> personService.create(nullPassword));
@@ -47,8 +48,8 @@ public class PersonServiceTest implements PersonMapper {
      * */
     @Test
     public void throw_error_on_blank_field() {
-        PersonDto blankUsername = new PersonDto("     ", "");
-        PersonDto blankPassword = new PersonDto("", "     ");
+        PersonDto blankUsername = new PersonDto(1L, "     ", "", Role.USER);
+        PersonDto blankPassword = new PersonDto(1L, "asdf", "     ", Role.USER);
 
         assertThrows(Exception.class, () -> personService.create(blankPassword));
         assertThrows(Exception.class, () -> personService.create(blankUsername));

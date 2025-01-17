@@ -2,20 +2,36 @@ package edu.architect_711.words.model.mapper;
 
 import edu.architect_711.words.model.dto.PersonDto;
 import edu.architect_711.words.model.entity.Person;
-import jakarta.validation.constraints.NotNull;
 
-public interface PersonMapper {
-    default Person personDtoToEntity(@NotNull PersonDto personDto) {
+import java.util.function.Consumer;
+
+public interface PersonMapper extends Mapper<PersonDto, Person> {
+
+    @Override
+    default Person toEntity(PersonDto personDto) {
         return new Person(
+                personDto.getId(),
                 personDto.getUsername(),
-                personDto.getPassword()
+                personDto.getPassword(),
+                personDto.getRole()
         );
     }
 
-    default PersonDto personEntityToDto(@NotNull Person person) {
+    default Person toEntity(PersonDto personDto, Consumer<PersonDto> modifier) {
+        Person person = toEntity(personDto);
+        modifier.accept(personDto);
+
+        return person;
+    }
+
+    @Override
+    default PersonDto toDto(Person person) {
         return new PersonDto(
+                person.getId(),
                 person.getUsername(),
-                person.getPassword()
+                person.getPassword(),
+                person.getRole()
         );
     }
+
 }

@@ -1,4 +1,4 @@
-package edu.architect_711.words.unit.service;
+package edu.architect_711.words.service;
 
 import edu.architect_711.words.model.mapper.WordLanguageMapper;
 import edu.architect_711.words.service.WordLanguageService;
