@@ -26,10 +26,9 @@ public class Person implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    public Person(String username, String password, Role role) {
+    public Person(String username, String password) {
         this.username = username;
         this.password = password;
-        this.role = role;
     }
 
     @Override
