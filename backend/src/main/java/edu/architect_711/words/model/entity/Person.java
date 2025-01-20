@@ -1,12 +1,19 @@
 package edu.architect_711.words.model.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
+import java.util.List;
+
+@AllArgsConstructor
 @NoArgsConstructor @Data @Entity @Table(name = "person")
-public class Person {
+public class Person implements UserDetails {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -16,8 +23,16 @@ public class Person {
     @Column(nullable = false)
     private String password;
 
-    public Person(@NonNull String username, @NonNull String password) {
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
+    public Person(String username, String password) {
         this.username = username;
         this.password = password;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(role.name()));
     }
 }
