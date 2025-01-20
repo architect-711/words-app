@@ -13,12 +13,7 @@ public class PersonController {
 
     @GetMapping("/{id}")
     public ResponseEntity<PersonDto> read(@PathVariable("id") Long id) {
-        return personService.read(id);
+        return personService.read(id); // TODO what about security??? any authorized person can get someone else by id?! this is also applied to words endpoints
     }
 
-    @PostMapping
-    public ResponseEntity<PersonDto> create(@RequestBody PersonDto personDto) {
-        return personService.create(personDto);
-    }
-
-    }
+}
