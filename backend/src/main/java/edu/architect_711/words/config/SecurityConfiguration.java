@@ -35,11 +35,7 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(
-                                "/api/authentication/**",
-                                "/api/people",
-                                "/api/word-languages"
-                        ).permitAll()
+                        .requestMatchers("/api/authentication/**").permitAll()
                         .anyRequest().authenticated())
                 .addFilterAfter(filter, LogoutFilter.class)
                 .userDetailsService(userDetailsService)
