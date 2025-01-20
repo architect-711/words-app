@@ -21,7 +21,7 @@ import java.util.Optional;
 
 @Component @RequiredArgsConstructor @Data
 public class TokenService {
-    @Value("${security.jwt.secret_key")
+    @Value("${security.jwt.secret_key}")
     private String secretKey;
     @Value("${security.jwt.access_token_expiration}")
     private long accessTokenExpiration;
@@ -59,23 +59,23 @@ public class TokenService {
     }
     public class Validator {
         public boolean isAccessValid(String accessToken, String username) {
-            return isValid(accessToken, username);
+            return isValid(tokenRepository.findByAccessToken(accessToken), accessToken, username);
         }
 
         public boolean isRefreshValid(String refreshToken, String username) {
-            return isValid(refreshToken, username);
+            return isValid(tokenRepository.findByRefreshToken(refreshToken), refreshToken, username);
         }
 
-        private boolean isValid(String token, String username) {
-            return isUnloggedOut(token) && isNotExpired(token) && username.equals(extractor.extractUsername(token));
+        private boolean isValid(Optional<Token> ambivalent, String token, String username) {
+            return isUnloggedOut(ambivalent) && isNotExpired(token) && username.equals(extractor.extractUsername(token));
         }
 
         private boolean isNotExpired(String token) {
             return extractor.extractExpiration(token).after(new Date());
         }
 
-        private boolean isUnloggedOut(String token) {
-            return tokenRepository.findByAccessToken(token).map(t -> !t.isLoggedOut()).orElse(false);
+        private boolean isUnloggedOut(Optional<Token> ambivalent) {
+            return ambivalent.map(t -> !t.isLoggedOut()).orElse(false);
         }
     }
     public class Extractor {
@@ -115,15 +115,6 @@ public class TokenService {
             tokens.forEach(t -> t.setLoggedOut(true));
 
             tokenRepository.saveAll(tokens);
-        }
-
-        public Token generateAndSaveNewTokens(String accessToken, String refreshToken, Person person) {
-            return tokenRepository.save(new Token(
-                    accessToken,
-                    refreshToken,
-                    false,
-                    person
-            ));
         }
 
         public Token fullUpdate(Person person) {
