@@ -7,6 +7,7 @@ import edu.architect_711.words.model.entity.Role;
 import edu.architect_711.words.model.mapper.PersonMapper;
 import edu.architect_711.words.model.mapper.TokenMapper;
 import edu.architect_711.words.model.validation_groups.PersonValidationGroups;
+import edu.architect_711.words.repository.TokenRepository;
 import edu.architect_711.words.repository.safe.SafePersonRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -21,31 +22,36 @@ import org.springframework.validation.annotation.Validated;
 
 @Service @Validated @RequiredArgsConstructor
 public class AuthenticationService implements PersonMapper, TokenMapper {
-    private final SafePersonRepository safePersonRepository;
     private final TokenService tokenService;
+
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
 
+    private final SafePersonRepository safePersonRepository;
+    private final TokenRepository tokenRepository;
+
     @Validated(PersonValidationGroups.Create.class)
-    public ResponseEntity<PersonDto> register(@Valid PersonDto personDto) {
+    public ResponseEntity<?> register(@Valid PersonDto personDto) {
         Person person = toEntity(personDto, p -> {
             p.setPassword(passwordEncoder.encode(p.getPassword()));
             p.setRole(Role.USER);
         });
 
-        return buildOk(toDto(safePersonRepository.save(person)));
+        safePersonRepository.save(person);
+
+        return ResponseEntity.ok().build();
     }
 
     public ResponseEntity<TokenDto> login(@Valid PersonDto personDto) {
         Person person = safePersonRepository.findPersonByUsername(personDto.getUsername());
 
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                person.getUsername(),
-                person.getPassword(),
+                personDto.getUsername(),
+                personDto.getPassword(),
                 person.getAuthorities()
         ));
 
-        return buildOk(toDto(tokenService.getUpdater().fullUpdate(person)));
+        return buildOk(toDto(tokenRepository.save(tokenService.getUpdater().fullUpdate(person))));
     }
 
     public ResponseEntity<TokenDto> refreshToken(HttpServletRequest request) {
