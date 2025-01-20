@@ -10,16 +10,14 @@ public interface PersonMapper extends Mapper<PersonDto, Person> {
     @Override
     default Person toEntity(PersonDto personDto) {
         return new Person(
-                personDto.getId(),
                 personDto.getUsername(),
-                personDto.getPassword(),
-                personDto.getRole()
+                personDto.getPassword()
         );
     }
 
-    default Person toEntity(PersonDto personDto, Consumer<PersonDto> modifier) {
+    default Person toEntity(PersonDto personDto, Consumer<Person> modifier) {
         Person person = toEntity(personDto);
-        modifier.accept(personDto);
+        modifier.accept(person);
 
         return person;
     }
@@ -27,10 +25,8 @@ public interface PersonMapper extends Mapper<PersonDto, Person> {
     @Override
     default PersonDto toDto(Person person) {
         return new PersonDto(
-                person.getId(),
                 person.getUsername(),
-                person.getPassword(),
-                person.getRole()
+                person.getPassword()
         );
     }
 
