@@ -13,7 +13,7 @@ public class AuthenticationController {
     private final AuthenticationService authenticationService;
 
     @PostMapping("/registration")
-    public ResponseEntity<PersonDto> register(@RequestBody PersonDto personDto) {
+    public ResponseEntity<?> register(@RequestBody PersonDto personDto) {
         return authenticationService.register(personDto);
     }
 
