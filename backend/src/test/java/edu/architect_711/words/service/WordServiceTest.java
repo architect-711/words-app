@@ -1,13 +1,10 @@
 package edu.architect_711.words.service;
 
-import edu.architect_711.words.model.dto.PersonDto;
 import edu.architect_711.words.model.dto.WordDto;
 import edu.architect_711.words.model.entity.Person;
 import edu.architect_711.words.model.entity.Role;
 import edu.architect_711.words.model.mapper.PersonMapper;
 import edu.architect_711.words.repository.PersonRepository;
-import edu.architect_711.words.service.PersonService;
-import edu.architect_711.words.service.WordService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.ConstraintViolationException;
 import org.junit.jupiter.api.BeforeAll;
@@ -15,22 +12,17 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Profile;
 
 import java.time.LocalDateTime;
 import java.util.Date;
-import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
-@Profile("test")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class WordServiceTest implements PersonMapper {
     @Autowired private WordService wordService;
-    @Autowired private PersonService personService;
-
     @Autowired private PersonRepository personRepository;
 
     private Person savedPersonOnStartup;
@@ -42,13 +34,12 @@ public class WordServiceTest implements PersonMapper {
     public void setup() {
         savedPersonOnStartup = personRepository
                 .findFirst()
-                .orElseGet(() -> toEntity(Objects.requireNonNull(
-                        personService.create(new PersonDto(
+                .orElseGet(() -> personRepository.save(new Person(
                                 1L,
                                 new Date().toString(),
                                 "password",
-                                Role.USER
-                        )).getBody())));
+                                Role.USER))
+                );
     }
 
     /**
