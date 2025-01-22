@@ -1,0 +1,1134 @@
+{
+	"info": {
+		"_postman_id": "1bbcd6ec-5985-404d-a190-de0dc35320c4",
+		"name": "v2.0.0",
+		"description": "[Documentation to v2.0.0 (<b>NOT API</b>)](https://app.weeek.net/ws/688666/kb/25)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "29346587-1bbcd6ec-5985-404d-a190-de0dc35320c4"
+	},
+	"item": [
+		{
+			"name": "api",
+			"item": [
+				{
+					"name": "words",
+					"item": [
+						{
+							"name": "{id}",
+							"item": [
+								{
+									"name": "delete",
+									"id": "386fddaf-32f9-4cc3-a558-5d12192dc823",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "*/*"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/words/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"words",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "<long>",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"id": "858f1514-86fe-4005-8d01-b0cf61dc4010",
+											"name": "OK",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "*/*"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/words/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"words",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "*/*",
+													"uuid": "906c332e-bbf3-428d-8236-6fce7965d748"
+												}
+											],
+											"cookie": [],
+											"body": "{}"
+										}
+									]
+								}
+							],
+							"id": "07bd8556-ce86-457a-b3fd-154d6a7a9926"
+						},
+						{
+							"name": "read",
+							"id": "143365f5-44f8-4638-a40e-439e85e01252",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/words?size=5&page=0",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"words"
+									],
+									"query": [
+										{
+											"key": "size",
+											"value": "5"
+										},
+										{
+											"key": "page",
+											"value": "0"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "fa604aba-2cf2-431b-936d-856efdabd1f5",
+									"name": "OK",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "*/*"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/words?size=5&page=0",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"words"
+											],
+											"query": [
+												{
+													"key": "size",
+													"value": "5"
+												},
+												{
+													"key": "page",
+													"value": "0"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*",
+											"uuid": "973f52eb-1b48-4c3f-bb0b-e02574464c26"
+										}
+									],
+									"cookie": [],
+									"body": "[\n  {\n    \"id\": \"<long>\",\n    \"language\": \"<string>\",\n    \"localDateTime\": \"<dateTime>\",\n    \"title\": \"<string>\",\n    \"userId\": \"<long>\",\n    \"wordDescription\": \"<string>\",\n    \"wordTranslation\": \"<string>\"\n  },\n  {\n    \"id\": \"<long>\",\n    \"language\": \"<string>\",\n    \"localDateTime\": \"<dateTime>\",\n    \"title\": \"<string>\",\n    \"userId\": \"<long>\",\n    \"wordDescription\": \"<string>\",\n    \"wordTranslation\": \"<string>\"\n  }\n]"
+								}
+							]
+						},
+						{
+							"name": "update",
+							"id": "8f5e7f26-dccb-4a02-a7d1-7dcff711d94d",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"id\": \"<long>\",\n  \"language\": \"<string>\",\n  \"localDateTime\": \"<dateTime>\",\n  \"title\": \"<string>\",\n  \"userId\": \"<long>\",\n  \"wordDescription\": \"<string>\",\n  \"wordTranslation\": \"<string>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/words",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"words"
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "9dfcf035-2d6b-4e2d-ad84-34246af2f0e1",
+									"name": "OK",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "*/*"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"id\": \"<long>\",\n  \"language\": \"<string>\",\n  \"localDateTime\": \"<dateTime>\",\n  \"title\": \"<string>\",\n  \"userId\": \"<long>\",\n  \"wordDescription\": \"<string>\",\n  \"wordTranslation\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/words",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"words"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*",
+											"uuid": "8b495a7c-f4fd-44ca-94ee-cf49da79f4e8"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"id\": \"<long>\",\n  \"language\": \"<string>\",\n  \"localDateTime\": \"<dateTime>\",\n  \"title\": \"<string>\",\n  \"userId\": \"<long>\",\n  \"wordDescription\": \"<string>\",\n  \"wordTranslation\": \"<string>\"\n}"
+								}
+							]
+						},
+						{
+							"name": "create",
+							"id": "e6bbf7df-04d3-474f-a461-705b1d7b4504",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"id\": \"<long>\",\n  \"language\": \"<string>\",\n  \"localDateTime\": \"<dateTime>\",\n  \"title\": \"<string>\",\n  \"userId\": \"<long>\",\n  \"wordDescription\": \"<string>\",\n  \"wordTranslation\": \"<string>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/words",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"words"
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "0be45d8e-aa17-4ff4-9006-0bcf6029ed0a",
+									"name": "OK",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "*/*"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"id\": \"<long>\",\n  \"language\": \"<string>\",\n  \"localDateTime\": \"<dateTime>\",\n  \"title\": \"<string>\",\n  \"userId\": \"<long>\",\n  \"wordDescription\": \"<string>\",\n  \"wordTranslation\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/words",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"words"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*",
+											"uuid": "96d7f660-8681-4564-8568-968fbc590585"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"id\": \"<long>\",\n  \"language\": \"<string>\",\n  \"localDateTime\": \"<dateTime>\",\n  \"title\": \"<string>\",\n  \"userId\": \"<long>\",\n  \"wordDescription\": \"<string>\",\n  \"wordTranslation\": \"<string>\"\n}"
+								}
+							]
+						}
+					],
+					"id": "d1c428b9-74da-4af1-9f0c-6bb1bb7a467a",
+					"description": "Words management",
+					"auth": {
+						"type": "bearer"
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "f16941c5-faa8-4612-9bb6-eab64e206b58",
+								"type": "text/javascript",
+								"packages": {},
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "26a0a643-e75a-4d27-8883-3ada3a5f6efc",
+								"type": "text/javascript",
+								"packages": {},
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "authentication",
+					"item": [
+						{
+							"name": "registration",
+							"item": [
+								{
+									"name": "register",
+									"id": "d6b5d97c-18e0-44d8-9726-23df3617b8a1",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "*/*"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"password\": \"<string>\",\n  \"username\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/authentication/registration",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"authentication",
+												"registration"
+											]
+										}
+									},
+									"response": [
+										{
+											"id": "f16c3e39-221e-40af-b57f-3df9f32dd01f",
+											"name": "OK",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													},
+													{
+														"key": "Accept",
+														"value": "*/*"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"password\": \"<string>\",\n  \"username\": \"<string>\"\n}",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/authentication/registration",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"authentication",
+														"registration"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "plain",
+											"header": [
+												{
+													"key": "X-Content-Type-Options",
+													"value": "nosniff",
+													"uuid": "5d4156e2-e692-44cf-a696-fb35bb81599e"
+												},
+												{
+													"key": "X-XSS-Protection",
+													"value": "0",
+													"uuid": "4496c784-b79f-42b5-a713-25452b55e58d"
+												},
+												{
+													"key": "Cache-Control",
+													"value": "no-cache, no-store, max-age=0, must-revalidate",
+													"uuid": "5522692f-dbe9-4b72-9651-ff27e24409dd"
+												},
+												{
+													"key": "Pragma",
+													"value": "no-cache",
+													"uuid": "618b4ae1-d3d9-454a-bd15-1de2d86255ab"
+												},
+												{
+													"key": "Expires",
+													"value": "0",
+													"uuid": "8b442aca-90f2-4ee2-950a-cb4f1739bb5c"
+												},
+												{
+													"key": "X-Frame-Options",
+													"value": "DENY",
+													"uuid": "d812bf45-f47a-434a-9f00-eef5afe51458"
+												},
+												{
+													"key": "Content-Length",
+													"value": "0",
+													"uuid": "d3c8d3f2-e172-406d-ad44-3e89173b35da"
+												},
+												{
+													"key": "Date",
+													"value": "Mon, 20 Jan 2025 18:32:30 GMT",
+													"uuid": "801be7d6-ef81-4059-bf34-a83eadf2c5af"
+												},
+												{
+													"key": "Keep-Alive",
+													"value": "timeout=60",
+													"uuid": "5d489709-8fce-49f6-9708-02a9b4410d7f"
+												},
+												{
+													"key": "Connection",
+													"value": "keep-alive",
+													"uuid": "7ceb945f-2378-4428-92d6-243f16fb920c"
+												}
+											],
+											"cookie": [],
+											"body": null
+										}
+									]
+								}
+							],
+							"id": "754b33c5-3454-464e-9eb5-d8919c873c60",
+							"description": "Register new person",
+							"auth": {
+								"type": "noauth"
+							},
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "2e447d7e-2f7e-4888-b50c-1b449a06ebc1",
+										"type": "text/javascript",
+										"packages": {},
+										"exec": [
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "4b6b2a05-65b5-4f20-9ab6-f1a34eaa3b2a",
+										"type": "text/javascript",
+										"packages": {},
+										"exec": [
+											""
+										]
+									}
+								}
+							]
+						},
+						{
+							"name": "login",
+							"item": [
+								{
+									"name": "login",
+									"id": "59a2468c-dd85-44af-a500-bfd6a026cda9",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "*/*"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"password\": \"<string>\",\n  \"username\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/authentication/login",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"authentication",
+												"login"
+											]
+										}
+									},
+									"response": [
+										{
+											"id": "03628aa3-3db5-47d3-becb-56026622ddeb",
+											"name": "OK",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													},
+													{
+														"key": "Accept",
+														"value": "*/*"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"password\": \"<string>\",\n  \"username\": \"<string>\"\n}",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/authentication/login",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"authentication",
+														"login"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "*/*",
+													"uuid": "c2690167-42f4-41fe-9066-24d962454140"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"accessToken\": \"<string>\",\n  \"refreshToken\": \"<string>\",\n  \"isLoggedOut\": <boolean>\n}"
+										}
+									]
+								}
+							],
+							"id": "259ea42b-b89d-4014-b610-111b1777b04b",
+							"description": "Get access and refresh tokens",
+							"auth": {
+								"type": "noauth"
+							},
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "6e1fa9b3-ef1d-4547-a5c5-9687881681c2",
+										"type": "text/javascript",
+										"packages": {},
+										"exec": [
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "bcbb3443-54a1-422f-bd75-478e487b1bb5",
+										"type": "text/javascript",
+										"packages": {},
+										"exec": [
+											""
+										]
+									}
+								}
+							]
+						},
+						{
+							"name": "refresh_token",
+							"item": [
+								{
+									"name": "refresh Token",
+									"id": "a29fb228-75c2-43e2-9646-e792a6fa105f",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "*/*"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/authentication/refresh_token",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"authentication",
+												"refresh_token"
+											]
+										}
+									},
+									"response": [
+										{
+											"id": "9dd99a70-7ce7-476b-916f-2ae5e9fce204",
+											"name": "OK",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "*/*"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/authentication/refresh_token",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"authentication",
+														"refresh_token"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "*/*",
+													"uuid": "0c15b5a6-e786-49c6-8f90-e961dc2aa823"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"accessToken\": \"<string>\",\n  \"refreshToken\": \"<string>\",\n  \"isLoggedOut\": <boolean>\n}"
+										}
+									]
+								}
+							],
+							"id": "7a8658c4-5d99-40b1-9f5d-5c20f460426d",
+							"description": "Generate new access and refresh tokens by refresh token, when access is expired.",
+							"auth": {
+								"type": "bearer",
+								"bearer": [
+									{
+										"key": "token",
+										"value": "REFRESH TOKEN!!!!",
+										"type": "string"
+									}
+								]
+							},
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "054a5d02-de02-4f34-bfb7-4910e2218bcf",
+										"type": "text/javascript",
+										"packages": {},
+										"exec": [
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "814cefc8-a78e-4cea-a1c4-551a718926c4",
+										"type": "text/javascript",
+										"packages": {},
+										"exec": [
+											""
+										]
+									}
+								}
+							]
+						}
+					],
+					"id": "874ae0fb-9ed7-47a8-aed5-2ce5de1c017b",
+					"description": "Manage person security things: register new person, generate tokens or update them",
+					"auth": {
+						"type": "noauth"
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "0a7a518b-afce-4865-87a8-cfe32af5bf6b",
+								"type": "text/javascript",
+								"packages": {},
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "55dff500-179e-49bf-bcfb-f5004e779a43",
+								"type": "text/javascript",
+								"packages": {},
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "word-languages",
+					"item": [
+						{
+							"name": "read all",
+							"id": "366b55c3-83f5-40af-868a-f08e34e08e6d",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI8c3RyaW5nPiIsImlhdCI6MTczNzM5ODE0MSwiZXhwIjoxNzM3NDg0NTQxfQ.XJRjnNFekS5W_sLNLFmxIGPMAyvsQ-repSYmi-D6K2d5BWEZxklzJV-qTns8DTGZPTId2x7iAHFBXwW-KVOM7Q",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/word-languages",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"word-languages"
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "9a1ae9cc-5538-4cc8-8a41-cd118a751e4d",
+									"name": "OK",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "*/*"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/word-languages",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"word-languages"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*",
+											"uuid": "d27f46b9-0a12-4b09-b825-fca95f9ad8fd"
+										}
+									],
+									"cookie": [],
+									"body": "[\n  {\n    \"title\": \"<string>\"\n  },\n  {\n    \"title\": \"<string>\"\n  }\n]"
+								}
+							]
+						}
+					],
+					"id": "f57ac1d3-e809-45b4-a9bb-479fd0cf517e",
+					"description": "All languages from app",
+					"auth": {
+						"type": "bearer"
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "93146d36-6ebc-4da6-a644-b5f6ed6a2bd4",
+								"type": "text/javascript",
+								"packages": {},
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "4c5c7eed-7c7a-4a0f-9a57-5b9debb07e32",
+								"type": "text/javascript",
+								"packages": {},
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "people",
+					"item": [
+						{
+							"name": "{id}",
+							"item": [
+								{
+									"name": "read all",
+									"id": "8ebd7cba-12de-4db6-858b-f6ac9033d1c5",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "*/*"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/people/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"people",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "<long>",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"id": "130204dd-07fb-4922-8fe0-f4f2271a7f92",
+											"name": "OK",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "*/*"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/people/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"people",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "*/*",
+													"uuid": "4c2faaba-3a37-47d9-be3f-5f989831a994"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"password\": \"<string>\",\n  \"username\": \"<string>\"\n}"
+										}
+									]
+								}
+							],
+							"id": "3e6005ee-e79a-47d4-b44c-4d5e0a7ff910",
+							"auth": {
+								"type": "bearer"
+							},
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "3aa25067-70a2-445a-a906-af3844272e28",
+										"type": "text/javascript",
+										"packages": {},
+										"exec": [
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "332bd7c1-772a-4f6e-bb46-0a824a174c12",
+										"type": "text/javascript",
+										"packages": {},
+										"exec": [
+											""
+										]
+									}
+								}
+							]
+						}
+					],
+					"id": "210f95ba-8909-43a1-b740-77dbc47a5ddf",
+					"description": "People management",
+					"auth": {
+						"type": "bearer"
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "b0d62ff4-2feb-4490-b711-fc7f8171b4cd",
+								"type": "text/javascript",
+								"packages": {},
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "bd6aa99d-f83e-44af-897c-0abaab21003c",
+								"type": "text/javascript",
+								"packages": {},
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				}
+			],
+			"id": "0e40bef9-caed-4686-a252-f2782c250246",
+			"description": "The beggining of all endpoints",
+			"auth": {
+				"type": "noauth"
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "5267ec7f-e219-40c0-a31f-75c747df4341",
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "2f1ec33e-88df-4bae-99ef-a5872b221102",
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"id": "dd241b1c-1286-428d-bedd-d72a41eeedf0",
+			"key": "baseUrl",
+			"value": "http://localhost:8080"
+		}
+	]
+}
