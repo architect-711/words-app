@@ -1,20 +1,29 @@
 #!/usr/bin/zsh
 
-# Import all from .env file
-source .env
+source ./build_utils.sh
 
-# Up local db for tests
-docker compose up -d postgres_local_db
+function prepare_docker() {
+    # clean everything
+    docker compose down
+    docker volume rm words-app_local_db_volume 2> /dev/null || true
+}
 
-# Build Spring app
-cd "backend" && ./gradlew clean build -PBACKEND_VERSION="${BACKEND_VERSION}" && cd ".."
+function build_spring() {
+    # force substitution of env vars which contain another env vars. This won't conflict, since it overrides (!!!)
+    # Otherwise Dockerfile gets unsubstituted ${BACKEND_BUILD_NAME} from .env
+    source .env
+    cd "backend" && ./gradlew clean build -PBACKEND_VERSION="${BACKEND_VERSION}" && cd ".."
+}
 
-if [ $? -ne 0 ]; then
-  echo "App building has been successfully failed."
-  exit 1;
+if ! check_env_files . ; then
+    exit 1
 fi
 
-# Build docker containers
-docker compose build spring_backend
-# Stop local db
-docker compose stop postgres_local_db
+import_all_env_vars .env .env.*
+build_spring
+prepare_docker && docker compose up -d postgres_local_db
+if [ $? -eq 0 ] ; then
+    docker compose build spring_backend
+else
+    echo "Failed to build app"
+fi

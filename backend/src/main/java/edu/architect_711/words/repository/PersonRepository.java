@@ -11,7 +11,7 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
 
     @Query(
             nativeQuery = true,
-            value = "SELECT * FROM person LIMIT 1"
+            value = "SELECT * FROM users LIMIT 1"
     )
     Optional<Person> findFirst();
 }

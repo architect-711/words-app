@@ -2,6 +2,7 @@ services:
     spring_backend:
         image: "${DOCKER_REGISTRY}/${BACKEND_IMAGE_NAME}"
         env_file:
+            - .env.production
             - .env
         depends_on:
             - postgres_prod_db

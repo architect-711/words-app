@@ -10,28 +10,65 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+/**
+ * <h1>What a hell is going on?</h1>
+ * <br> <br>
+ * There are some fields. And depending on validation group some of them must be omitted
+ * <br> <br>
+ * When called the `create` method in service, the only fields `id` and `localDateTime` can be null
+ * <br>
+ * When called the `update` method in service, the only field `userId` can be null
+ * */
 @Data @AllArgsConstructor @NoArgsConstructor
 public class WordDto {
-    @Null(message = "Id must be null.", groups = WordValidationGroups.Create.class)
-    @NotNull(message = "Id can't be null")
+    @Null(
+            message = "Id must be null.",
+            groups = WordValidationGroups.Create.class
+    )
+    @NotNull(
+            message = "Id can't be null",
+            groups = WordValidationGroups.Update.class
+    )
     private Long id;
 
-    @NotNull(message = "User id can't be null")
+    @Null(
+            message = "User id must be null",
+            groups = WordValidationGroups.Update.class
+    )
+    @NotNull(
+            message = "User id can't be null",
+            groups = WordValidationGroups.Create.class
+    )
     private Long userId;
 
-    @NotBlank(message = "Title cannot be blank")
+    @NotBlank(message = "Title cannot be blank", groups = {
+                WordValidationGroups.Create.class,
+                WordValidationGroups.Update.class
+    })
     private String title;
 
-    @NotBlank(message = "Word translation cannot be blank.")
+    @NotBlank(message = "Word translation cannot be blank.", groups = {
+            WordValidationGroups.Create.class,
+            WordValidationGroups.Update.class
+    })
     private String wordTranslation;
 
-    @NotBlank(message = "Word description cannot be blank.")
+    @NotBlank(message = "Word description cannot be blank.", groups = {
+            WordValidationGroups.Create.class,
+            WordValidationGroups.Update.class
+    })
     private String wordDescription;
 
-    @NotBlank(message = "Language cannot be blank")
+    @NotBlank(message = "Language cannot be blank", groups = {
+            WordValidationGroups.Create.class,
+            WordValidationGroups.Update.class
+    })
     private String language;
 
-    @Null(message = "Local date time must be null", groups = WordValidationGroups.Create.class)
-    @NotNull(message = "Time created cannot be blank")
+    @Null(
+            message = "Date must be null", groups = {
+            WordValidationGroups.Create.class,
+            WordValidationGroups.Update.class
+    })
     private LocalDateTime localDateTime;
 }
