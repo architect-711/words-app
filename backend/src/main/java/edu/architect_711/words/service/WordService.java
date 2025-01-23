@@ -6,8 +6,9 @@ import edu.architect_711.words.model.entity.Word;
 import edu.architect_711.words.model.entity.WordLanguage;
 import edu.architect_711.words.model.mapper.WordMapper;
 import edu.architect_711.words.model.validation_groups.WordValidationGroups;
-import edu.architect_711.words.repository.WordsRepository;
-import edu.architect_711.words.service.utils.RepositorySafeSearcher;
+import edu.architect_711.words.repository.safe.SafePersonRepository;
+import edu.architect_711.words.repository.safe.SafeWordLanguageRepository;
+import edu.architect_711.words.repository.safe.SafeWordRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,42 +21,45 @@ import java.util.List;
 
 @Service @RequiredArgsConstructor @Slf4j @Validated
 public class WordService implements WordMapper {
-    private final WordsRepository wordsRepository;
-    private final RepositorySafeSearcher safeSearcher;
+    private final SafeWordRepository safeWordRepository;
+    private final SafePersonRepository safePersonRepository;
+    private final SafeWordLanguageRepository safeWordLanguageRepository;
 
     public ResponseEntity<List<WordDto>> read(Integer size, Integer page) {
-        final List<Word> foundWords = wordsRepository.findAll(PageRequest.of(page, size)).getContent();
+        final List<Word> foundWords = safeWordRepository.findAll(PageRequest.of(page, size)).getContent();
 
-        return ResponseEntity.ok(foundWords.stream().map(this::wordEntityToDto).toList());
+        return ResponseEntity.ok(foundWords.stream().map(this::toDto).toList());
     }
 
     @Validated(WordValidationGroups.Create.class)
     public ResponseEntity<WordDto> create(@Valid WordDto wordDto) {
-        Person person = safeSearcher.findPersonById(wordDto.getUserId());
-        WordLanguage wordLanguage = safeSearcher.findWordLanguageByTitle(wordDto.getLanguage());
+        Person person = safePersonRepository.findPersonById(wordDto.getUserId());
+        WordLanguage wordLanguage = safeWordLanguageRepository.findWordLanguageByTitle(wordDto.getLanguage());
 
-        return ResponseEntity.ok(wordEntityToDto(
-                wordsRepository.save(wordDtoToEntity(wordDto, person, wordLanguage))
-        ));
+        return buildOkResponse(safeWordRepository.save(toEntity(wordDto, person, wordLanguage)));
     }
 
-    @Validated(WordValidationGroups.Update.class)
     public ResponseEntity<WordDto> update(@Valid WordDto wordDto) {
-        WordLanguage wordLanguage = safeSearcher.findWordLanguageByTitle(wordDto.getLanguage());
+        WordLanguage wordLanguage = safeWordLanguageRepository.findWordLanguageByTitle(wordDto.getLanguage());
 
-        Word foundWord = safeSearcher.findWordById(wordDto.getId());
+        Word foundWord = safeWordRepository.findWordById(wordDto.getId());
 
         foundWord.setTitle(wordDto.getTitle());
         foundWord.setLanguage(wordLanguage);
         foundWord.setWordTranslation(wordDto.getWordTranslation());
         foundWord.setWordDescription(wordDto.getWordDescription());
 
-        return ResponseEntity.ok(wordEntityToDto(wordsRepository.save(foundWord)));
+        return buildOkResponse(safeWordRepository.save(foundWord));
     }
 
     public ResponseEntity<?> delete(Long id) {
-        wordsRepository.deleteById(id);
+        safeWordRepository.deleteById(id);
 
         return ResponseEntity.ok().build();
     }
+
+    private ResponseEntity<WordDto> buildOkResponse(Word word) {
+        return ResponseEntity.ok(toDto(word));
+    }
+
 }
