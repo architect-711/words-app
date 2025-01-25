@@ -1,4 +1,4 @@
-package edu.architect_711.words.security;
+package edu.architect_711.words.integration.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.architect_711.words.controller.AuthenticationController;

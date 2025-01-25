@@ -1,4 +1,4 @@
-package edu.architect_711.words.service;
+package edu.architect_711.words.integration.service;
 
 import edu.architect_711.words.controller.AuthenticationController;
 import edu.architect_711.words.model.mapper.WordLanguageMapper;

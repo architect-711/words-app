@@ -1,10 +1,11 @@
-package edu.architect_711.words.service;
+package edu.architect_711.words.integration.service;
 
 import edu.architect_711.words.model.dto.WordDto;
 import edu.architect_711.words.model.entity.Person;
 import edu.architect_711.words.model.entity.Role;
 import edu.architect_711.words.model.mapper.PersonMapper;
 import edu.architect_711.words.repository.PersonRepository;
+import edu.architect_711.words.service.WordService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.ConstraintViolationException;
 import org.junit.jupiter.api.BeforeAll;
