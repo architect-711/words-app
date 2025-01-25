@@ -6,7 +6,7 @@ spring:
   main:
     banner-mode: off
   config:
-    import: classpath:config/database.yml,config/error.yml
+    import: classpath:config/database.yml,config/error.yml,config/api.yaml
 
 springdoc:
   api-docs:
