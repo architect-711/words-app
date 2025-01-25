@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/words")
+@RequestMapping("/${api.root.name}/${api.root.children.words.name}/")
 @RequiredArgsConstructor
 public class WordController {
     private final WordService wordService;
 
-    @GetMapping
+    @GetMapping("${api.root.children.words.endpoints.get_all}")
     public ResponseEntity<List<WordDto>> read(
             @RequestParam(name = "size", defaultValue = "5") Integer size,
             @RequestParam(name = "page", defaultValue = "0") Integer page
@@ -22,17 +22,17 @@ public class WordController {
         return wordService.read(size, page);
     }
 
-    @PostMapping
+    @PostMapping("${api.root.children.words.endpoints.create_one}")
     public ResponseEntity<WordDto> create(@RequestBody WordDto wordDto) {
         return wordService.create(wordDto);
     }
 
-    @PutMapping
+    @PutMapping("${api.root.children.words.endpoints.update_one}")
     public ResponseEntity<WordDto> update(@RequestBody WordDto wordDto) {
         return wordService.update(wordDto);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("${api.root.children.words.endpoints.get_by_id}/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") Long id) {
         return wordService.delete(id);
     }
