@@ -26,21 +26,21 @@ public class WordService implements WordMapper {
     private final SafeWordLanguageRepository safeWordLanguageRepository;
 
     public ResponseEntity<List<WordDto>> read(Integer size, Integer page) {
-        final List<Word> foundWords = safeWordRepository.findAll(PageRequest.of(page, size)).getContent();
+        final List<Word> foundWords = safeWordRepository.findAll(PageRequest.of(page, size)).getContent(); // TODO findAll???????????????????????????
 
         return ResponseEntity.ok(foundWords.stream().map(this::toDto).toList());
     }
 
     @Validated(WordValidationGroups.Create.class)
     public ResponseEntity<WordDto> create(@Valid WordDto wordDto) {
-        Person person = safePersonRepository.findPersonById(wordDto.getUserId());
+        Person person = safePersonRepository.findPersonById(wordDto.getUserId()); // TODO fix security flaw
         WordLanguage wordLanguage = safeWordLanguageRepository.findWordLanguageByTitle(wordDto.getLanguage());
 
         return buildOkResponse(safeWordRepository.save(toEntity(wordDto, person, wordLanguage)));
     }
 
     public ResponseEntity<WordDto> update(@Valid WordDto wordDto) {
-        WordLanguage wordLanguage = safeWordLanguageRepository.findWordLanguageByTitle(wordDto.getLanguage());
+        WordLanguage wordLanguage = safeWordLanguageRepository.findWordLanguageByTitle(wordDto.getLanguage()); // TODO fix security flaw
 
         Word foundWord = safeWordRepository.findWordById(wordDto.getId());
 
@@ -52,7 +52,7 @@ public class WordService implements WordMapper {
         return buildOkResponse(safeWordRepository.save(foundWord));
     }
 
-    public ResponseEntity<?> delete(Long id) {
+    public ResponseEntity<?> delete(Long id) { // TODO fix security flaw
         safeWordRepository.deleteById(id);
 
         return ResponseEntity.ok().build();

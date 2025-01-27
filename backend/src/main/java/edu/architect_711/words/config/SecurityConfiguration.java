@@ -1,6 +1,7 @@
 package edu.architect_711.words.config;
 
 import edu.architect_711.words.filter.JwtAuthenticationFilter;
+import edu.architect_711.words.filter.JwtAuthorizationFilter;
 import edu.architect_711.words.handler.JwtLogoutHandler;
 import edu.architect_711.words.service.PersonService;
 import lombok.RequiredArgsConstructor;
@@ -18,14 +19,17 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandlerImpl;
+import org.springframework.security.web.authentication.AnonymousAuthenticationFilter;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
 
 @Configuration @RequiredArgsConstructor @EnableWebSecurity
 public class SecurityConfiguration {
-    private final JwtAuthenticationFilter filter;
     private final PersonService userDetailsService;
     private final JwtLogoutHandler logoutHandler;
+
+    private final JwtAuthenticationFilter filter;
+    private final JwtAuthorizationFilter jwtAuthorizationFilter;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -38,6 +42,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/api/authentication/**").permitAll()
                         .anyRequest().authenticated())
                 .addFilterAfter(filter, LogoutFilter.class)
+                .addFilterAfter(jwtAuthorizationFilter, AnonymousAuthenticationFilter.class)
                 .userDetailsService(userDetailsService)
                 .exceptionHandling(exception -> exception
                         .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
