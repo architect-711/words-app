@@ -1,7 +1,8 @@
 package edu.architect_711.words.filter;
 
-import edu.architect_711.words.repository.safe.SafePersonRepository;
-import edu.architect_711.words.service.TokenService;
+import edu.architect_711.words.security.SecurityConfiguration;
+import edu.architect_711.words.security.SecurityFilter;
+import edu.architect_711.words.service.jwt_token.JwtTokenService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -9,46 +10,38 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Optional;
 
 @Component @RequiredArgsConstructor
-public class JwtAuthenticationFilter extends OncePerRequestFilter {
-    private final TokenService tokenService;
-    private final SafePersonRepository safePersonRepository;
+public class JwtAuthenticationFilter extends OncePerRequestFilter implements SecurityFilter {
+    private final JwtTokenService tokenService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        Optional<String> token = TokenService.Extractor.extractFromHeader(request.getHeader("Authorization"));
+        Optional.ofNullable(tokenService.extractFromRequest(request)).ifPresent(this::filterToken);
 
-        token.ifPresent(this::handle);
-        
         filterChain.doFilter(request, response);
     }
 
-    private void handle(String token) {
-        String username = tokenService.getExtractor().extractUsername(token);
-        
-        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null)
-            authenticate(token, username);
-    }
+    private void filterToken(String accessToken) {
+        String username = tokenService.extractUsername(accessToken);
 
-    private void authenticate(String token, String username) {
-        UserDetails person = safePersonRepository.findPersonByUsername(username);
-
-        // there might be provided a refresh token, on for example /refresh_tokens, so shouldn't reject
-        if (!tokenService.getValidator().isAccessValid(token, username))
+        // there might be provided a refresh token, so we let return 403
+        boolean shouldIgnore = username == null || SecurityContextHolder.getContext().getAuthentication() != null;
+        if (shouldIgnore || !tokenService.isAccessValid(accessToken, username))
             return;
 
-        SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(
-                person.getUsername(),
-                person.getPassword(),
-                person.getAuthorities()
-        ));
+        SecurityContextHolder.getContext().setAuthentication(UsernamePasswordAuthenticationToken.authenticated(username, accessToken, null));
+    }
+
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+        return Arrays.stream(SecurityConfiguration.PUBLIC_URIS).anyMatch(uri -> uri.matches(request.getRequestURI()));
     }
 
 }

@@ -1,0 +1,17 @@
+spring:
+  main:
+    banner-mode: off
+
+logging:
+  level:
+    org:
+      springframework.security: TRACE
+      hibernate.orm.jdbc.bind: TRACE
+    root: ERROR
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+
+server:
+  port: ${BACKEND_LOCAL_PORT:8080}
+  error.whitelabel.enabled: false
