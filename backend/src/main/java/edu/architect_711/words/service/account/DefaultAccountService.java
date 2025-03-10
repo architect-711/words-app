@@ -41,12 +41,14 @@ public class DefaultAccountService implements AccountService, LogoutHandler {
 
     private final JwtTokenService jwtTokenService;
 
+    @Override
     public ResponseEntity<JwtTokenDto> register(@Valid AccountDto accountDto) {
         AccountEntity accountEntity = accountRepository.save(defaultAccount(accountDto));
 
         return buildJwtOk(jwtTokenRepository.save(generateOfEntity(accountEntity)));
     }
 
+    @Override
     public ResponseEntity<JwtTokenDto> login(@Valid AccountDto accountDto) {
         delegateToAuthManager(accountDto.getUsername(), accountDto.getPassword());
 
@@ -55,6 +57,7 @@ public class DefaultAccountService implements AccountService, LogoutHandler {
         return buildJwtOk(gracefullySaveNewToken(accountEntity));
     }
 
+    @Override
     public ResponseEntity<JwtTokenDto> refreshToken(HttpServletRequest request) {
         AccountEntity accountEntity = verifyToken(request, jwtTokenService::isRefreshValid);
 
