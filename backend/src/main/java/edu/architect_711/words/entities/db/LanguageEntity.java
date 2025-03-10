@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity @Table(name = "languages") @NoArgsConstructor @Data
+@Entity @Table(name = "language") @NoArgsConstructor @Data
 public class LanguageEntity implements Language {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
