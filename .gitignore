@@ -2,4 +2,4 @@
 .vscode
 
 # contains private data
-.env
+.env*
