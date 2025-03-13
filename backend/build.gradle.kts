@@ -27,8 +27,6 @@ dependencies {
 	// Database
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa") // the orm specification, that adds required interfaces and how to use this tools
 	runtimeOnly("org.postgresql:postgresql") // the database itself
-	// https://mvnrepository.com/artifact/com.h2database/h2
-	testImplementation("com.h2database:h2:2.3.232")
 
 
 	// Api documentation
