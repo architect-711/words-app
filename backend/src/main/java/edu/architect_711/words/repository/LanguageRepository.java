@@ -10,8 +10,7 @@ import java.util.Optional;
 public interface LanguageRepository extends JpaRepository<LanguageEntity, Long> {
     Optional<LanguageEntity> findByTitle(String title);
 
-
     default LanguageEntity safeFindByTitle(String language) {
-        return this.findByTitle(language).orElseThrow(() -> new EntityNotFoundException("WordEntity language not found with title: " + language));
+        return this.findByTitle(language).orElseThrow(() -> new EntityNotFoundException("Language not found with title: " + language));
     }
 }
