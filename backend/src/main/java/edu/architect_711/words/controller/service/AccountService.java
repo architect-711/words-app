@@ -1,20 +1,17 @@
 package edu.architect_711.words.controller.service;
 
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-
 import edu.architect_711.words.entities.dto.AccountDto;
 import edu.architect_711.words.entities.dto.JwtTokenDto;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
 
 public interface AccountService {
-    ResponseEntity<JwtTokenDto> register(AccountDto person);
+    ResponseEntity<JwtTokenDto> register(@Valid AccountDto accountDto);
 
-    ResponseEntity<JwtTokenDto> login(AccountDto person);
+    ResponseEntity<JwtTokenDto> login(@Valid AccountDto accountDto);
 
-    void logout(HttpServletRequest request, HttpServletResponse response,
-            Authentication authentication);
+    ResponseEntity<?> logout(HttpServletRequest request);
 
     ResponseEntity<JwtTokenDto> refreshToken(HttpServletRequest request);
 }
