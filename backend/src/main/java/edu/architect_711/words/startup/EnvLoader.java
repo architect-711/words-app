@@ -1,14 +1,13 @@
 package edu.architect_711.words.startup;
 
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.context.event.ApplicationStartingEvent;
+import org.springframework.context.ApplicationListener;
+
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
-
-import org.springframework.boot.context.event.ApplicationStartingEvent;
-import org.springframework.context.ApplicationListener;
-
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * <p>
@@ -35,7 +34,7 @@ public class EnvLoader implements ApplicationListener<ApplicationStartingEvent> 
         Path path = Paths.get("..", DEFAULT_ENV_FILE_NAME);
 
         try (Stream<String> lines = Files.lines(path)) {
-            lines.forEach(line -> loadVarToSystem(line));
+            lines.forEach(EnvLoader::loadVarToSystem);
         } catch (Exception exception) {
             log.error("Couldn't load env vars:/");
 
