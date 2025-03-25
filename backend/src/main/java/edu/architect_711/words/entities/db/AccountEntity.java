@@ -13,6 +13,7 @@ import edu.architect_711.words.entities.Account;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 @AllArgsConstructor @Builder
 @NoArgsConstructor @Data @Entity @Table(name = "account")
@@ -28,6 +29,12 @@ public class AccountEntity implements UserDetails, Account { // TODO implement a
 
     @Enumerated(EnumType.STRING)
     private Role role; // TODO make a table
+
+    @OneToMany(mappedBy = "accountEntity", cascade = CascadeType.ALL)
+    private Set<JwtTokenEntity> jwtTokenEntities;
+
+    @OneToMany(mappedBy = "accountEntity", cascade = CascadeType.ALL)
+    private Set<WordEntity> wordEntities;
 
     public AccountEntity(String username, String password, Role role) {
         this.username = username;
