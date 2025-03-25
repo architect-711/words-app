@@ -1,12 +1,11 @@
 package edu.architect_711.words.entities.db;
 
+import edu.architect_711.words.entities.Word;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-
-import edu.architect_711.words.entities.Word;
 
 @Entity
 @Table(name = "word")
@@ -26,12 +25,11 @@ public class WordEntity implements Word {
     @Column(nullable = false, name = "description")
     private String description;
 
-    // TODO cascade necessity is unknown as of now. (???)
-    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_id", nullable = false)
     private AccountEntity accountEntity;
 
-    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "language_id", nullable = false)
     private LanguageEntity languageEntity;
 
