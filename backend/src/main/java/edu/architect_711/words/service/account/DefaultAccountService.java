@@ -1,16 +1,5 @@
 package edu.architect_711.words.service.account;
 
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.AuthenticationServiceException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.logout.LogoutHandler;
-import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
-
 import edu.architect_711.words.controller.service.AccountService;
 import edu.architect_711.words.entities.db.AccountEntity;
 import edu.architect_711.words.entities.db.JwtTokenEntity;
@@ -25,11 +14,22 @@ import edu.architect_711.words.service.jwt_token.JwtTokenService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
+import jakarta.validation.groups.Default;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationServiceException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.logout.LogoutHandler;
+import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
 @Service
-@Validated
 @RequiredArgsConstructor
+@Validated
 public class DefaultAccountService implements AccountService, LogoutHandler {
     private final static EntityMapper<JwtTokenEntity, JwtTokenDto> tokenMapper = new JwtTokenMapper();
 
@@ -41,15 +41,19 @@ public class DefaultAccountService implements AccountService, LogoutHandler {
 
     private final JwtTokenService jwtTokenService;
 
-    @Override
-    public ResponseEntity<JwtTokenDto> register(@Valid AccountDto accountDto) {
+    @Override @Validated({Default.class, AccountDto.OnCreate.class})
+    public ResponseEntity<JwtTokenDto> register(
+             @Valid AccountDto accountDto
+    ) {
         AccountEntity accountEntity = accountRepository.save(defaultAccount(accountDto));
 
         return buildJwtOk(jwtTokenRepository.save(generateOfEntity(accountEntity)));
     }
 
-    @Override
-    public ResponseEntity<JwtTokenDto> login(@Valid AccountDto accountDto) {
+    @Override @Validated({Default.class, AccountDto.OnCreated.class})
+    public ResponseEntity<JwtTokenDto> login(
+            @Valid AccountDto accountDto
+    ) {
         delegateToAuthManager(accountDto.getUsername(), accountDto.getPassword());
 
         AccountEntity accountEntity = accountRepository.safeFindByUsername(accountDto.getUsername());
@@ -62,6 +66,13 @@ public class DefaultAccountService implements AccountService, LogoutHandler {
         AccountEntity accountEntity = verifyToken(request, jwtTokenService::isRefreshValid);
 
         return buildJwtOk(gracefullySaveNewToken(accountEntity));
+    }
+
+    @Override
+    public ResponseEntity<?> logout(HttpServletRequest request) {
+        logout(request, null, null);
+
+        return ResponseEntity.ok().build();
     }
 
     @Override
@@ -91,19 +102,19 @@ public class DefaultAccountService implements AccountService, LogoutHandler {
     }
 
     private AccountEntity verifyToken(HttpServletRequest request, TokenVerifier verifyTokenFunction) {
-        String refreshToken = jwtTokenService.extractFromRequest(request);
+        String someToken = jwtTokenService.extractFromRequest(request);
 
-        if (refreshToken == null)
+        if (someToken == null)
             throw new AuthenticationServiceException("Token not found in the header.");
 
-        String username = jwtTokenService.extractUsername(refreshToken);
+        String username = jwtTokenService.extractUsername(someToken);
 
         if (username == null)
             throw new AuthenticationServiceException("Username is null");
 
         AccountEntity accountEntity = accountRepository.safeFindByUsername(username);
 
-        if (!jwtTokenService.isRefreshValid(refreshToken, accountEntity.getUsername()))
+        if (!verifyTokenFunction.verify(someToken, accountEntity.getUsername()))
             throw new AuthenticationServiceException("Token is invalid");
 
         return accountEntity;
