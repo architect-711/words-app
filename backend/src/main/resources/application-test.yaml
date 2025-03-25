@@ -1,7 +1,20 @@
 spring:
-  datasource:
-    url: ${BACKEND_DATASOURCE_LOCAL_URL}
-    username: ${POSTGRES_LOCAL_USERNAME}
-    password: ${POSTGRES_LOCAL_PASSWORD}
+  main:
+    banner-mode: off
   jpa:
+    properties.hibernate.format_sql: true
     show-sql: true
+
+logging:
+  level:
+    org:
+      springframework.security: TRACE
+      hibernate.orm.jdbc.bind: TRACE
+    root: ERROR
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+
+server:
+  port: 8080 
+  error.whitelabel.enabled: false
