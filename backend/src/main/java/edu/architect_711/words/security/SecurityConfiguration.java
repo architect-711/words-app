@@ -27,8 +27,9 @@ public class SecurityConfiguration {
 
     public static final String[] PUBLIC_URIS = {
             "/api/accounts/registration",
+            "/api/accounts/refresh_token",
             "/api/accounts/login",
-            "api/languages"
+            "/api/languages"
     };
 
     @Bean
