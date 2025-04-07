@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "edu.architect-711"
-version = project.findProperty("BACKEND_VERSION") ?: "0.0.0"
+version = System.getenv("BACKEND_VERSION")
 
 java {
 	toolchain {
