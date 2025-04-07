@@ -11,9 +11,6 @@ logging:
       springframework.security: TRACE
       hibernate.orm.jdbc.bind: TRACE
     root: ERROR
-  flyway:
-    enabled: true
-    locations: classpath:db/migration
 
 server:
   error.whitelabel.enabled: false
