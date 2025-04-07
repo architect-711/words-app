@@ -1,6 +1,5 @@
 package edu.architect_711.words.intergration;
 
-import edu.architect_711.words.startup.EnvLoader;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -19,10 +18,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class LanguageServiceITest {
     @Autowired
     private MockMvc mockMvc;
-
-    public LanguageServiceITest() {
-        EnvLoader.load();
-    }
 
     @Test
     public void should_ok__return_langs_list() throws Exception {

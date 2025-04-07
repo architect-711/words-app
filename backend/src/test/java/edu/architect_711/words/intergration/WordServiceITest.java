@@ -7,7 +7,6 @@ import edu.architect_711.words.repository.AccountRepository;
 import edu.architect_711.words.repository.WordRepository;
 import edu.architect_711.words.security.token.JwtAuthenticationToken;
 import edu.architect_711.words.service.word.DefaultWordService;
-import edu.architect_711.words.startup.EnvLoader;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -30,10 +29,6 @@ public class WordServiceITest {
     @Autowired private AccountRepository accountRepository;
 
     @Autowired private DefaultWordService wordService;
-
-    public WordServiceITest() {
-        EnvLoader.load();
-    }
 
     private static AccountEntity owner = new AccountEntity(LocalDateTime.now().toString(), "1234", Role.USER);
     private static AccountEntity left = new AccountEntity(LocalDateTime.now().toString(), "1234", Role.USER);

@@ -7,7 +7,6 @@ import edu.architect_711.words.repository.AccountRepository;
 import edu.architect_711.words.repository.JwtTokenRepository;
 import edu.architect_711.words.service.account.DefaultAccountService;
 import edu.architect_711.words.service.jwt_token.JwtTokenService;
-import edu.architect_711.words.startup.EnvLoader;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import jakarta.validation.ConstraintViolation;
@@ -46,10 +45,6 @@ public class DefaultAccountServiceITest {
 
     // assign only when saved. don't modify
     private JwtTokenDto savedToken;
-
-    public DefaultAccountServiceITest() {
-        EnvLoader.load();
-    }
 
     private final static AccountDto BASE =  new AccountDto(LocalDateTime.now().toString(), "password", null);
 

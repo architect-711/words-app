@@ -1,7 +1,6 @@
 package edu.architect_711.words.intergration;
 
 import edu.architect_711.words.security.SecurityConfiguration;
-import edu.architect_711.words.startup.EnvLoader;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -10,11 +9,10 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-
 import static jakarta.servlet.http.HttpServletResponse.SC_FORBIDDEN;
 import static jakarta.servlet.http.HttpServletResponse.SC_UNAUTHORIZED;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 @SpringBootTest
 @ActiveProfiles(profiles = {"test", "postgres"})
@@ -29,10 +27,6 @@ public class SecurityITest {
             "/api/words/delete",
             "/api/accounts/logout"
     };
-
-    public SecurityITest() {
-        EnvLoader.load();
-    }
 
     @Test
     public void should_ok__public_uris() {
