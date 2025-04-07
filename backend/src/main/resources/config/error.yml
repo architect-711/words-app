@@ -1,3 +1,0 @@
-e0: An unknown exception happened in the system. # default message
-e1: The exception of service entity lookup. # couldn't find entity
-e2: Attempt to save already existing value. # when trying to save existing value

@@ -1,7 +1,0 @@
-spring:
-  datasource:
-    url: ${BACKEND_DATASOURCE_LOCAL_URL}
-    username: ${POSTGRES_LOCAL_USERNAME}
-    password: ${POSTGRES_LOCAL_PASSWORD}
-  jpa:
-    show-sql: true

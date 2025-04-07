@@ -1,0 +1,17 @@
+spring:
+  main:
+    banner-mode: off
+  jpa:
+    properties.hibernate.format_sql: true
+    show-sql: true
+
+logging:
+  level:
+    org:
+      springframework.security: TRACE
+      hibernate.orm.jdbc.bind: TRACE
+    root: ERROR
+
+server:
+  port: 8080 
+  error.whitelabel.enabled: false

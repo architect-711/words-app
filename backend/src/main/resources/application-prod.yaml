@@ -1,0 +1,9 @@
+logging:
+  level:
+    root: ERROR
+
+spring:
+  datasource:
+    url: ${BACKEND_URL}
+    username: ${POSTGRES_USERNAME}
+    password: ${POSTGRES_PASSWORD}
