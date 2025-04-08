@@ -1,23 +1,23 @@
 services:
     spring_backend:
         image: "${DOCKER_REGISTRY}/${BACKEND_IMAGE_NAME}"
-        env_file:
-            - .env
-        depends_on:
-            - postgres_prod_db
-        build: 
+        env_file: 
+            - .env.base
+            - ${PROFILE_ENV_FILE_PATH_REL} # TODO security breach, but who couldn't care less?
+        build:
             context: ./backend
-            args:
-                - APP_NAME=${BACKEND_BUILD_NAME}
-                - APP_VERSION=${BACKEND_VERSION}
+        environment:
+            - DATABASE_URL=${DATABASE_URL} # specified one more time, because changes when working outside of container. Such way takes precedence
+            - APP_NAME_ENV=${BACKEND_BUILD_NAME}
+            - ACTIVE_PROFILE_ENV=${ACTIVE_PROFILE}
         ports:
             - "8081:8080"
     postgres_prod_db:
         image: postgres:16.4-alpine3.20
         environment:
-            - POSTGRES_USER=${POSTGRES_PROD_USERNAME}
-            - POSTGRES_PASSWORD=${POSTGRES_PROD_PASSWORD}
-            - POSTGRES_DB=words_app_db
+           - POSTGRES_USER=${DATABASE_USERNAME}
+           - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+           - POSTGRES_DB=words_app_db
         ports: 
             - "5433:5432"
         volumes:
@@ -26,8 +26,8 @@ services:
         image: postgres:16.4-alpine3.20
         restart: no
         environment:
-            - POSTGRES_USER=${POSTGRES_LOCAL_USERNAME}
-            - POSTGRES_PASSWORD=${POSTGRES_LOCAL_PASSWORD}
+            - POSTGRES_USER=${DATABASE_USERNAME}
+            - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
             - POSTGRES_DB=words_app_db
         ports:
             - "5434:5432"
