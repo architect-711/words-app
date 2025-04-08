@@ -29,7 +29,8 @@ public class SecurityConfiguration {
             "/api/accounts/registration",
             "/api/accounts/refresh_token",
             "/api/accounts/login",
-            "/api/languages"
+            "/api/languages",
+            "/api/documentation/**"
     };
 
     @Bean
