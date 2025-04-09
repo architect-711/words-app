@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/words")
+@RequestMapping("/api/words")
 @RequiredArgsConstructor
 public class WordController {
     private final DefaultWordService defaultWordService;
