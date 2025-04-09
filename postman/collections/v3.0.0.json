@@ -1,0 +1,883 @@
+{
+	"info": {
+		"_postman_id": "411b5cdd-31a2-4a8a-8ca4-6322e6f88e5d",
+		"name": "v3.0.0",
+		"description": "[Docs](https://app.weeek.net/ws/688666/kb/29)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "29346587-411b5cdd-31a2-4a8a-8ca4-6322e6f88e5d"
+	},
+	"item": [
+		{
+			"name": "api",
+			"item": [
+				{
+					"name": "words",
+					"item": [
+						{
+							"name": "{id}",
+							"item": [
+								{
+									"name": "delete",
+									"id": "72da2c5c-ee00-4132-bde4-a0b4ae7638e2",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{bearerToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "*/*"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/words/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"words",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "<long>",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"id": "9c1565ec-b437-4b14-9f15-44a9296867ee",
+											"name": "OK",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "*/*"
+													},
+													{
+														"description": "Added as a part of security scheme: bearer",
+														"key": "Authorization",
+														"value": "Bearer <token>"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/words/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"words",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "*/*",
+													"uuid": "758bf069-3797-47f8-b7f0-e057c85f584c"
+												}
+											],
+											"cookie": [],
+											"body": "{}"
+										}
+									]
+								}
+							],
+							"id": "f0f88cee-5700-4d7f-bd4d-7e3354c7d703"
+						},
+						{
+							"name": "read",
+							"id": "a1ff6502-19f3-4a01-a826-35c86dd14676",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/words?size=5&page=0",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"words"
+									],
+									"query": [
+										{
+											"key": "size",
+											"value": "5"
+										},
+										{
+											"key": "page",
+											"value": "0"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "1ff6dcf5-c1e6-46ff-9f9d-3bf73c7bab08",
+									"name": "OK",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "*/*"
+											},
+											{
+												"description": "Added as a part of security scheme: bearer",
+												"key": "Authorization",
+												"value": "Bearer <token>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/words?size=5&page=0",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"words"
+											],
+											"query": [
+												{
+													"key": "size",
+													"value": "5"
+												},
+												{
+													"key": "page",
+													"value": "0"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*",
+											"uuid": "ed40b8d9-6745-44eb-bfab-ccb74e558e50"
+										}
+									],
+									"cookie": [],
+									"body": "[\n  {\n    \"description\": \"<string>\",\n    \"id\": \"<long>\",\n    \"language\": \"<string>\",\n    \"localDateTime\": \"<dateTime>\",\n    \"title\": \"<string>\",\n    \"translation\": \"<string>\",\n    \"userId\": \"<long>\"\n  },\n  {\n    \"description\": \"<string>\",\n    \"id\": \"<long>\",\n    \"language\": \"<string>\",\n    \"localDateTime\": \"<dateTime>\",\n    \"title\": \"<string>\",\n    \"translation\": \"<string>\",\n    \"userId\": \"<long>\"\n  }\n]"
+								}
+							]
+						},
+						{
+							"name": "update",
+							"id": "b20a2e28-31b6-4fb2-a567-0ed391566d84",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"description\": \"<string>\",\n  \"id\": \"<long>\",\n  \"language\": \"<string>\",\n  \"localDateTime\": \"<dateTime>\",\n  \"title\": \"<string>\",\n  \"translation\": \"<string>\",\n  \"userId\": \"<long>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/words",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"words"
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "9067f9e9-c2cd-450c-ae09-15d10d0b688e",
+									"name": "OK",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "*/*"
+											},
+											{
+												"description": "Added as a part of security scheme: bearer",
+												"key": "Authorization",
+												"value": "Bearer <token>"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"description\": \"<string>\",\n  \"id\": \"<long>\",\n  \"language\": \"<string>\",\n  \"localDateTime\": \"<dateTime>\",\n  \"title\": \"<string>\",\n  \"translation\": \"<string>\",\n  \"userId\": \"<long>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/words",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"words"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*",
+											"uuid": "17ef296a-ed8d-431f-ab02-576c356c1ad0"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"description\": \"<string>\",\n  \"id\": \"<long>\",\n  \"language\": \"<string>\",\n  \"localDateTime\": \"<dateTime>\",\n  \"title\": \"<string>\",\n  \"translation\": \"<string>\",\n  \"userId\": \"<long>\"\n}"
+								}
+							]
+						},
+						{
+							"name": "create",
+							"id": "4916d724-2c11-4a29-abc6-a06414355f89",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"description\": \"<string>\",\n  \"id\": \"<long>\",\n  \"language\": \"<string>\",\n  \"localDateTime\": \"<dateTime>\",\n  \"title\": \"<string>\",\n  \"translation\": \"<string>\",\n  \"userId\": \"<long>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/words",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"words"
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "99696794-632b-4133-b4cb-7b782669ca48",
+									"name": "OK",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "*/*"
+											},
+											{
+												"description": "Added as a part of security scheme: bearer",
+												"key": "Authorization",
+												"value": "Bearer <token>"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"description\": \"<string>\",\n  \"id\": \"<long>\",\n  \"language\": \"<string>\",\n  \"localDateTime\": \"<dateTime>\",\n  \"title\": \"<string>\",\n  \"translation\": \"<string>\",\n  \"userId\": \"<long>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/words",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"words"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*",
+											"uuid": "bf731490-ded5-4280-8876-c6a8907ead12"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"description\": \"<string>\",\n  \"id\": \"<long>\",\n  \"language\": \"<string>\",\n  \"localDateTime\": \"<dateTime>\",\n  \"title\": \"<string>\",\n  \"translation\": \"<string>\",\n  \"userId\": \"<long>\"\n}"
+								}
+							]
+						}
+					],
+					"id": "78b3a33a-0a38-443e-8992-b17b73749df4"
+				},
+				{
+					"name": "accounts",
+					"item": [
+						{
+							"name": "registration",
+							"item": [
+								{
+									"name": "register",
+									"id": "92e51a88-388b-4959-bdf8-9e510653ebaf",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "*/*"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"password\": \"<string>\",\n  \"role\": \"ADMIN\",\n  \"username\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/accounts/registration",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"accounts",
+												"registration"
+											]
+										}
+									},
+									"response": [
+										{
+											"id": "93c29025-0384-4144-99d3-89ff08e0194b",
+											"name": "OK",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													},
+													{
+														"key": "Accept",
+														"value": "*/*"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"password\": \"<string>\",\n  \"role\": \"ADMIN\",\n  \"username\": \"<string>\"\n}",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/accounts/registration",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"accounts",
+														"registration"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "*/*",
+													"uuid": "fd345444-521a-453d-8cfb-3e5c4390c7ce"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"accessToken\": \"<string>\",\n  \"refreshToken\": \"<string>\"\n}"
+										}
+									]
+								}
+							],
+							"id": "3c581d05-baf6-40c0-9a42-8357b7c709e1"
+						},
+						{
+							"name": "login",
+							"item": [
+								{
+									"name": "login",
+									"id": "95e7f131-2e65-42b2-a021-9fd8fbc7cb5d",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "*/*"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"password\": \"<string>\",\n  \"role\": \"ADMIN\",\n  \"username\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/accounts/login",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"accounts",
+												"login"
+											]
+										}
+									},
+									"response": [
+										{
+											"id": "eafa59ef-2c29-4423-8fdb-9477c783de51",
+											"name": "OK",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													},
+													{
+														"key": "Accept",
+														"value": "*/*"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"password\": \"<string>\",\n  \"role\": \"ADMIN\",\n  \"username\": \"<string>\"\n}",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/accounts/login",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"accounts",
+														"login"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "*/*",
+													"uuid": "b9198c74-0a89-4e94-98f4-88f3caefffa0"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"accessToken\": \"<string>\",\n  \"refreshToken\": \"<string>\"\n}"
+										}
+									]
+								}
+							],
+							"id": "3c138871-db0a-41ef-b9f8-8617d458f389"
+						},
+						{
+							"name": "logout",
+							"item": [
+								{
+									"name": "logout",
+									"id": "6bbf246b-cd67-418b-b7f5-af1c7821be0b",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{bearerToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "*/*"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/accounts/logout",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"accounts",
+												"logout"
+											]
+										}
+									},
+									"response": [
+										{
+											"id": "3d426079-c704-4e90-90b1-16a1e22bdc96",
+											"name": "OK",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "*/*"
+													},
+													{
+														"description": "Added as a part of security scheme: bearer",
+														"key": "Authorization",
+														"value": "Bearer <token>"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/accounts/logout",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"accounts",
+														"logout"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "*/*",
+													"uuid": "6a7422f1-9061-46f7-a8a1-5a22f753d42a"
+												}
+											],
+											"cookie": [],
+											"body": "{}"
+										}
+									]
+								}
+							],
+							"id": "7a5386c1-d384-4f47-a4fa-42a848f42dd0"
+						},
+						{
+							"name": "fresh_token",
+							"item": [
+								{
+									"name": "refresh Token",
+									"id": "b61c35ee-b8ab-400e-a61b-f412e4f996de",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{bearerToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "*/*"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/accounts/fresh_token",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"accounts",
+												"fresh_token"
+											]
+										}
+									},
+									"response": [
+										{
+											"id": "e690a893-3c6a-498a-8904-04bbb36045a2",
+											"name": "OK",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "*/*"
+													},
+													{
+														"description": "Added as a part of security scheme: bearer",
+														"key": "Authorization",
+														"value": "Bearer <token>"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/accounts/fresh_token",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"accounts",
+														"fresh_token"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "*/*",
+													"uuid": "0d4cba3e-52a0-4c66-b1e1-7c3d7bddcf1f"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"accessToken\": \"<string>\",\n  \"refreshToken\": \"<string>\"\n}"
+										}
+									]
+								}
+							],
+							"id": "650b7814-b288-483a-8929-3edead8e208e"
+						}
+					],
+					"id": "1c6ca454-b254-44e7-8530-bf9f10673606"
+				},
+				{
+					"name": "languages",
+					"item": [
+						{
+							"name": "read 1",
+							"id": "081077f4-9fef-42c5-9686-c6cb5988b4cf",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/languages",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"languages"
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "e542bfb4-0a93-44cf-8e4e-8a9dd233ae1d",
+									"name": "OK",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "*/*"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/languages",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"languages"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*",
+											"uuid": "48f704cf-ed43-4d11-8597-38dca96c1329"
+										}
+									],
+									"cookie": [],
+									"body": "[\n  {\n    \"title\": \"<string>\"\n  },\n  {\n    \"title\": \"<string>\"\n  }\n]"
+								}
+							]
+						}
+					],
+					"id": "e1b10d59-3c69-46e9-9120-5ab19505e3d5"
+				}
+			],
+			"id": "81a95605-c67a-4d59-abc7-51c06cd91bd2"
+		}
+	],
+	"variable": [
+		{
+			"id": "8e84a94f-a618-4f2f-899d-1eee14a38871",
+			"key": "baseUrl",
+			"value": "http://localhost:8080"
+		}
+	]
+}
