@@ -3,7 +3,7 @@ services:
         image: "${DOCKER_REGISTRY}/${BACKEND_IMAGE_NAME}"
         env_file: 
             - .env.base
-            - ${PROFILE_ENV_FILE_PATH_REL} # TODO security breach, but who couldn't care less?
+            - ${PROFILE_ENV_FILE_PATH_REL}
         build:
             context: ./backend
         environment:

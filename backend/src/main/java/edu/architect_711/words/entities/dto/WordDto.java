@@ -17,9 +17,6 @@ public class WordDto implements Word  {
     @NotNull(message = "Id can't be null", groups = OnCreated.class)
     private Long id;
 
-    @NotNull(message = "User id can't be null", groups = Default.class)
-    private Long userId;
-
     @NotBlank(message = "Title cannot be blank", groups = Default.class)
     private String title;
 

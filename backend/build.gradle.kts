@@ -28,7 +28,6 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa") // the orm specification, that adds required interfaces and how to use this tools
 	runtimeOnly("org.postgresql:postgresql") // the database itself
 
-
 	// Api documentation
 	// https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webmvc-ui
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0")
@@ -42,15 +41,6 @@ dependencies {
 	// validation
 	implementation("org.springframework.boot:spring-boot-starter-validation:3.4.0")
 
-	// Security
-	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security
-	implementation("org.springframework.boot:spring-boot-starter-security")
-
-	// JWT
-	implementation("io.jsonwebtoken:jjwt-api:0.12.6")
-	runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.12.6")
-	runtimeOnly("io.jsonwebtoken:jjwt-impl:0.12.6")
-
 	// Spring AOP
 	implementation("org.springframework.boot:spring-boot-starter-aop:3.4.0")
 
@@ -63,7 +53,6 @@ dependencies {
 
 	// testing
 	testImplementation("org.springframework.boot:spring-boot-starter-test") // main test library
-	testImplementation("org.springframework.security:spring-security-test")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher") // Junit
 }
 
