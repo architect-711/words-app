@@ -48,7 +48,7 @@ public class DefaultWordService implements WordService {
     @Override
     @Validated({Default.class, WordDto.OnCreated.class})
     public ResponseEntity<WordDto> update(@Valid WordDto wordDto) {
-        final WordEntity wordEntity = wordRepository.safeFindWordByTitle(wordDto.getTitle());
+        final WordEntity wordEntity = wordRepository.safeFindWordById(wordDto.getId());
 
         LanguageEntity languageEntity = languageRepository.safeFindByTitle(wordDto.getLanguage());
         languageEntity.setTitle(wordDto.getTitle());
