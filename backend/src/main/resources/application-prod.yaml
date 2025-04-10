@@ -3,7 +3,8 @@ logging:
     root: ERROR
 
 spring:
-  datasource:
-    url: ${BACKEND_URL}
-    username: ${POSTGRES_USERNAME}
-    password: ${POSTGRES_PASSWORD}
+  main:
+    banner-mode: off
+
+server:
+  error.whitelabel.enabled: false

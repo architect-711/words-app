@@ -25,10 +25,6 @@ public class WordEntity implements Word {
     @Column(nullable = false, name = "description")
     private String description;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "account_id", nullable = false)
-    private AccountEntity accountEntity;
-
     @ManyToOne
     @JoinColumn(name = "language_id", nullable = false)
     private LanguageEntity languageEntity;
@@ -37,22 +33,15 @@ public class WordEntity implements Word {
     private LocalDateTime localDateTime;
 
     public WordEntity(
-            AccountEntity accountEntity,
             String title,
             String translation,
             String description,
             LanguageEntity languageEntity) {
-        this.accountEntity = accountEntity;
         this.title = title;
         this.translation = translation;
         this.description = description;
         this.languageEntity = languageEntity;
         this.localDateTime = LocalDateTime.now();
-    }
-
-    @Override
-    public Long getUserId() {
-        return accountEntity.getId();
     }
 
     @Override

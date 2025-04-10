@@ -8,7 +8,6 @@ spring:
 logging:
   level:
     org:
-      springframework.security: TRACE
       hibernate.orm.jdbc.bind: TRACE
     root: ERROR
 

@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 
 public interface Word {
     Long getId();
-    Long getUserId();
     String getTitle();
     String getTranslation();
     String getDescription();

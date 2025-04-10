@@ -1,0 +1,448 @@
+{
+	"info": {
+		"_postman_id": "7e9b92ae-268e-4d96-b155-a3557a416c9b",
+		"name": "v3.0.0",
+		"description": "error response:\n\n``` json\n{\n    \"localDateTime\": \"2025-04-10T22:20:48.981674652\",\n    \"message\": \"The exception of service entity lookup.\",\n    \"description\": \"java.lang.IllegalArgumentException: Page index must not be less than zero\"\n}\n\n ```",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "29346587-7e9b92ae-268e-4d96-b155-a3557a416c9b"
+	},
+	"item": [
+		{
+			"name": "api",
+			"item": [
+				{
+					"name": "words",
+					"item": [
+						{
+							"name": "{id}",
+							"item": [
+								{
+									"name": "delete",
+									"id": "6ab91ed6-1464-4e4b-928c-864441efe460",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "*/*"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/words/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"words",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "<long>",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"id": "0986a337-44ff-40a7-987c-bd26d9ada395",
+											"name": "OK",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "*/*"
+													}
+												],
+												"url": {
+													"raw": "•••••••/api/words/:id",
+													"host": [
+														"•••••••"
+													],
+													"path": [
+														"api",
+														"words",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "*/*",
+													"uuid": "0ba958c7-baa5-4c5f-bb43-ca17467a39fa"
+												}
+											],
+											"cookie": [],
+											"body": "{}"
+										}
+									]
+								}
+							],
+							"id": "9dde846a-b014-436b-b784-38732e826361"
+						},
+						{
+							"name": "read",
+							"id": "f566d871-bab7-44ce-9231-f0215e9f1620",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/words?size=5&page=0",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"words"
+									],
+									"query": [
+										{
+											"key": "size",
+											"value": "5"
+										},
+										{
+											"key": "page",
+											"value": "0"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "a9ec1182-9099-4f9f-8486-c49496736c0e",
+									"name": "OK",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "*/*"
+											}
+										],
+										"url": {
+											"raw": "•••••••/api/words?size=5&page=0",
+											"host": [
+												"•••••••"
+											],
+											"path": [
+												"api",
+												"words"
+											],
+											"query": [
+												{
+													"key": "size",
+													"value": "5"
+												},
+												{
+													"key": "page",
+													"value": "0"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*",
+											"uuid": "e3ead4df-a780-420b-b92b-0ce93ac7b710"
+										}
+									],
+									"cookie": [],
+									"body": "[\n  {\n    \"description\": \"<string>\",\n    \"id\": \"<long>\",\n    \"language\": \"<string>\",\n    \"localDateTime\": \"<dateTime>\",\n    \"title\": \"<string>\",\n    \"translation\": \"<string>\"\n  },\n  {\n    \"description\": \"<string>\",\n    \"id\": \"<long>\",\n    \"language\": \"<string>\",\n    \"localDateTime\": \"<dateTime>\",\n    \"title\": \"<string>\",\n    \"translation\": \"<string>\"\n  }\n]"
+								}
+							]
+						},
+						{
+							"name": "update",
+							"id": "2d4808cc-7298-4d99-9a84-3d76cad577b8",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"description\": \"<string>\",\n  \"id\": \"<long>\",\n  \"language\": \"<string>\",\n  \"localDateTime\": \"<dateTime>\",\n  \"title\": \"<string>\",\n  \"translation\": \"<string>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/words",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"words"
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "11c50939-a690-4133-9c58-ef75054827d0",
+									"name": "OK",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "*/*"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"description\": \"<string>\",\n  \"id\": \"<long>\",\n  \"language\": \"<string>\",\n  \"localDateTime\": \"<dateTime>\",\n  \"title\": \"<string>\",\n  \"translation\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "•••••••/api/words",
+											"host": [
+												"•••••••"
+											],
+											"path": [
+												"api",
+												"words"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*",
+											"uuid": "10f79a25-7b8e-4ec3-99cb-4231ebae2395"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"description\": \"<string>\",\n  \"id\": \"<long>\",\n  \"language\": \"<string>\",\n  \"localDateTime\": \"<dateTime>\",\n  \"title\": \"<string>\",\n  \"translation\": \"<string>\"\n}"
+								}
+							]
+						},
+						{
+							"name": "create",
+							"id": "afd118b9-4546-4d57-866f-d8a4418804b3",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"description\": \"<string>\",\n  \"language\": \"<string>\",\n  \"title\": \"<string>\",\n  \"translation\": \"<string>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/words",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"words"
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "b61867ee-e6b4-4ce2-a63b-ef39e3fc7d33",
+									"name": "OK",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "*/*"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"description\": \"<string>\",\n  \"id\": \"<long>\",\n  \"language\": \"<string>\",\n  \"localDateTime\": \"<dateTime>\",\n  \"title\": \"<string>\",\n  \"translation\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "•••••••/api/words",
+											"host": [
+												"•••••••"
+											],
+											"path": [
+												"api",
+												"words"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*",
+											"uuid": "fcf7122a-db4d-4897-aeef-0e9fa1378066"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"description\": \"<string>\",\n  \"id\": \"<long>\",\n  \"language\": \"<string>\",\n  \"localDateTime\": \"<dateTime>\",\n  \"title\": \"<string>\",\n  \"translation\": \"<string>\"\n}"
+								}
+							]
+						}
+					],
+					"id": "6aa10678-b31a-4b93-8b77-2932f743a34e"
+				},
+				{
+					"name": "languages",
+					"item": [
+						{
+							"name": "read 1",
+							"id": "4db6d83f-1ab7-461d-a7e8-3646aa6c9706",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/languages",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"languages"
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "edf8e72f-ec53-4025-a691-499e3c9826bb",
+									"name": "OK",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "*/*"
+											}
+										],
+										"url": {
+											"raw": "•••••••/api/languages",
+											"host": [
+												"•••••••"
+											],
+											"path": [
+												"api",
+												"languages"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*",
+											"uuid": "235e5404-0d15-4771-a36c-1f3195793e95"
+										}
+									],
+									"cookie": [],
+									"body": "[\n  {\n    \"title\": \"<string>\"\n  },\n  {\n    \"title\": \"<string>\"\n  }\n]"
+								}
+							]
+						}
+					],
+					"id": "f635ac9c-79f8-4709-99b9-8654422227bb"
+				}
+			],
+			"id": "befe7a60-c55d-4752-860c-b1dbc18fc5a7",
+			"description": "root"
+		}
+	],
+	"variable": [
+		{
+			"id": "3676d80f-752d-4912-9bd3-b255ed14f4ff",
+			"key": "baseUrl",
+			"value": "http://localhost:8080"
+		}
+	]
+}

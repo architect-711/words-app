@@ -1,6 +1,5 @@
 package edu.architect_711.words.entities.mapper;
 
-import edu.architect_711.words.entities.db.AccountEntity;
 import edu.architect_711.words.entities.db.LanguageEntity;
 import edu.architect_711.words.entities.db.WordEntity;
 import edu.architect_711.words.entities.dto.WordDto;
@@ -12,9 +11,8 @@ public class WordMapper implements EntityMapper<WordEntity, WordDto> {
         return null;
     }
 
-    public WordEntity toEntity(WordDto wordDto, AccountEntity accountEntity, LanguageEntity languageEntity) {
+    public WordEntity toEntity(WordDto wordDto, LanguageEntity languageEntity) {
         return new WordEntity(
-                accountEntity,
                 wordDto.getTitle(),
                 wordDto.getTranslation(),
                 wordDto.getDescription(),
@@ -26,7 +24,6 @@ public class WordMapper implements EntityMapper<WordEntity, WordDto> {
     public WordDto toDto(WordEntity entity) {
         return new WordDto(
                 entity.getId(),
-                entity.getAccountEntity().getId(),
                 entity.getTitle(),
                 entity.getTranslation(),
                 entity.getDescription(),

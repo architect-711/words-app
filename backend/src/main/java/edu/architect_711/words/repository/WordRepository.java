@@ -15,6 +15,10 @@ public interface WordRepository extends JpaRepository<WordEntity, Long> {
         return findById(id).orElseThrow(() -> new EntityNotFoundException("WordEntity not found with id: " + id));
     }
 
+    default WordEntity safeFindWordByTitle(final String title) {
+        return findByTitle(title).orElseThrow(() -> new EntityNotFoundException("Word not found with title: " + title));
+    }
+
     @Query(nativeQuery = true, value = """
             SELECT * FROM word
             WHERE account_id = :id
