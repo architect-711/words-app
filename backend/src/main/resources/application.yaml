@@ -1,0 +1,12 @@
+spring:
+  jackson.deserialization.fail-on-unknown-properties: true
+  config:
+    import: classpath:config/error.yaml
+  profiles:
+    default: "dev,postgres"
+
+springdoc:
+  api-docs:
+    path: /api/documentation/docs
+  swagger-ui:
+    path: /api/documentation/swagger-ui.html

@@ -1,0 +1,16 @@
+METHOD /url <---> request <---> response --- description
+
+--- people
+POST /people/registration  <---> PersonDto      <---> JwtTokenDto  --- register new account # PUBLIC
+POST /people/login         <---> PersonDto      <---> JwtTokenDto  --- access and refresh are expired # PUBLIC
+GET  /people/fresh_token   <---> Header token   <---> JwtTokenDto  --- access is expired
+GET  /people/logout        <---> Header token   <---> void         --- delete all tokens 
+
+--- words
+GET    /words?size=XXX&page=YYY <---> Params    <---> WordDto array --- to see all words
+POST   /words                   <---> WordDto   <---> WordEntity    --- create wordEntity
+PUT    /words                   <---> WordDto   <---> WordEntity    --- update wordEntity
+DELETE /words/{id}              <---> Path var  <---> void          --- delete by id
+
+--- languages
+GET /languages <---> Params <---> languages list --- to see ALL (not much) langauges

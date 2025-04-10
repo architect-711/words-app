@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "edu.architect-711"
-version = project.findProperty("BACKEND_VERSION") ?: "0.0.0"
+version = System.getenv("BACKEND_VERSION")
 
 java {
 	toolchain {
@@ -32,20 +32,14 @@ dependencies {
 	// https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webmvc-ui
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0")
 
+	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-devtools
+	implementation("org.springframework.boot:spring-boot-devtools:3.4.1") // enhance development <speed
+
 	// https://mvnrepository.com/artifact/org.flywaydb/flyway-database-postgresql
 	runtimeOnly("org.flywaydb:flyway-database-postgresql:11.1.0") // db migration tool
 
 	// validation
 	implementation("org.springframework.boot:spring-boot-starter-validation:3.4.0")
-
-	// Security
-	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security
-	implementation("org.springframework.boot:spring-boot-starter-security")
-
-	// JWT
-	implementation("io.jsonwebtoken:jjwt-api:0.12.6")
-	runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.12.6")
-	runtimeOnly("io.jsonwebtoken:jjwt-impl:0.12.6")
 
 	// Spring AOP
 	implementation("org.springframework.boot:spring-boot-starter-aop:3.4.0")
@@ -59,7 +53,6 @@ dependencies {
 
 	// testing
 	testImplementation("org.springframework.boot:spring-boot-starter-test") // main test library
-	testImplementation("org.springframework.security:spring-security-test")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher") // Junit
 }
 

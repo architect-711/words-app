@@ -1,0 +1,15 @@
+spring:
+  main:
+    banner-mode: off
+  jpa:
+    properties.hibernate.format_sql: true
+    show-sql: true
+
+logging:
+  level:
+    org:
+      hibernate.orm.jdbc.bind: TRACE
+    root: ERROR
+
+server:
+  error.whitelabel.enabled: false

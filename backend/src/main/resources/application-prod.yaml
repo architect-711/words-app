@@ -1,0 +1,10 @@
+logging:
+  level:
+    root: ERROR
+
+spring:
+  main:
+    banner-mode: off
+
+server:
+  error.whitelabel.enabled: false

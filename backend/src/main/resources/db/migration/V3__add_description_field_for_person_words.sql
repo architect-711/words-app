@@ -1,1 +1,0 @@
-alter table person_words add column word_description text not null;

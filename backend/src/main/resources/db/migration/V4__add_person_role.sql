@@ -1,1 +1,0 @@
-alter table person add column role varchar not null default 'USER';
