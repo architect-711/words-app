@@ -1,0 +1,10 @@
+.word_item {
+    border : 1px solid black;
+    padding : 10px;
+}
+.word_item_link p {
+    margin-left : 10px;
+}
+.word_item_link p:first-child {
+    margin : 0;
+}

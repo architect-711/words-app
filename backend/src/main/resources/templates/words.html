@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/global.css">
+    <link rel="stylesheet" href="/word_item.css">
+    <title>WordsApp | Words</title>
+</head>
+<body>
+
+    <header th:insert="fragments/general.html :: header"></header>
+
+    <div class="content">
+
+        <h1 class="mt-30">Your superfluous words</h1>
+        <ul style="margin-top: 10px">
+            <div th:if="${words.empty}">Nobody even propose where you words are.</div>
+            <div th:unless="${words.empty}" th:each="word : ${words}">
+                <div th:insert="fragments/word_item :: word_item(${word})"></div>
+            </div>
+        </ul>
+
+    </div>
+
+</body>
+</html>

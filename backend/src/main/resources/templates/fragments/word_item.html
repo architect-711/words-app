@@ -1,0 +1,12 @@
+<div th:fragment="word_item (word)" class="word_item db" xmlns:th="http://www.w3.org/1999/xhtml" oncli>
+
+  <a th:href="@{/words/{id}(id=${word.id})}" class="word_item_link db">
+    <p th:text="${word.title}"></p>
+    <p th:text="${word.translation}"></p>
+    <p th:text="${word.language}"></p>
+  </a>
+
+  <a th:href="@{/delete/{id}(id=${word.id})}">
+    <button >Delete</button>
+  </a>
+</div>
