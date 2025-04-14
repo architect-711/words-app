@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/global.css">
+    <title>WordsApp | New Word</title>
+</head>
+<body>
+
+    <header th:insert="fragments/general.html :: header"></header>
+
+    <div class="content mt-30">
+        <h1>Create new word</h1>
+
+        <form action="#" th:action="@{/save_new}" method="post" th:object="${word}">
+            <p>Title: <input
+                    type="text"
+                    placeholder="title..."
+                    name="title"
+                    th:field="*{title}"
+                    th:value="${word.title}"
+                    id="title"
+            ></p>
+            <p>Translation: <input type="text" placeholder="translation..." name="translation" th:field="*{translation}"></p>
+            <p>Description: <input type="text" placeholder="description" name="description" th:field="*{description}"></p>
+            <p>Language: <select th:field="*{language}">
+                <option th:each="lang : ${langs}" th:value="${lang.title}" th:text="${lang.title}"></option>
+            </select></p>
+
+            <button type="submit">Save!</button>
+        </form>
+    </div>
+</body>
+</html>
