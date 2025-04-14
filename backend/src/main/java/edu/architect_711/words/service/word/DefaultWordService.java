@@ -50,11 +50,13 @@ public class DefaultWordService implements WordService {
     public ResponseEntity<WordDto> update(@Valid WordDto wordDto) {
         final WordEntity wordEntity = wordRepository.safeFindWordById(wordDto.getId());
 
-        LanguageEntity languageEntity = languageRepository.safeFindByTitle(wordDto.getLanguage());
-        languageEntity.setTitle(wordDto.getTitle());
+        if (!wordDto.getLanguage().equals(wordEntity.getLanguage())) {
+            final LanguageEntity languageEntity = languageRepository.safeFindByTitle(wordDto.getLanguage());
+
+            wordEntity.setLanguageEntity(languageEntity);
+        }
 
         wordEntity.setTitle(wordDto.getTitle());
-        wordEntity.setLanguageEntity(languageEntity);
         wordEntity.setTranslation(wordDto.getTranslation());
         wordEntity.setDescription(wordDto.getDescription());
 
@@ -66,6 +68,11 @@ public class DefaultWordService implements WordService {
         wordRepository.deleteById(id);
 
         return ResponseEntity.ok().build();
+    }
+
+    @Override
+    public ResponseEntity<List<WordDto>> findByTitle(String title) {
+        return ResponseEntity.ok(wordRepository.findByTitleApproximates(title).stream().map(wordMapper::toDto).toList());
     }
 
     private ResponseEntity<WordDto> buildOkResponse(WordEntity wordEntity) {
