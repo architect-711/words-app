@@ -17,10 +17,10 @@ public class WordsFiller implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        if (Objects.requireNonNull(service.read(20, 0).getBody()).size() == 20)
+        if (Objects.requireNonNull(service.read(20, 0).getBody()).size() >= 5)
             return;
 
-        for (byte i = 0; i < 20; i++)
+        for (byte i = 0; i < 5; i++)
             service.create(new WordDto(
                     null,
                     "title" + LocalDateTime.now(),
