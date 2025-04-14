@@ -10,7 +10,14 @@
 
     <header th:insert="fragments/general.html :: header"></header>
 
-    <div class="content">
+    <div class="content mt-30">
+
+        <a th:href="@{/new}">Create</a>
+
+        <form action="#" class="db" th:action="@{/word}" method="post">
+            <input type="text" placeholder="find by title" name="title">
+            <button type="submit">Find!</button>
+        </form>
 
         <h1 class="mt-30">Your superfluous words</h1>
         <ul style="margin-top: 10px">
@@ -19,6 +26,9 @@
                 <div th:insert="fragments/word_item :: word_item(${word})"></div>
             </div>
         </ul>
+
+        <a th:href="@{'/words?size=' + ${size} + '&page=' + ${page - 1}}">Prev</a>
+        <a th:href="@{'/words?size=' + ${size} + '&page=' + ${page + 1}}">Next</a>
 
     </div>
 
