@@ -11,4 +11,5 @@ public interface WordService {
     ResponseEntity<WordDto> create(@Valid WordDto wordDto);
     ResponseEntity<WordDto> update(@Valid WordDto wordDto);
     ResponseEntity<?> delete(Long id);
+    ResponseEntity<List<WordDto>> findByTitle(final String title);
 }
