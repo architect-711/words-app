@@ -11,6 +11,15 @@ import java.util.Optional;
 public interface WordRepository extends JpaRepository<WordEntity, Long> {
     Optional<WordEntity> findByTitle(final String title);
 
+    @Query(
+            nativeQuery = true,
+            value = """
+                    SELECT * FROM word
+                    WHERE title LIKE %:title%
+                    """
+    )
+    List<WordEntity> findByTitleApproximates(final String title);
+
     default WordEntity safeFindWordById(Long id) {
         return findById(id).orElseThrow(() -> new EntityNotFoundException("WordEntity not found with id: " + id));
     }
