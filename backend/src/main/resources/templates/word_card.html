@@ -10,11 +10,19 @@
     <header th:insert="fragments/general.html :: header"></header>
 
     <div class="content mt-30">
-        <h1 th:if="${word == null}">You are idiot : there is no such word</h1>
-        <div th:unless="${word == null}">
-            <form action="#" th:action="@{/update}" method="post" th:object="${word}">
 
-                <input type="hidden" th:value="${word.id}" th:field="*{id}" readonly="readonly"/>
+        <h1 th:if="${word == null}">You are idiot : there is no such word</h1>
+
+        <div th:unless="${word == null}">
+
+            <form action="#" th:action="@{/words/update}" method="post" th:object="${word}">
+
+                <input
+                        type="hidden"
+                        th:value="${word.id}"
+                        th:field="*{id}"
+                        readonly="readonly"
+                />
                 <input
                         type="text"
                         id="title"
@@ -22,6 +30,13 @@
                         th:value="${word.title}"
                         th:field="*{title}"
                 />
+                <p>Language: <select th:field="*{language}">
+                    <option
+                            th:each="lang : ${langs}"
+                            th:value="${lang.title}"
+                            th:text="${lang.title}"
+                    ></option>
+                </select></p>
                 <p>Translation: <input
                         type="text"
                         placeholder="translation"
@@ -30,17 +45,22 @@
                         th:value="${word.translation}"
                         th:field="*{translation}"/>
                 </p>
-                <p>Created: <input th:value="${word.localDateTime}" th:field="*{localDateTime}" readonly="readonly"/></p>
-                <hr>
-                <p>Description: <input
-                    type="text"
-                    placeholder="Description"
-                    id="description"
-                    class="regular_input"
-                    th:value="${word.description}"
-                    th:field="*{description}"/>
+                <p>Created: <input
+                        th:value="${word.localDateTime}"
+                        th:field="*{localDateTime}"
+                        readonly="readonly"/>
                 </p>
-                <p>Language: <input th:value="${word.language}" th:field="*{language}"/></p>
+
+                <hr>
+
+                <p>Description: <input
+                        type="text"
+                        placeholder="Description"
+                        id="description"
+                        class="regular_input"
+                        th:value="${word.description}"
+                        th:field="*{description}"/>
+                </p>
 
                 <p style="padding: 10px 0 10px 0"><b>Click on value to modify it</b></p>
 
@@ -48,7 +68,9 @@
                 <button type="reset">Reset</button>
 
             </form>
+
         </div>
+
     </div>
 
 </body>

@@ -10,25 +10,59 @@
     <header th:insert="fragments/general.html :: header"></header>
 
     <div class="content mt-30">
+
         <h1>Create new word</h1>
 
-        <form action="#" th:action="@{/save_new}" method="post" th:object="${word}">
-            <p>Title: <input
-                    type="text"
-                    placeholder="title..."
-                    name="title"
-                    th:field="*{title}"
-                    th:value="${word.title}"
-                    id="title"
-            ></p>
-            <p>Translation: <input type="text" placeholder="translation..." name="translation" th:field="*{translation}"></p>
-            <p>Description: <input type="text" placeholder="description" name="description" th:field="*{description}"></p>
-            <p>Language: <select th:field="*{language}">
-                <option th:each="lang : ${langs}" th:value="${lang.title}" th:text="${lang.title}"></option>
-            </select></p>
+        <form action="#" th:action="@{/words/new}" method="post" th:object="${word}">
+
+            <table>
+                <tr>
+                    <th>Title</th>
+                    <th>Translation</th>
+                    <th>Language</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td>
+                        <input
+                                type="text"
+                                placeholder="title..."
+                                name="title"
+                                th:field="*{title}"
+                                id="title">
+                    </td>
+                    <td>
+                        <input
+                                type="text"
+                                placeholder="translation..."
+                                name="translation"
+                                id="translation"
+                                th:field="*{translation}">
+                    </td>
+                    <td>
+                        <input
+                                type="text"
+                                placeholder="description"
+                                name="description"
+                                id="description"
+                                th:field="*{description}">
+                    </td>
+                    <td>
+                        <select th:field="*{language}">
+                            <option
+                                    th:each="lang : ${langs}"
+                                    th:value="${lang.title}"
+                                    th:text="${lang.title}"
+                            ></option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
 
             <button type="submit">Save!</button>
         </form>
+
     </div>
+
 </body>
 </html>
