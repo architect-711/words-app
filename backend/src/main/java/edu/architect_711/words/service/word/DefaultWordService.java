@@ -32,7 +32,7 @@ public class DefaultWordService implements WordService {
     public ResponseEntity<List<WordDto>> read(Integer size, Integer page) {
         final List<WordEntity> foundWordEntities = wordRepository.findAll(PageRequest.of(page, size)).getContent();
 
-        return ResponseEntity.ok(foundWordEntities.stream().map(wordMapper::toDto).toList());
+        return ResponseEntity.ok(entityListToDto(foundWordEntities));
     }
 
     @Override
@@ -50,11 +50,13 @@ public class DefaultWordService implements WordService {
     public ResponseEntity<WordDto> update(@Valid WordDto wordDto) {
         final WordEntity wordEntity = wordRepository.safeFindWordById(wordDto.getId());
 
-        LanguageEntity languageEntity = languageRepository.safeFindByTitle(wordDto.getLanguage());
-        languageEntity.setTitle(wordDto.getTitle());
+        if (!wordDto.getLanguage().equals(wordEntity.getLanguage())) {
+            final LanguageEntity languageEntity = languageRepository.safeFindByTitle(wordDto.getLanguage());
+
+            wordEntity.setLanguageEntity(languageEntity);
+        }
 
         wordEntity.setTitle(wordDto.getTitle());
-        wordEntity.setLanguageEntity(languageEntity);
         wordEntity.setTranslation(wordDto.getTranslation());
         wordEntity.setDescription(wordDto.getDescription());
 
@@ -68,8 +70,22 @@ public class DefaultWordService implements WordService {
         return ResponseEntity.ok().build();
     }
 
+    @Override
+    public ResponseEntity<List<WordDto>> findByTitle(String title) {
+        return ResponseEntity.ok(entityListToDto(wordRepository.findByTitleApproximates(title)));
+    }
+
+    @Override
+    public ResponseEntity<List<WordDto>> findByLang(final String lang) {
+        return ResponseEntity.ok(entityListToDto(wordRepository.findByLang(lang)));
+    }
+
     private ResponseEntity<WordDto> buildOkResponse(WordEntity wordEntity) {
         return ResponseEntity.ok(wordMapper.toDto(wordEntity));
+    }
+
+    private static List<WordDto> entityListToDto(final List<WordEntity> entities) {
+        return entities.stream().map(wordMapper::toDto).toList();
     }
 
 }

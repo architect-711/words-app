@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/global.css">
+    <link rel="stylesheet" href="/word_item.css">
+    <title>WordsApp | Find words</title>
+</head>
+<body>
+
+    <header th:insert="fragments/general.html :: header"></header>
+
+    <div class="content mt-30">
+
+        <form action="#" class="db" th:action="@{/words/find}" method="post">
+            <input type="text" placeholder="find by title" name="title">
+            <select name="lang">
+                <option
+                        th:each="lang : ${langs}"
+                        th:value="${lang.title}"
+                        th:text="${lang.title}"
+                ></option>
+            </select>
+            <button type="submit">Find!</button>
+        </form>
+
+        <h1 class="mt-30">Your words</h1>
+
+        <div style="margin-top: 10px">
+            <h2 th:if="${words.empty}">No words found.</h2>
+            <div th:unless="${words.empty}" th:each="word : ${words}">
+                <div th:insert="fragments/word_item :: word_item(${word})"></div>
+            </div>
+        </div>
+
+        <a th:href="@{'/words/find?size=' + ${size} + '&page=' + ${page - 1}}">Prev</a>
+        <a th:href="@{'/words/find?size=' + ${size} + '&page=' + ${page + 1}}">Next</a>
+
+    </div>
+
+</body>
+</html>

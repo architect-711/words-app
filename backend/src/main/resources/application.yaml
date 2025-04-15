@@ -4,6 +4,8 @@ spring:
     import: classpath:config/error.yaml
   profiles:
     default: "dev,postgres"
+  thymeleaf:
+    cache: false
 
 springdoc:
   api-docs:

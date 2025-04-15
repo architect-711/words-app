@@ -1,0 +1,24 @@
+* {
+    margin : 0;
+    padding : 0;
+}
+
+.content {
+    width : 70%;
+    margin-left : 15%;
+}
+
+.db {
+    display : flex;
+    justify-content : space-between;
+    align-items : center;
+}
+
+.header {
+    background-color : rgb(209, 209, 209);
+    padding : 10px;
+}
+
+.mt-30 {
+    margin-top: 30px
+}
