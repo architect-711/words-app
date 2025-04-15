@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @Controller @RequiredArgsConstructor @RequestMapping("/words")
 @Validated
@@ -58,7 +59,9 @@ public class WordsFrontendController {
         String title = map.get("title");
         String lang = map.get("lang");
 
-        if (!title.isBlank())
+        if (!title.isBlank() && !lang.isBlank())
+            foundWords = Objects.requireNonNull(wordService.findByLang(lang).getBody()).stream().filter(w -> w.getTitle().contains(title)).toList();
+        else if (!title.isBlank())
             foundWords = wordService.findByTitle(title).getBody();
         else if (!lang.isBlank())
             foundWords = wordService.findByLang(lang).getBody();
