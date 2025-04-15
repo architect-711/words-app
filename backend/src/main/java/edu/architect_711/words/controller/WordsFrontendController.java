@@ -14,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @Controller @RequiredArgsConstructor @RequestMapping("/words")
@@ -40,6 +41,7 @@ public class WordsFrontendController {
             Model model
     ) {
         model.addAttribute("words", wordService.read(size, page).getBody());
+        model.addAttribute("langs", languageService.findAll().getBody());
         model.addAttribute("size", size);
         model.addAttribute("page", page);
 
@@ -51,7 +53,20 @@ public class WordsFrontendController {
             @RequestParam Map<String, String> map,
             Model model
     ) {
-        model.addAttribute("words", wordService.findByTitle(map.getOrDefault("title", "")).getBody());
+        List<WordDto> foundWords;
+
+        String title = map.get("title");
+        String lang = map.get("lang");
+
+        if (!title.isBlank())
+            foundWords = wordService.findByTitle(title).getBody();
+        else if (!lang.isBlank())
+            foundWords = wordService.findByLang(lang).getBody();
+        else
+            foundWords = List.of();
+
+        model.addAttribute("words", foundWords);
+        model.addAttribute("langs", languageService.findAll().getBody());
         model.addAttribute("size", 5);
         model.addAttribute("page", 0);
 

@@ -34,4 +34,20 @@ public interface WordRepository extends JpaRepository<WordEntity, Long> {
             LIMIT :limit OFFSET :offset
             """)
     List<WordEntity> findAllPaginatedById(Long id, Long limit, Long offset);
+
+    @Query(
+            nativeQuery = true, value = """
+            SELECT word.id,
+                   word.title,
+                   word.translation,
+                   word.description,
+                   word.language_id,
+                   word.local_date_time
+            FROM word
+            INNER JOIN language
+            ON word.language_id = language.id
+            WHERE language.title = :lang;
+            """
+    )
+    List<WordEntity> findByLang(String lang);
 }
