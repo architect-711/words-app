@@ -1,0 +1,446 @@
+{
+	"info": {
+		"_postman_id": "10396119-6427-471e-a684-a81b7baf2d22",
+		"name": "v3.1.0",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "29346587-10396119-6427-471e-a684-a81b7baf2d22"
+	},
+	"item": [
+		{
+			"name": "api",
+			"item": [
+				{
+					"name": "words",
+					"item": [
+						{
+							"name": "{id}",
+							"item": [
+								{
+									"name": "delete",
+									"id": "494f514f-75dd-4a50-a991-f8b588d4fac1",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "*/*"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/words/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"words",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "<long>",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"id": "af1e0964-bdd1-4ddb-afb4-f867e089e8e4",
+											"name": "OK",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "*/*"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/words/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"words",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "*/*",
+													"uuid": "feb7bb41-5386-40a1-9adf-120ec87b5c70"
+												}
+											],
+											"cookie": [],
+											"body": "{}"
+										}
+									]
+								}
+							],
+							"id": "f2af4572-d78a-46cb-82db-b9a6f88fd617"
+						},
+						{
+							"name": "read",
+							"id": "6caf6781-ff8b-4430-b027-88089476260a",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/words?size=5&page=0",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"words"
+									],
+									"query": [
+										{
+											"key": "size",
+											"value": "5"
+										},
+										{
+											"key": "page",
+											"value": "0"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "fab08efc-409d-4778-b8ee-78a6addf8d20",
+									"name": "OK",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "*/*"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/words?size=5&page=0",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"words"
+											],
+											"query": [
+												{
+													"key": "size",
+													"value": "5"
+												},
+												{
+													"key": "page",
+													"value": "0"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*",
+											"uuid": "f3c84032-52e5-46af-9f28-9fca1606a85b"
+										}
+									],
+									"cookie": [],
+									"body": "[\n  {\n    \"description\": \"<string>\",\n    \"id\": \"<long>\",\n    \"language\": \"<string>\",\n    \"localDateTime\": \"<dateTime>\",\n    \"title\": \"<string>\",\n    \"translation\": \"<string>\"\n  },\n  {\n    \"description\": \"<string>\",\n    \"id\": \"<long>\",\n    \"language\": \"<string>\",\n    \"localDateTime\": \"<dateTime>\",\n    \"title\": \"<string>\",\n    \"translation\": \"<string>\"\n  }\n]"
+								}
+							]
+						},
+						{
+							"name": "update",
+							"id": "0c322931-c64f-491a-a266-36527385501f",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"description\": \"<string>\",\n  \"id\": \"<long>\",\n  \"language\": \"<string>\",\n  \"localDateTime\": \"<dateTime>\",\n  \"title\": \"<string>\",\n  \"translation\": \"<string>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/words",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"words"
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "0f441511-ae0a-4df7-94cd-c7e3dedf3693",
+									"name": "OK",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "*/*"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"description\": \"<string>\",\n  \"id\": \"<long>\",\n  \"language\": \"<string>\",\n  \"localDateTime\": \"<dateTime>\",\n  \"title\": \"<string>\",\n  \"translation\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/words",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"words"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*",
+											"uuid": "14fea45e-0de0-4a86-a5e6-31d7f38fd4a4"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"description\": \"<string>\",\n  \"id\": \"<long>\",\n  \"language\": \"<string>\",\n  \"localDateTime\": \"<dateTime>\",\n  \"title\": \"<string>\",\n  \"translation\": \"<string>\"\n}"
+								}
+							]
+						},
+						{
+							"name": "create",
+							"id": "48c920a4-11fd-450e-a658-e1a43b96d31b",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"description\": \"<string>\",\n  \"id\": \"<long>\",\n  \"language\": \"<string>\",\n  \"localDateTime\": \"<dateTime>\",\n  \"title\": \"<string>\",\n  \"translation\": \"<string>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/words",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"words"
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "dca32b6c-7534-495a-b11b-ff73c7f3a99e",
+									"name": "OK",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "*/*"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"description\": \"<string>\",\n  \"id\": \"<long>\",\n  \"language\": \"<string>\",\n  \"localDateTime\": \"<dateTime>\",\n  \"title\": \"<string>\",\n  \"translation\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/words",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"words"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*",
+											"uuid": "2f90c11a-35bd-4a04-aac8-0d3ba6a8929d"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"description\": \"<string>\",\n  \"id\": \"<long>\",\n  \"language\": \"<string>\",\n  \"localDateTime\": \"<dateTime>\",\n  \"title\": \"<string>\",\n  \"translation\": \"<string>\"\n}"
+								}
+							]
+						}
+					],
+					"id": "9191e202-85e2-4f95-8eaa-5ee9c0b6b58c"
+				},
+				{
+					"name": "languages",
+					"item": [
+						{
+							"name": "read 1",
+							"id": "c13fb741-4a1c-4765-88a3-593466e9a495",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/languages",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"languages"
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "db2b6022-bcf1-44b8-b8ba-56d2d3c01c56",
+									"name": "OK",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "*/*"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/languages",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"languages"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*",
+											"uuid": "2b361a20-ea6a-441f-a4d8-3fe755837f55"
+										}
+									],
+									"cookie": [],
+									"body": "[\n  {\n    \"title\": \"<string>\"\n  },\n  {\n    \"title\": \"<string>\"\n  }\n]"
+								}
+							]
+						}
+					],
+					"id": "ae7c5c15-17fd-42e5-98b4-ef98a24eaaa6"
+				}
+			],
+			"id": "a83352b2-9608-4a77-ac03-ea54b8af439c"
+		}
+	],
+	"variable": [
+		{
+			"id": "f5d7df3a-1d88-4cee-884d-443cf712e40b",
+			"key": "baseUrl",
+			"value": "http://localhost:8080"
+		}
+	]
+}
