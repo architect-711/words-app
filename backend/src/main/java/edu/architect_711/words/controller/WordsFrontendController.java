@@ -3,18 +3,16 @@ package edu.architect_711.words.controller;
 import edu.architect_711.words.controller.service.LanguageService;
 import edu.architect_711.words.controller.service.WordService;
 import edu.architect_711.words.entities.db.WordEntity;
+import edu.architect_711.words.entities.dto.WordDto;
 import edu.architect_711.words.repository.WordRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @Controller @RequiredArgsConstructor @RequestMapping("/words")
-@Validated
 public class WordsFrontendController {
     private final WordService wordService;
     private final WordRepository wordRepository;
@@ -25,6 +23,29 @@ public class WordsFrontendController {
         return "words";
     }
 
+
+
+    @GetMapping("/new")
+    public String newWord(Model model) {
+        model.addAttribute("word", new WordDto());
+        model.addAttribute("langs", languageService.findAll().getBody());
+
+        return "new_word";
+    }
+    @PostMapping("/new")
+    public String saveNew(@RequestParam Map<String, String> map, Model model) {
+        // fucking shit code, I am tired, so won't do better. legacy uuhooo!
+        wordService.create(new WordDto(
+                null,
+                map.get("title"),
+                map.get("translation"),
+                map.get("description"),
+                map.get("language"),
+                null
+        ));
+
+        return "redirect:/words/find";
+    }
 
 
     /* ------------------------------------------------- */
