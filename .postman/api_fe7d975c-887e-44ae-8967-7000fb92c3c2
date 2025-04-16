@@ -14,8 +14,6 @@ files[] = {"id":"29346587-7e9b92ae-268e-4d96-b155-a3557a416c9b","path":"v3.0.0.j
 [config.relations.collections.metaData]
 
 [config.relations.apiDefinition]
-files[] = {"path":"docs.json","metaData":{}}
 
 [config.relations.apiDefinition.metaData]
-rootFiles[] = docs.json
 type = openapi:3
