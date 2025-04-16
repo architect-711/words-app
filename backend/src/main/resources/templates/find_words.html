@@ -12,9 +12,10 @@
 
     <div class="content mt-30">
 
-        <form action="#" class="db" th:action="@{/words/find}" method="post">
+        <form action="#" class="db" th:action="@{/words/find}" method="get">
             <input type="text" placeholder="find by title" name="title">
             <select name="lang">
+                <option value="">Please select...</option>
                 <option
                         th:each="lang : ${langs}"
                         th:value="${lang.title}"
@@ -33,8 +34,8 @@
             </div>
         </div>
 
-        <a th:href="@{'/words/find?size=' + ${size} + '&page=' + ${page - 1}}">Prev</a>
-        <a th:href="@{'/words/find?size=' + ${size} + '&page=' + ${page + 1}}">Next</a>
+        <a th:href="@{'/words/find?size=' + ${size} + '&page=' + ${page - 1}} + '&title=' + ${title} + '&lang=' + ${lang}">Prev</a>
+        <a th:href="@{'/words/find?size=' + ${size} + '&page=' + ${page + 1}} + '&title=' + ${title} + '&lang=' + ${lang}">Next</a>
 
     </div>
 
