@@ -49,6 +49,7 @@
                     </td>
                     <td>
                         <select th:field="*{language}">
+                            <option value="">Please select</option>
                             <option
                                     th:each="lang : ${langs}"
                                     th:value="${lang.title}"
