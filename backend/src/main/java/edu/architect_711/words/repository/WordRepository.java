@@ -11,12 +11,18 @@ import java.util.Optional;
 public interface WordRepository extends JpaRepository<WordEntity, Long> {
     Optional<WordEntity> findByTitle(final String title);
 
+    @Query(
+            nativeQuery = true,
+            value = """
+                    SELECT * FROM word
+                    WHERE title LIKE %:title%
+                    LIMIT :size OFFSET :page
+                    """
+    )
+    List<WordEntity> findByTitleApproximates(final String title, final int size, final int page);
+
     default WordEntity safeFindWordById(Long id) {
         return findById(id).orElseThrow(() -> new EntityNotFoundException("WordEntity not found with id: " + id));
-    }
-
-    default WordEntity safeFindWordByTitle(final String title) {
-        return findByTitle(title).orElseThrow(() -> new EntityNotFoundException("Word not found with title: " + title));
     }
 
     @Query(nativeQuery = true, value = """
@@ -25,4 +31,22 @@ public interface WordRepository extends JpaRepository<WordEntity, Long> {
             LIMIT :limit OFFSET :offset
             """)
     List<WordEntity> findAllPaginatedById(Long id, Long limit, Long offset);
+
+    @Query(
+            nativeQuery = true, value = """
+            SELECT word.id,
+                   word.title,
+                   word.translation,
+                   word.description,
+                   word.language_id,
+                   word.local_date_time
+            FROM word
+            INNER JOIN language
+            ON word.language_id = language.id
+            WHERE language.title LIKE %:lang%
+            LIMIT :size OFFSET :page;
+            """
+    )
+    List<WordEntity> findPaginatedByLangAprx(final String lang, final int size, final int page);
+
 }
