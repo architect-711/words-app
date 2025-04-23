@@ -17,6 +17,27 @@
     align-items: start;
 }
 
+.langs_selection {
+    padding: 5px;
+    background-color: #fff;
+    border: 1px solid var(--general);
+    border-radius: 5px;
+}
+
+a {
+    text-decoration: none;
+}
+
+.as_p_input {
+    border: none;
+    display: inline;
+    outline: none;
+    font-family: inherit;
+    font-size: inherit;
+    padding: none;
+    width: auto;
+}
+
 .db {
     display : flex;
     justify-content : space-between;
@@ -51,13 +72,13 @@
     cursor: pointer;
 }
 
-.btn_regular {
+.btn_regular, .btn_primary:hover {
     background-color: #ffff;
 
     color: var(--general);
 }
 
-.btn_primary {
+.btn_primary, .btn_regular:hover {
     background-color: var(--general);
     color: #ffff;
 }
