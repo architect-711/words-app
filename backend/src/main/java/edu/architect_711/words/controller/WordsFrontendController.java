@@ -25,6 +25,9 @@ public class WordsFrontendController {
 
 
 
+    /* ------------------------------------------------- */
+    /*                      CREATION                     */
+    /* ------------------------------------------------- */
     @GetMapping("/new")
     public String newWord(Model model) {
         model.addAttribute("word", new WordDto());
