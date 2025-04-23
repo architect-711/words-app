@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/global.css">
+    <link rel="stylesheet" href="/words.css">
+    <link rel="stylesheet" href="/word_item.css">
     <title>WordsApp | Words</title>
 </head>
 <body>
@@ -11,11 +13,42 @@
 
     <div class="content mt-30">
 
-        <p>Available actions:</p>
-        <ul>
-            <li><a th:href="@{/words/new}" >Create</a></li>
-            <li><a th:href="@{/words/find}">Find</a>  </li>
-        </ul>
+        <div class="head_bar container">
+            <a th:href="@{/words/new}" class="btn btn_regular">Create</a>
+
+            <div class="lookup">
+                <form action="#" class="lookup_form db" th:action="@{/words/find}" method="get">
+                    <input
+                            type="text"
+                            placeholder="find by title"
+                            name="title"
+                            class="lookup_input as_p_input"
+                    >
+                    <select th:replace="fragments/langs_selection.html :: langs_selection (langs=${langs})"></select>
+                    <button type="submit" class="btn btn_regular">Find!</button>
+                </form>
+            </div>
+
+        </div>
+
+        <div class="mt-10">
+            <h2 th:if="${words.empty}">No words found.</h2>
+
+            <th:block th:unless="${words.empty}" th:each="word : ${words}">
+                <div th:replace="fragments/word_item :: word_item(${word})"></div>
+            </th:block>
+        </div>
+
+        <div class="nav-links mt-10">
+            <a
+                    class="btn btn_regular"
+                    th:href="@{'/words/find?size=' + ${size} + '&page=' + ${page - 1}} + '&title=' + ${title} + '&lang=' + ${lang}"
+            >Prev</a>
+            <a
+                    class="btn btn_regular"
+                    th:href="@{'/words/find?size=' + ${size} + '&page=' + ${page + 1}} + '&title=' + ${title} + '&lang=' + ${lang}"
+            >Next</a>
+        </div>
 
     </div>
 
