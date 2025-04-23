@@ -19,7 +19,15 @@ public class WordsFrontendController {
     private final LanguageService languageService;
 
     @GetMapping
-    public String words() {
+    public String words(
+            @RequestParam(defaultValue = "5", name = "size") int size,
+            @RequestParam(defaultValue = "0", name = "page") int page,
+            @RequestParam(defaultValue = "", name = "title") String title,
+            @RequestParam(defaultValue = "", name = "lang") String lang,
+            Model model
+    ) {
+        wordService.paginatedQueriedFind(model, size, page, title, lang);
+
         return "words";
     }
 
