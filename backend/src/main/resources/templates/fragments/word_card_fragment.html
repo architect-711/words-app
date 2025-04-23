@@ -28,13 +28,10 @@
             <tr>
                 <th>Language</th>
                 <td>
-                    <select th:field="*{language}">
-                        <option
-                                th:each="lang : ${langs}"
-                                th:value="${lang.title}"
-                                th:text="${lang.title}"
-                        ></option>
-                    </select>
+                    <select
+                            th:field="*{language}"
+                            th:replace="fragments/langs_selection.html :: langs_selection (langs=${langs})"
+                    ></select>
                 </td>
             </tr>
 

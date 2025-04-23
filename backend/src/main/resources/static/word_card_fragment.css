@@ -22,15 +22,6 @@
 #table td {
     padding: 0 0 0 10px;
 }
-.as_p_input {
-    border: none;
-    display: inline;
-    outline: none;
-    font-family: inherit;
-    font-size: inherit;
-    padding: none;
-    width: auto;
-}
 #description {
     margin-top: 15px;
     padding: 10px;
