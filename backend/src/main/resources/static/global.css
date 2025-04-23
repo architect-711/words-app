@@ -1,3 +1,7 @@
+:root {
+    --general: rgb(51, 25, 25);
+}
+
 * {
     margin : 0;
     padding : 0;
@@ -7,6 +11,11 @@
     width : 70%;
     margin-left : 15%;
 }
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: start;
+}
 
 .db {
     display : flex;
@@ -15,10 +24,40 @@
 }
 
 .header {
-    background-color : rgb(209, 209, 209);
+    background-color : var(--general);
     padding : 10px;
+}
+.header a {
+    color: #ffff;
+    text-decoration: none;
+}
+
+.mt-10 {
+    margin-top: 10px;
+}
+.mt-20 {
+    margin-top: 20px
 }
 
 .mt-30 {
     margin-top: 30px
+}
+
+.btn {
+    padding: 5px 10px;
+    border-radius: 5px;
+
+    border: 1px solid var(--general);
+    cursor: pointer;
+}
+
+.btn_regular {
+    background-color: #ffff;
+
+    color: var(--general);
+}
+
+.btn_primary {
+    background-color: var(--general);
+    color: #ffff;
 }
