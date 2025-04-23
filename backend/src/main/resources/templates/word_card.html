@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/global.css">
     <link rel="stylesheet" href="/word_card.css">
+    <link rel="stylesheet" href="/word_card_fragment.css">
     <title>WordsApp | Word Card</title>
 </head>
 <body>
@@ -11,63 +12,10 @@
 
     <div class="content mt-30">
 
-        <h1 th:if="${word == null}">You are idiot : there is no such word</h1>
+        <div class="container">
 
-        <div th:unless="${word == null}">
-
-            <form action="#" th:action="@{/words/update}" method="post" th:object="${word}">
-
-                <input
-                        type="hidden"
-                        th:value="${word.id}"
-                        th:field="*{id}"
-                        readonly="readonly"
-                />
-                <input
-                        type="text"
-                        id="title"
-                        placeholder="title"
-                        th:value="${word.title}"
-                        th:field="*{title}"
-                />
-                <p>Language: <select th:field="*{language}">
-                    <option
-                            th:each="lang : ${langs}"
-                            th:value="${lang.title}"
-                            th:text="${lang.title}"
-                    ></option>
-                </select></p>
-                <p>Translation: <input
-                        type="text"
-                        placeholder="translation"
-                        id="translation"
-                        class="regular_input"
-                        th:value="${word.translation}"
-                        th:field="*{translation}"/>
-                </p>
-                <p>Created: <input
-                        th:value="${word.localDateTime}"
-                        th:field="*{localDateTime}"
-                        readonly="readonly"/>
-                </p>
-
-                <hr>
-
-                <p>Description: <textarea
-                        type="text"
-                        placeholder="Description"
-                        id="description"
-                        class="regular_input"
-                        th:value="${word.description}"
-                        th:field="*{description}"></textarea>
-                </p>
-
-                <p style="padding: 10px 0 10px 0"><b>Click on value to modify it</b></p>
-
-                <button type="submit">Save changes</button>
-                <button type="reset">Reset</button>
-
-            </form>
+            <h1 th:if="${word == null}">There is no such word</h1>
+            <div th:unless="${word == null}" th:insert="fragments/word_card_fragment.html :: form_container (word=${word}, post_uri='/words/new')"></div>
 
         </div>
 
