@@ -9,5 +9,6 @@
             th:each="language : ${langs}"
             th:value="${language.title}"
             th:text="${language.title}"
+            th:selected="${language.title eq selected_lang}"
     ></option>
 </select>

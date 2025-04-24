@@ -30,7 +30,7 @@
                 <td>
                     <select
                             th:field="*{language}"
-                            th:replace="fragments/langs_selection.html :: langs_selection (langs=${langs})"
+                            th:replace="fragments/langs_selection.html :: langs_selection (langs=${langs}, selected_lang=${word.language})"
                     ></select>
                 </td>
             </tr>
