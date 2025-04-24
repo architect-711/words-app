@@ -34,3 +34,7 @@
     white-space: nowrap;
     overflow: hidden;
 }
+
+#word_item_table td {
+    opacity: .5;
+}
