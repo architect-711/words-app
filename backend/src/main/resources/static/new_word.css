@@ -1,0 +1,11 @@
+#form_table {
+    text-align: left;
+}
+#form_table td {
+    padding: 0 0 0 10px;
+}
+.fill_input {
+    border: none;
+    border-bottom: 2px solid var(--general);
+    outline: none;
+}

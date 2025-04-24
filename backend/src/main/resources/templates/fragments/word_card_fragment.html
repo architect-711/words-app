@@ -1,0 +1,84 @@
+<div
+        xmlns:th="http://www.w3.org/1999/xhtml"
+        th:fragment="form_container">
+    <form
+            class="form"
+            action="#"
+            th:action="@{${post_uri}}"
+            method="post"
+            th:object="${word}"
+    >
+
+        <input
+                type="hidden"
+                th:value="${word.id}"
+                th:field="*{id}"
+                readonly="readonly"
+        />
+        <input
+                type="text"
+                id="title"
+                placeholder="title"
+                th:value="${word.title}"
+                th:field="*{title}"
+        />
+
+        <table id="table">
+
+            <tr>
+                <th>Language</th>
+                <td>
+                    <select
+                            th:field="*{language}"
+                            th:replace="fragments/langs_selection.html :: langs_selection (langs=${langs}, selected_lang=${word.language})"
+                    ></select>
+                </td>
+            </tr>
+
+            <tr>
+                <th>Translation</th>
+                <td>
+                    <input
+                            type="text"
+                            placeholder="translation"
+                            id="translation"
+                            class="as_p_input"
+                            th:value="${word.translation}"
+                            th:field="*{translation}"
+                    />
+                </td>
+            </tr>
+
+            <tr>
+                <th>Created</th>
+                <td>
+                    <input
+                            th:value="${word.localDateTime}"
+                            th:field="*{localDateTime}"
+                            placeholder="auto filled"
+                            class="as_p_input"
+                            readonly="readonly"
+                    />
+                </td>
+            </tr>
+
+        </table>
+
+        <textarea
+                type="text"
+                placeholder="Description"
+                id="description"
+                class="as_p_input"
+                th:value="${word.description}"
+                th:field="*{description}"
+        ></textarea>
+
+        <p id="hint"><b>Click on value to modify it</b></p>
+
+        <div class="mt-10">
+            <button type="submit" class="btn btn_primary">Save changes</button>
+            <button type="reset" class="btn btn_regular">Reset</button>
+        </div>
+
+    </form>
+</div>

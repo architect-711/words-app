@@ -1,0 +1,33 @@
+.form {
+    border-radius:10px;
+    border: 1px solid var(--general);
+    padding: 10px;
+}
+#title {
+    font-size : 2em;
+    font-weight : bold;
+
+    border: none;
+    display: inline;
+    font-family: inherit;
+    padding: none;
+    width: auto;
+    text-align: center;
+
+    color: var(--general);
+}
+#table {
+    text-align: left;
+}
+#table td {
+    padding: 0 0 0 10px;
+}
+#description {
+    margin-top: 15px;
+    padding: 10px;
+
+    background-color: rgb(234, 234, 234);
+    border-radius: 10px;
+
+    color: var(--general);
+}
