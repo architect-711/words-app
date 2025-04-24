@@ -4,6 +4,7 @@ import edu.architect_711.words.controller.service.LanguageService;
 import edu.architect_711.words.controller.service.WordService;
 import edu.architect_711.words.entities.db.WordEntity;
 import edu.architect_711.words.entities.dto.WordDto;
+import edu.architect_711.words.entities.mapper.WordMapper;
 import edu.architect_711.words.repository.WordRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,8 @@ public class WordsFrontendController {
     private final WordService wordService;
     private final WordRepository wordRepository;
     private final LanguageService languageService;
+
+    private final static WordMapper wm = new WordMapper();
 
     @GetMapping
     public String words(
@@ -55,26 +58,8 @@ public class WordsFrontendController {
                 null
         ));
 
-        return "redirect:/words/find";
+        return "redirect:/words/new";
     }
-
-
-    /* ------------------------------------------------- */
-    /*                  FIND WORDS                       */
-    /* ------------------------------------------------- */
-    @GetMapping("/find")
-    public String find(
-            @RequestParam(defaultValue = "5", name = "size") int size,
-            @RequestParam(defaultValue = "0", name = "page") int page,
-            @RequestParam(defaultValue = "", name = "title") String title,
-            @RequestParam(defaultValue = "", name = "lang") String lang,
-            Model model
-    ) {
-        wordService.paginatedQueriedFind(model, size, page, title, lang);
-
-        return "find_words";
-    }
-
 
 
     /* ------------------------------------------------- */
@@ -84,7 +69,7 @@ public class WordsFrontendController {
     public String getById(@PathVariable Long id, Model model) {
         final WordEntity entity = wordRepository.safeFindWordById(id);
 
-        model.addAttribute("word", entity);
+        model.addAttribute("word", wm.toDto(entity));
         model.addAttribute("langs", languageService.findAll().getBody());
 
         return "word_card";
