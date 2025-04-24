@@ -17,7 +17,7 @@
             <a th:href="@{/words/new}" class="btn btn_regular">Create</a>
 
             <div class="lookup">
-                <form action="#" class="lookup_form db" th:action="@{/words/find}" method="get">
+                <form action="#" class="lookup_form db" th:action="@{/words}" method="get">
                     <input
                             type="text"
                             placeholder="find by title"
@@ -42,11 +42,12 @@
         <div class="nav-links mt-10">
             <a
                     class="btn btn_regular"
-                    th:href="@{'/words/find?size=' + ${size} + '&page=' + ${page - 1}} + '&title=' + ${title} + '&lang=' + ${lang}"
+                    th:href="@{'/words?size=' + ${size} + '&page=' + ${page - 1}} + '&title=' + ${title} + '&lang=' + ${lang}"
+                    th:unless="${page} == 0"
             >Prev</a>
             <a
                     class="btn btn_regular"
-                    th:href="@{'/words/find?size=' + ${size} + '&page=' + ${page + 1}} + '&title=' + ${title} + '&lang=' + ${lang}"
+                    th:href="@{'/words?size=' + ${size} + '&page=' + ${page + 1}} + '&title=' + ${title} + '&lang=' + ${lang}"
             >Next</a>
         </div>
 
