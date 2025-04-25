@@ -1,18 +1,3 @@
-#title {
-    font-size : 2em;
-    font-weight : bold;
-
-    border: none;
-    display: inline;
-    font-family: inherit;
-    padding: none;
-    width: auto;
-}
-.regular_input {
-    border: none;
-    display: inline;
-    font-family: inherit;
-    font-size: inherit;
-    padding: none;
-    width: auto;
+#hint {
+    padding-top: 10px;
 }

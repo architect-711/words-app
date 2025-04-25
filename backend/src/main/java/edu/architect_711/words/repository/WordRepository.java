@@ -4,6 +4,7 @@ import edu.architect_711.words.entities.db.WordEntity;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
@@ -39,6 +40,7 @@ public interface WordRepository extends JpaRepository<WordEntity, Long> {
                    word.translation,
                    word.description,
                    word.language_id,
+                   word.use_cases,
                    word.local_date_time
             FROM word
             INNER JOIN language
@@ -47,6 +49,7 @@ public interface WordRepository extends JpaRepository<WordEntity, Long> {
             LIMIT :size OFFSET :page;
             """
     )
-    List<WordEntity> findPaginatedByLangAprx(final String lang, final int size, final int page);
+    List<WordEntity> findPaginatedByLangAprx(@Param("lang") String lang, 
+               @Param("size") int size, @Param("page") int page);
 
 }

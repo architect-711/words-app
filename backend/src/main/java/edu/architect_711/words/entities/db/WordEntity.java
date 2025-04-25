@@ -1,11 +1,16 @@
 package edu.architect_711.words.entities.db;
 
 import edu.architect_711.words.entities.Word;
+import io.hypersistence.utils.hibernate.type.array.ListArrayType;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
+
+import org.hibernate.annotations.Type;
+
 
 @Entity
 @Table(name = "word")
@@ -29,6 +34,13 @@ public class WordEntity implements Word {
     @JoinColumn(name = "language_id", nullable = false)
     private LanguageEntity languageEntity;
 
+    @Type(ListArrayType.class)
+    @Column(
+        name = "use_cases",
+        columnDefinition = "text[]"
+    )
+    private List<String> useCases;
+
     @Column(columnDefinition = "timestamp")
     private LocalDateTime localDateTime;
 
@@ -36,11 +48,14 @@ public class WordEntity implements Word {
             String title,
             String translation,
             String description,
-            LanguageEntity languageEntity) {
+            List<String> useCases,
+            LanguageEntity languageEntity
+    ) {
         this.title = title;
         this.translation = translation;
         this.description = description;
         this.languageEntity = languageEntity;
+        this.useCases = useCases;
         this.localDateTime = LocalDateTime.now();
     }
 
