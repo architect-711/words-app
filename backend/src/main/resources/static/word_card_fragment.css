@@ -1,8 +1,4 @@
-.form {
-    border-radius:10px;
-    border: 1px solid var(--general);
-    padding: 10px;
-}
+.form {}
 #title {
     font-size : 2em;
     font-weight : bold;
@@ -12,7 +8,6 @@
     font-family: inherit;
     padding: none;
     width: auto;
-    text-align: center;
 
     color: var(--general);
 }
@@ -30,4 +25,16 @@
     border-radius: 10px;
 
     color: var(--general);
+}
+.use_cases_container {}
+.use_case_li {
+    padding: 5px 0;
+}
+#useCasesUl {
+    list-style-position: inside;
+}
+.use_case_textarea {
+    width: 95%;
+    padding: 10px 0;
+    border-radius: 10px;
 }

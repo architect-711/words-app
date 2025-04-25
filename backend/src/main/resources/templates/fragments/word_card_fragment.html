@@ -73,6 +73,49 @@
                 th:field="*{description}"
         ></textarea>
 
+        <script>
+            function addUseCase() {
+                const ul = document.getElementById("useCasesUl");
+                const childrenN = ul.children.length;
+                const child = document.createElement("li");
+
+                child.classList.add("use_case_li", "db");
+
+                child.innerHTML = `
+                    <textarea
+                        type="text"
+                        name="useCases[${childrenN}]"
+                        class="as_p_input modest_input use_case_textarea"
+                    ></textarea>
+                    <button type="button" onclick="removeUseCase(this)" class="btn btn_regular">Remove</button>
+                `;
+
+                ul.appendChild(child);
+            }
+
+            function removeUseCase(button) {
+                button.parentNode.remove();
+            }
+        </script>
+
+        <div class="use_cases_container mt-10">
+            <h3>Use cases:</h3>
+            <ul id="useCasesUl">
+                <li th:each="useCase, i : *{useCases}" class="use_case_li db">
+
+                    <textarea
+                            type="text"
+                            th:name="'useCases[' + ${i.index} + ']'"
+                            th:text="${useCase}"
+                            class="as_p_input modest_input use_case_textarea"
+                    ></textarea>
+                    <button onclick="removeUseCase(this)" class="btn btn_regular">Remove</button>
+
+                </li>
+            </ul>
+            <button type="button" onclick="addUseCase()" class="btn btn_regular">Add useCase</button>
+        </div>
+
         <p id="hint"><b>Click on value to modify it</b></p>
 
         <div class="mt-10">
