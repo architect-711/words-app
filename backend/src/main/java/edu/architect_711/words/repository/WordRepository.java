@@ -40,6 +40,7 @@ public interface WordRepository extends JpaRepository<WordEntity, Long> {
                    word.translation,
                    word.description,
                    word.language_id,
+                   word.use_cases,
                    word.local_date_time
             FROM word
             INNER JOIN language
