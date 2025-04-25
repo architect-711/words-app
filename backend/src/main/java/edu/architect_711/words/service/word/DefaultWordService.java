@@ -41,9 +41,15 @@ public class DefaultWordService implements WordService {
     public ResponseEntity<WordDto> create(@Valid WordDto wordDto) {
         final LanguageEntity languageEntity = languageRepository.safeFindByTitle(wordDto.getLanguage());
 
+        wordDto.setUseCases(getValidUseCases(wordDto.getUseCases()));
+
         return buildOkResponse(wordRepository.save(
                 wordMapper.toEntity(wordDto, languageEntity)
         ));
+    }
+
+    private static List<String> getValidUseCases(final List<String> raw) {
+        return raw.stream().filter(w -> w != null && !w.isBlank()).toList();
     }
 
     @Override
@@ -60,7 +66,7 @@ public class DefaultWordService implements WordService {
         wordEntity.setTitle(wordDto.getTitle());
         wordEntity.setTranslation(wordDto.getTranslation());
         wordEntity.setDescription(wordDto.getDescription());
-        wordEntity.setUseCases(wordDto.getUseCases());
+        wordEntity.setUseCases(getValidUseCases(wordDto.getUseCases()));
 
         return buildOkResponse(wordRepository.save(wordEntity));
     }
