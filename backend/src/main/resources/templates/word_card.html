@@ -12,12 +12,8 @@
 
     <div class="content mt-30">
 
-        <div class="container">
-
-            <h1 th:if="${word == null}">There is no such word</h1>
-            <div th:unless="${word == null}" th:insert="fragments/word_card_fragment.html :: form_container (word=${word}, post_uri='/words/update')"></div>
-
-        </div>
+        <h1 th:if="${word == null}">There is no such word</h1>
+        <div th:unless="${word == null}" th:insert="fragments/word_card_fragment.html :: form_container (word=${word}, post_uri='/words/update')"></div>
 
     </div>
 

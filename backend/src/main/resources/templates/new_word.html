@@ -12,13 +12,7 @@
     <header th:insert="fragments/general.html :: header"></header>
 
     <div class="content mt-30">
-        <h1>Create new word</h1>
-
-        <div class="container mt-20">
-
-            <div th:insert="fragments/word_card_fragment.html :: form_container (word=${word}, post_uri='/words/new')"></div>
-
-        </div>
+        <div th:replace="fragments/word_card_fragment.html :: form_container (word=${word}, post_uri='/words/new')"></div>
     </div>
 
 </body>
