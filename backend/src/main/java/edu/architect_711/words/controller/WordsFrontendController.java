@@ -2,7 +2,6 @@ package edu.architect_711.words.controller;
 
 import edu.architect_711.words.controller.service.LanguageService;
 import edu.architect_711.words.controller.service.WordService;
-import edu.architect_711.words.entities.db.LanguageEntity;
 import edu.architect_711.words.entities.db.WordEntity;
 import edu.architect_711.words.entities.dto.WordDto;
 import edu.architect_711.words.entities.mapper.WordMapper;
@@ -12,9 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDateTime;
-import java.util.Map;
 
 @Controller @RequiredArgsConstructor @RequestMapping("/words")
 public class WordsFrontendController {
@@ -52,23 +48,12 @@ public class WordsFrontendController {
         return "new_word";
     }
     @PostMapping("/new")
-    public String saveNew(@RequestParam Map<String, String> map, Model model) {
-        // fucking shit code, I am tired, so won't do better. legacy uuhooo!
-        wordService.create(parseFormData(map, true));
+    public String saveNew(@ModelAttribute("wordForm") WordDto dto, Model model) {
+        wordService.create(dto);
 
         return "redirect:/words/new";
     }
 
-    private static WordDto parseFormData(final Map<String, String> map, final boolean ignoreAutos) {
-        return new WordDto(
-                ignoreAutos ? null : Long.parseLong(map.get("id")),
-                map.get("title"),
-                map.get("translation"),
-                map.get("description"),
-                map.get("language"),
-                ignoreAutos ? null : LocalDateTime.parse(map.get("localDateTime"))
-        );
-    }
 
 
     /* ------------------------------------------------- */
@@ -90,19 +75,10 @@ public class WordsFrontendController {
     /*                      UPDATE                       */
     /* ------------------------------------------------- */
     @PostMapping("/update")
-    public String updateOne(@RequestParam Map<String, String> map) {
-        final WordDto dto = parseFormData(map, true);
-        final WordEntity foundWord = wordRepository.safeFindWordById(Long.valueOf(map.get("id")));
-        final LanguageEntity languageEntity = languageRepository.safeFindByTitle(dto.getLanguage());
+    public String updateOne(@ModelAttribute("wordForm") WordDto dto) {
+        WordDto response = wordService.update(dto).getBody();
 
-        foundWord.setTitle(dto.getTitle());
-        foundWord.setTranslation(dto.getTranslation());
-        foundWord.setDescription(dto.getDescription());
-        foundWord.setLanguageEntity(languageEntity);
-
-        wordRepository.save(foundWord);
-
-        return "redirect:/words/" + foundWord.getId();
+        return "redirect:/words/" + response.getId();
     }
 
 
