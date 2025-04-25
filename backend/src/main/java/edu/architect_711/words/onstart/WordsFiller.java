@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 @Component @RequiredArgsConstructor @Profile("dev")
@@ -26,6 +27,7 @@ public class WordsFiller implements ApplicationRunner {
                     "title" + LocalDateTime.now(),
                     "translation",
                     "description",
+                    List.of(),
                     "Russian",
                     null
             ));

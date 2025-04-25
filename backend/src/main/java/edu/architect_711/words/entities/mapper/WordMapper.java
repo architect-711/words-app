@@ -16,6 +16,7 @@ public class WordMapper implements EntityMapper<WordEntity, WordDto> {
                 wordDto.getTitle(),
                 wordDto.getTranslation(),
                 wordDto.getDescription(),
+                wordDto.getUseCases(),
                 languageEntity
         );
     }
@@ -27,6 +28,7 @@ public class WordMapper implements EntityMapper<WordEntity, WordDto> {
                 entity.getTitle(),
                 entity.getTranslation(),
                 entity.getDescription(),
+                entity.getUseCases(),
                 entity.getLanguageEntity().getTitle(),
                 entity.getLocalDateTime()
         );

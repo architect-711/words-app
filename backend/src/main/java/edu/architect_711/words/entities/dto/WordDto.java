@@ -10,6 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data @AllArgsConstructor @NoArgsConstructor
 public class WordDto implements Word  {
@@ -24,6 +25,7 @@ public class WordDto implements Word  {
     private String translation;
 
     private String description;
+    private List<String> useCases;
 
     @NotBlank(message = "LanguageEntity cannot be blank", groups = Default.class)
     private String language;

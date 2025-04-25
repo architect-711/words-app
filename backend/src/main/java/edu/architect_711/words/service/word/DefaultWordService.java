@@ -60,6 +60,7 @@ public class DefaultWordService implements WordService {
         wordEntity.setTitle(wordDto.getTitle());
         wordEntity.setTranslation(wordDto.getTranslation());
         wordEntity.setDescription(wordDto.getDescription());
+        wordEntity.setUseCases(wordDto.getUseCases());
 
         return buildOkResponse(wordRepository.save(wordEntity));
     }
