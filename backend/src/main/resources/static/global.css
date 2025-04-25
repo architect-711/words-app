@@ -38,6 +38,10 @@ a {
     width: auto;
 }
 
+.modest_input {
+    border: 1px solid var(--general);
+}
+
 .db {
     display : flex;
     justify-content : space-between;
