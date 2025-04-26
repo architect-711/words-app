@@ -49,7 +49,7 @@ public class DefaultWordService implements WordService {
     }
 
     private static List<String> getValidUseCases(final List<String> raw) {
-        return raw.stream().filter(w -> w != null && !w.isBlank()).toList();
+        return raw == null ? List.of() : raw.stream().filter(w -> w != null && !w.isBlank()).toList();
     }
 
     @Override
