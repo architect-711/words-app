@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/words")
+@CrossOrigin
 @RequiredArgsConstructor
 public class WordController {
     private final DefaultWordService defaultWordService;
