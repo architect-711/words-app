@@ -3,3 +3,4 @@
 
 # contains private data
 .env*
+scripts/.*
