@@ -1,6 +1,6 @@
 services:
     spring_backend:
-        image: "${DOCKER_REGISTRY}/${BACKEND_IMAGE_NAME}"
+        image: "${DOCKER_REGISTRY}/${BACKEND_IMAGE_NAME}:${BACKEND_VERSION}"
         env_file: 
             - .env.base
             - ${PROFILE_ENV_FILE_PATH_REL}
