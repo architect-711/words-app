@@ -85,7 +85,7 @@
                     <textarea
                         type="text"
                         name="useCases[${childrenN}]"
-                        class="as_p_input modest_input use_case_textarea"
+                        class="as_p_input modest_input use_case_textarea pd-10"
                     ></textarea>
                     <button type="button" onclick="removeUseCase(this)" class="btn btn_regular">Remove</button>
                 `;
@@ -107,7 +107,7 @@
                             type="text"
                             th:name="'useCases[' + ${i.index} + ']'"
                             th:text="${useCase}"
-                            class="as_p_input modest_input use_case_textarea"
+                            class="as_p_input modest_input use_case_textarea pd-10"
                     ></textarea>
                     <button onclick="removeUseCase(this)" class="btn btn_regular">Remove</button>
 
