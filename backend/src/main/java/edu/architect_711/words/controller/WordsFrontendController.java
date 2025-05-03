@@ -8,9 +8,12 @@ import edu.architect_711.words.entities.mapper.WordMapper;
 import edu.architect_711.words.repository.LanguageRepository;
 import edu.architect_711.words.repository.WordRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller @RequiredArgsConstructor @RequestMapping("/words")
 public class WordsFrontendController {
@@ -24,13 +27,20 @@ public class WordsFrontendController {
 
     @GetMapping
     public String words(
-            @RequestParam(defaultValue = "5", name = "size") int size,
+            @RequestParam(defaultValue = "10", name = "size") int size,
             @RequestParam(defaultValue = "0", name = "page") int page,
             @RequestParam(defaultValue = "", name = "title") String title,
-            @RequestParam(defaultValue = "", name = "language") String lang,
+            @RequestParam(defaultValue = "", name = "lang") String lang,
             Model model
     ) {
-        wordService.paginatedQueriedFind(model, size, page, title, lang);
+        ResponseEntity<List<WordDto>> listResponseEntity = wordService.find(size, page, title, lang);
+
+        model.addAttribute("size", size);
+        model.addAttribute("page", page);
+        model.addAttribute("title", title);
+        model.addAttribute("lang", lang);
+        model.addAttribute("langs", languageService.findAll().getBody());
+        model.addAttribute("words", listResponseEntity.getBody());
 
         return "words";
     }
