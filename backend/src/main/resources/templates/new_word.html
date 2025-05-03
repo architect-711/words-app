@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/global.css">
+    <link rel="stylesheet" href="/new_word.css">
+    <link rel="stylesheet" href="/word_card_fragment.css">
+    <title>WordsApp | New Word</title>
+</head>
+<body>
+
+    <header th:insert="fragments/general.html :: header"></header>
+
+    <div class="content mt-30">
+        <div th:replace="fragments/word_card_fragment.html :: form_container (word=${word}, post_uri='/words/new')"></div>
+    </div>
+
+</body>
+</html>

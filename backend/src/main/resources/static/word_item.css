@@ -1,0 +1,40 @@
+.word_item {
+    border : 1px solid black;
+    padding : 10px;
+    border-bottom: none;
+}
+.word_item:hover {
+    background-color: #eae2e2;
+}
+.word_item:last-child {
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom: 1px solid var(--general);
+}
+.word_item:first-child {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.word_item_link p {
+    color: var(--general);
+    margin-left : 10px;
+}
+.word_item_link p:first-child {
+    margin : 0;
+}
+
+#word_item_table {
+    width: 50%;
+    table-layout: fixed;
+    text-align: left;
+}
+
+#word_item_table th, #word_item_table td {
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+#word_item_table td {
+    opacity: .5;
+}

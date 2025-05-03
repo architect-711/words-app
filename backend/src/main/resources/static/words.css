@@ -1,0 +1,18 @@
+.head_bar {
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--general);
+    padding: 10px;
+    border-radius: 10px;
+}
+.lookup {
+    width: 80%;
+}
+.lookup_form {
+    margin-left: 20%;
+}
+.lookup_input {
+    padding: 5px;
+    border-radius: 5px;
+    width: 50%;
+}
