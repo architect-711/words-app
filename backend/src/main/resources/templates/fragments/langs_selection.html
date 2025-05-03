@@ -1,0 +1,14 @@
+<select
+        name="language"
+        class="langs_selection"
+        xmlns:th="http://www.w3.org/1999/xhtml"
+        th:fragment="langs_selection"
+>
+    <option value="">Please select...</option>
+    <option
+            th:each="language : ${langs}"
+            th:value="${language.title}"
+            th:text="${language.title}"
+            th:selected="${language.title eq selected_lang}"
+    ></option>
+</select>

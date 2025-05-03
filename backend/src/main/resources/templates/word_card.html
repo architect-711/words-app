@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/global.css">
+    <link rel="stylesheet" href="/word_card.css">
+    <link rel="stylesheet" href="/word_card_fragment.css">
+    <title>WordsApp | Word Card</title>
+</head>
+<body>
+    <header th:insert="fragments/general.html :: header"></header>
+
+    <div class="content mt-30">
+
+        <h1 th:if="${word == null}">There is no such word</h1>
+        <div th:unless="${word == null}" th:insert="fragments/word_card_fragment.html :: form_container (word=${word}, post_uri='/words/update')"></div>
+
+    </div>
+
+</body>
+</html>
