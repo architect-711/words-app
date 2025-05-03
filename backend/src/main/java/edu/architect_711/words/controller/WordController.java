@@ -22,6 +22,23 @@ public class WordController {
         return defaultWordService.read(size, page);
     }
 
+    @GetMapping("/find")
+    public ResponseEntity<List<WordDto>> find(
+        @RequestParam(name = "size", defaultValue = "5") Integer size,
+        @RequestParam(name = "page", defaultValue = "0") Integer page,
+        @RequestParam(name = "title", defaultValue = "") String title,
+        @RequestParam(name = "lang", defaultValue = "") String lang
+    ) {
+        return defaultWordService.find(size, page, title, lang);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<WordDto> getById(
+            @PathVariable("id") Long id
+    ) {
+        return defaultWordService.getById(id);
+    }
+
     @PostMapping
     public ResponseEntity<WordDto> create(@RequestBody WordDto wordDto) {
         return defaultWordService.create(wordDto);
