@@ -86,3 +86,6 @@ a {
     background-color: var(--general);
     color: #ffff;
 }
+.pd-10 {
+    padding: 10px !important;
+}
