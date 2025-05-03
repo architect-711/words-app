@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -88,30 +89,27 @@ public class DefaultWordService implements WordService {
         return ResponseEntity.ok(entityListToDto(wordRepository.findPaginatedByLangAprx(lang, 5, 0)));
     }
 
-    public void paginatedQueriedFind(final Model model, final int size, final int page,
-                                      final String title, final String lang) {
-        if (size < 0 || page < 0)
-            return;
+    @Override
+    public ResponseEntity<List<WordDto>> find(final int size, final int page,
+        final String title, final String lang
+    ) {
+        final List<WordEntity> res = new ArrayList<>();
 
         if (!title.isBlank() && !lang.isBlank())
-            setWordsAttr(model, wordRepository.findPaginatedByLangAprx(lang, size, page)
-                    .stream().filter(w -> w.getTitle().contains(title)).toList());
+            res.addAll(wordRepository
+                .findPaginatedByLangAprx(lang, size, page)
+                .stream()
+                .filter(osya -> osya.getTitle().contains(title))
+                .toList()
+            );
         else if (!title.isBlank())
-            setWordsAttr(model, wordRepository.findByTitleApproximates(title, size, page));
+            res.addAll(wordRepository.findByTitleApproximates(title, size, page));
         else if (!lang.isBlank())
-            setWordsAttr(model, wordRepository.findPaginatedByLangAprx(lang, size, page));
+            res.addAll(wordRepository.findPaginatedByLangAprx(lang, size, page));
         else
-            setWordsAttr(model, read(size, page).getBody());
+            return read(size, page);
 
-        model.addAttribute("langs", languageRepository.findAll());
-        model.addAttribute("size", size);
-        model.addAttribute("page", page);
-        model.addAttribute("title", title);
-        model.addAttribute("lang", lang);
-    }
-
-    private static <T> void setWordsAttr(final Model model, final T value) {
-        model.addAttribute("words", value);
+        return ResponseEntity.ok().body(entityListToDto(res));
     }
 
     private ResponseEntity<WordDto> buildOkResponse(WordEntity wordEntity) {
@@ -122,4 +120,7 @@ public class DefaultWordService implements WordService {
         return entities.stream().map(wordMapper::toDto).toList();
     }
 
+    public ResponseEntity<WordDto> getById(Long id) {
+        return ResponseEntity.ok(wordMapper.toDto(wordRepository.safeFindWordById(id)));
+    }
 }
