@@ -30,7 +30,7 @@ public class WordsFrontendController {
             @RequestParam(defaultValue = "10", name = "size") int size,
             @RequestParam(defaultValue = "0", name = "page") int page,
             @RequestParam(defaultValue = "", name = "title") String title,
-            @RequestParam(defaultValue = "", name = "lang") String lang,
+            @RequestParam(defaultValue = "", name = "language") String lang,
             Model model
     ) {
         ResponseEntity<List<WordDto>> listResponseEntity = wordService.find(size, page, title, lang);
