@@ -1,0 +1,36 @@
+#container {
+    background-color: rgb(241, 247, 247);
+    border-radius: 10px;
+}
+#container input {
+    font-size: 22px;
+}
+#edit_inform {
+    opacity: .5;
+    font-size: 14px;
+}
+#title {
+    width: 80%;
+
+    font-family: 'Spectral';
+    font-weight: 600;
+    font-size: 28px !important;
+}
+#translation {
+    opacity: .8;
+    width: 70%;
+}
+#description {
+    
+}
+#use_cases_container {}
+.use_case {
+    list-style-position: inside;
+}
+.use_case li + li {
+    margin-top : 10px
+}
+.buttons {}
+.buttons button + button {
+    margin-left: 10px;
+}

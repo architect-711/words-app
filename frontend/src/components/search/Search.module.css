@@ -1,0 +1,22 @@
+.container {
+    background-color: var(--general);
+    padding: 10px;
+    border-radius: 10px;
+}
+.search_container {
+    width: 80%;
+}
+.input {
+    outline: none;
+    padding: 5px;
+    border: none;
+    width: 70%;
+    border-radius: 5px;
+}
+.select {
+    background-color: #fff;
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+    width: 10%;
+}

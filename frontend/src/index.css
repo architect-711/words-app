@@ -1,0 +1,94 @@
+
+/* GLOBAL SETTINGS */
+body, *, h1, h2, h3, h4, h5, p {
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --general: rgb(51, 25, 25);
+}
+
+@font-face {
+  font-family: "SpectralRegular";
+  src: local("SpectralRegular"), url("./fonts/Spectral/Spectral-Regular.ttf") format("truetype");
+}
+
+body {
+  font-family: 'Spectral';
+}
+
+a {
+  text-decoration: none;
+}
+
+
+
+/*  GLOBAL CLASSES  */
+.content {
+  width: 80%;
+  margin-left: 10%;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-center-between {
+  justify-content: space-between;
+  align-items: center;
+}
+.mt-10 {
+  margin-top: 10px;
+}
+.mt-20 {
+  margin-top: 20px;
+}
+a.active {
+  opacity: 1;
+}
+p {
+  font-size: 24px;
+}
+
+.btn {
+  padding: 5px 10px;
+  border-radius: 5px;
+
+  border: 1px solid var(--general);
+  cursor: pointer;
+}
+
+.btn-regular, .btn-primary:hover {
+  background-color: #ffff;
+
+  color: var(--general);
+}
+
+.btn-primary, .btn-regular:hover {
+  background-color: var(--general);
+  color: #ffff;
+}
+
+.input {
+  border : none;
+  outline : none;
+  font-family: 'Spectral';
+}
+
+.input-bottom {
+  border-bottom: 1px solid var(--general);
+}
+
+.pd-10 {
+  padding : 10px;
+}
+.br-10 {
+  border-radius: 10px;
+}
+.bg-white {
+  background-color: #ffff;
+}
+.fs-22 {
+  font-size: 22px
+}

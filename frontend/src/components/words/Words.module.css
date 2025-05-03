@@ -1,0 +1,33 @@
+.words_container {}
+.word_container {
+    padding: 10px;
+    border: 1px solid var(--general);
+    border-bottom: none;
+}
+.word_container:first-child {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+.word_container:last-child {
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom: 1px solid var(--general);
+}
+.link {
+    color: var(--general);
+}
+#table {
+    width: fit-content;
+    table-layout: fixed;
+    text-align: left;
+}
+#table th, #table td {
+    white-space: nowrap;
+    overflow: hidden;
+}
+#table td:first-child {
+    opacity: .5;
+}
+#table td:last-child {
+    opacity: .4;
+}

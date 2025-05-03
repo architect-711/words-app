@@ -1,0 +1,22 @@
+.header {
+    background-color: var(--general);
+    color: #ffff;
+    padding: 10px;
+}
+#title {
+    color: #fff;
+    font-weight: 600;
+    font-size: 28px;
+}
+.links {}
+.link {
+    color: #fff;
+    font-size: 22px;
+    opacity: .5;
+}
+.link:hover {
+    opacity: 1;
+}
+.link + .link {
+    margin-left: 10px;
+}
