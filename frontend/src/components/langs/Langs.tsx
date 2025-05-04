@@ -5,16 +5,18 @@ const Langs = ({
     langs,
     active,
     defaultValue,
-    onChange 
+    onChange,
+    name
 } : {
     langs : Language[],
     active : string,
+    name? : string,
     defaultValue? : string,
-    onChange : (e : ChangeEvent<HTMLSelectElement>) => void 
+    onChange? : (e : ChangeEvent<HTMLSelectElement>) => void 
 }) => {
     return (
         <select 
-            name="" 
+            name={name} 
             id=""
             onChange={onChange}
             className='input pd-10 br-10 bg-white'
