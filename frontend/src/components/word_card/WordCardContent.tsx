@@ -1,9 +1,11 @@
-import { InputHTMLAttributes, useState } from 'react';
+import { ChangeEvent, DOMAttributes, EventHandler, InputHTMLAttributes, MouseEventHandler, useState } from 'react';
 import { Language, Word, WordForm } from '../../types/global';
 import Langs from '../langs/Langs';
 import KittyInput from '../shared/input/KittyInput';
 import styles from './WordCard.module.css';
 import Usecase from './Usecase';
+
+const REMEMBER_LANG_KEY = 'remember_lang_choice';
 
 const WordCardContent = ({
     word, 
@@ -14,7 +16,15 @@ const WordCardContent = ({
     langs : Language[],
     onSave : (f : WordForm) => void
 }) => { 
-    const [form, setForm] = useState<WordForm>(word);
+    const [form, setForm] = useState<WordForm>(() => {
+            let item = localStorage.getItem(REMEMBER_LANG_KEY);
+    
+            word.language = ( item == null || item.length <= 0 ) 
+                ? word.language 
+                : item
+    
+            return word
+    });
 
     const reset = () : void => setForm(word);
     const onRemove = (u : string) => {
@@ -36,6 +46,10 @@ const WordCardContent = ({
         return form.useCases;
     }
 
+    const toggleLangChoice = (event : ChangeEvent<HTMLInputElement>) => {
+        localStorage.setItem(REMEMBER_LANG_KEY, event.target.checked ? form.language : '');
+    }
+
     return (
         <>
             <div className="top">
@@ -51,9 +65,21 @@ const WordCardContent = ({
                     other={{ value: form.title }}
                 />
 
+                <div className="remember_lang pd-10">
+                    <input 
+                        type="checkbox" 
+                        onChange={toggleLangChoice}
+                    />
+                    <span>Remember language choice?</span>
+                </div>
+
                 <p id={styles.translation}>from <Langs 
                     langs={langs} 
-                    active={word.language} 
+                    active={
+                        word.language == '' 
+                        ? localStorage.getItem(REMEMBER_LANG_KEY) ?? word.language 
+                        : word.language
+                    }
                     defaultValue='Choose language'
                     onChange={e => setForm({ ...form, language : e.target.value})}
                 /> - <KittyInput 
