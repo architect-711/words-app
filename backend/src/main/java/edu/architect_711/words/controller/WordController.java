@@ -25,7 +25,7 @@ public class WordController {
 
     @GetMapping("/find")
     public ResponseEntity<List<WordDto>> find(
-        @RequestParam(name = "size", defaultValue = "5") Integer size,
+        @RequestParam(name = "size", defaultValue = "10") Integer size,
         @RequestParam(name = "page", defaultValue = "0") Integer page,
         @RequestParam(name = "title", defaultValue = "") String title,
         @RequestParam(name = "lang", defaultValue = "") String lang
