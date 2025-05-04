@@ -14,7 +14,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.ArrayList;
@@ -93,23 +92,32 @@ public class DefaultWordService implements WordService {
     public ResponseEntity<List<WordDto>> find(final int size, final int page,
         final String title, final String lang
     ) {
+        if (size < 0 || page < 0) {
+            throw new IllegalArgumentException("Size or page is invalid");
+        }
+
+        final int offset = calcOffset(page, size);
         final List<WordEntity> res = new ArrayList<>();
 
         if (!title.isBlank() && !lang.isBlank())
             res.addAll(wordRepository
-                .findPaginatedByLangAprx(lang, size, page)
+                .findPaginatedByLangAprx(lang, size, offset)
                 .stream()
                 .filter(osya -> osya.getTitle().contains(title))
                 .toList()
             );
         else if (!title.isBlank())
-            res.addAll(wordRepository.findByTitleApproximates(title, size, page));
+            res.addAll(wordRepository.findByTitleApproximates(title, size, offset));
         else if (!lang.isBlank())
-            res.addAll(wordRepository.findPaginatedByLangAprx(lang, size, page));
+            res.addAll(wordRepository.findPaginatedByLangAprx(lang, size, offset));
         else
             return read(size, page);
 
         return ResponseEntity.ok().body(entityListToDto(res));
+    }
+
+    private static int calcOffset(final int size, final int page) {
+        return page * size;
     }
 
     private ResponseEntity<WordDto> buildOkResponse(WordEntity wordEntity) {
