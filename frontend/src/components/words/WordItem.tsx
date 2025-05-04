@@ -1,9 +1,19 @@
-import { title } from "process";
 import { Word } from "../../types/global";
 import styles from './Words.module.css';
 import { Link } from "react-router-dom";
 
-export default function WordItem({ word } : { word : Word }) {
+interface Props {
+    word : Word,
+    onDelete : (id : number) => void
+}
+
+export default function WordItem({ word, onDelete } : Props) {
+
+    const preDelete = () : void => {
+        if (window.confirm(`Delete word ${word.title} with id ${word.id}?`))
+            onDelete(word.id ?? -1);
+    }
+
     return (
         <div className={`${styles.word_container} flex flex-centere-between`}>
 
@@ -17,7 +27,7 @@ export default function WordItem({ word } : { word : Word }) {
                 </table>
             </Link>
 
-            <button className="btn btn-regular">Delete</button>
+            <button className="btn btn-regular" onClick={preDelete}>Delete</button>
         </div>
     );
 }

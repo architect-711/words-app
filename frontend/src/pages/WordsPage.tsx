@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { FetchError, Language, Word, WordsPagFetchParams } from "../types/global";
 import Search from "../components/search/Search";
 import Fallback from "../components/words/Fallback";
-import { fetchLanguages, fetchWords, find } from "../api/fetchers";
+import {deleteWordById, fetchLanguages, fetchWords, find} from "../api/fetchers";
 import WordContainer from "../components/words/WordsContainer";
 import { buildFallbackMessage } from "../utils/error";
 import { createSearchParams, useNavigate, useParams, useSearchParams } from "react-router-dom";
@@ -32,6 +32,18 @@ export default function WordsPage() {
         );
     }
 
+    const onDelete = (id : number) : void => {
+        if (id < 0) {
+            setFetchErrors([...fetchErrors, {
+                name : 'Impossible',
+                message : 'You did something impossible, the id of the word you are trying to delete is negative! -_-',
+                description : 'The delete button for the word was called, but id for some impossible reason is negative'
+            }]);
+        }
+
+        deleteWordById(id, e => setFetchErrors([...fetchErrors, e]), () => setWords(words.filter(w => w.id !== id)));
+    }
+
     useEffect(() => {
         fetchWords();
         fetchLanguages(handleError, r => setLanguages(r.data)); 
@@ -45,6 +57,7 @@ export default function WordsPage() {
                 ? <WordContainer 
                     words={words} 
                     disablePrev={(page ?? 0) <= 0}
+                    onDelete={onDelete}
                 />
                 : <div>
                     {

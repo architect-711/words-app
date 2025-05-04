@@ -6,10 +6,11 @@ import Fallback from "./Fallback";
 
 interface Params {
     words : Word[],
-    disablePrev : boolean
+    disablePrev : boolean,
+    onDelete : (id : number) => void
 }
 
-export default function WordContainer({ words, disablePrev = false } : Params) {
+export default function WordContainer({ words, disablePrev = false, onDelete } : Params) {
     const isWordsEmpty = () : boolean => words == null || words.length == 0;
 
     return (
@@ -18,7 +19,7 @@ export default function WordContainer({ words, disablePrev = false } : Params) {
                 {isWordsEmpty()
                     ? <Fallback text="No words found!"/>
                     : <div className="words">
-                        {words.map((w, i) => <WordItem key={i} word={w}/>)}
+                        {words.map((w, i) => <WordItem key={i} word={w} onDelete={onDelete}/>)}
                     </div>
                 }
 
