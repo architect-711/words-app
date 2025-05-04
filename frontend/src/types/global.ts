@@ -33,10 +33,10 @@ export interface FetchError {
 }
 
 export interface WordsPagFetchParams {
-    page : number,
-    size : number,
-    lang : string,
-    title : string
+    page? : number,
+    size? : number,
+    lang? : string,
+    title? : string
 }
 
 export interface WordForm extends Word {}
