@@ -1,44 +1,36 @@
-import { FetchError, Language, NoPromiseServiceResponse, Word, WordsPagFetchParams } from "../types/global";
+import {
+    FetchError,
+    Language,
+    NoPromiseServiceResponse,
+    ServiceResponse,
+    Word,
+    WordsPagFetchParams
+} from "../types/global";
 import { errorHandler } from "../utils/error";
 import handleBackendError from "../utils/handleIfError";
 import LangaugeService from "./LanguageService";
 import WordsService from "./WordsService";
 import { AxiosResponse } from "axios";
+import {exec} from "node:child_process";
 
-export const fetchWords = async (
-    params : WordsPagFetchParams,
-    eFn    : (error : FetchError) => void,
-    okFn   : (response : AxiosResponse<Word[]>) => void
-) : Promise<void> => {
-    try {
-        const r : NoPromiseServiceResponse<Word[]> = await WordsService.getAll(params.page, params.size);
+interface Funs<T> {
+    eFn   : (e : FetchError) => void,
+    okFn  : (r : AxiosResponse<T>) => void
+}
 
-        handleBackendError(r, eFn, okFn);
-    } catch (e : unknown) {
-        errorHandler(e, eFn); 
+export function buildFuns<T>(eFn : (e : FetchError) => void, okFn : (r : AxiosResponse<T>) => void) : Funs<T> {
+    return {
+        eFn : eFn,
+        okFn : okFn
     }
 }
 
-export const fetchLanguages = async (
-    eFn : (error : FetchError) => void,
-    okFn : (response : AxiosResponse<Language[]>) => void
-) : Promise<void> => {
+export async function apiRequestWrapper<T>(
+    serviceCall : () => ServiceResponse<T>,
+    {okFn, eFn} : Funs<T>
+) : Promise<void> {
     try {
-        const r : NoPromiseServiceResponse<Language[]> = await LangaugeService.getAll();
-
-        handleBackendError(r, eFn, okFn);
-    } catch (e) {
-        errorHandler(e, eFn);
-    }
-}
-
-export const fetchWordById = async (
-    id : number,
-    eFn : (error : FetchError) => void,
-    okFn : (res : AxiosResponse<Word>) => void
-) : Promise<void> => {
-    try {
-        const r : NoPromiseServiceResponse<Word> = await WordsService.getById(Number(id));
+        const r : NoPromiseServiceResponse<T> = await serviceCall();
 
         handleBackendError(r, eFn, okFn);
     } catch (e) {
@@ -46,61 +38,32 @@ export const fetchWordById = async (
     }
 }
 
-export const updateWord = async (
-    word : Word,
-    eFn : (error : FetchError) => void,
-    okFn : (res : AxiosResponse<Word>) => void
-) : Promise<void> => {
-    try {
-        const r : NoPromiseServiceResponse<Word> = await WordsService.update(word);
-
-        handleBackendError(r, eFn, okFn);
-    } catch (e) {
-        errorHandler(e, eFn);
-    }
+export function fetchLanguages( funs : Funs<Language[]>) : void {
+    apiRequestWrapper(() => LangaugeService.getAll(), funs);
 }
 
-export const saveWord = async (
-    word : Word,
-    eFn : (error : FetchError) => void,
-    okFn : (res : AxiosResponse<Word>) => void
-) : Promise<void> => {
-    try {
-        const r : NoPromiseServiceResponse<Word> = await WordsService.save(word);
-
-        handleBackendError(r, eFn, okFn);
-    } catch (e) {
-        errorHandler(e, eFn);
-    }
+export function fetchWordById(id : number, funs : Funs<Word>) : void {
+    apiRequestWrapper(() => WordsService.getById(id), funs);
 }
 
-export const find = async (
-    eFn : (err : FetchError) => void,
-    okFn : (res : AxiosResponse<Word[]>) => void,
-    page? : number, 
+export function updateWord(word : Word, funs : Funs<Word>) : void {
+    apiRequestWrapper(() => WordsService.update(word), funs);
+}
+
+export function saveWord(word : Word, funs : Funs<Word>) : void{
+    apiRequestWrapper(() => WordsService.save(word), funs);
+}
+
+export function find(
+    funs : Funs<Word[]>,
+    page? : number,
     size? : number, 
     title? : string, 
     lang? : string,
-) : Promise<void> => {
-    try {
-        const r = await WordsService.find(page, size, title, lang);
-
-        handleBackendError(r, eFn, okFn);
-    } catch (e) {
-        errorHandler(e, eFn);
-    }
+) : void {
+    apiRequestWrapper(() => WordsService.find(page, size, title, lang), funs);
 }
 
-export const deleteWordById = async (
-    id : number,
-    eFn : (err : FetchError) => void,
-    okFn : (res : AxiosResponse<void>) => void
-) : Promise<void> => {
-    try {
-        const r = await WordsService.deleteById(id);
-
-        handleBackendError(r, eFn, okFn);
-    } catch (e) {
-        errorHandler(e, eFn);
-    }
+export function deleteWordById(id : number, funs : Funs<void>) : void {
+    apiRequestWrapper(() => WordsService.deleteById(id), funs);
 }
