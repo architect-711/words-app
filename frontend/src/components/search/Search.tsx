@@ -6,33 +6,33 @@ import Langs from '../langs/Langs';
 
 interface Params {
     languages : Language[],
-    onFind : (input : string, langSelect : string) => void
 }
 
-function Search({ languages, onFind } : Params) {
-    const [input, setInput] = useState<string>('');
-    const [langSelect, setLangSelect] = useState<string>('');
-
+function Search({ languages } : Params) {
     return (
         <div className={`${styles.container} flex flex-center-between`}>
             <Link to="/words/new" className='btn btn-regular'>Create</Link>
 
-            <div className={`${styles.search_container} flex flex-center-between`}>
+            <form className={`${styles.search_container} flex flex-center-between`}>
                 <input 
                     type="text" 
+                    name='title'
                     placeholder='title...'
                     className={styles.input}
-                    value={input}
-                    onChange={e => setInput(e.target.value)}
                 />
 
-                <Langs langs={languages} onChange={e => setLangSelect(e.target.value)} active='' defaultValue='Select lang'/>
+                <Langs 
+                    name='lang'
+                    langs={languages} 
+                    active='' 
+                    defaultValue='Select lang'
+                />
 
                 <button 
                     className='btn btn-regular' 
-                    onClick={e => onFind(input, langSelect)}
+                    type='submit'
                 >Find</button>
-            </div>
+            </form>
         </div>
     );
 }
