@@ -6,12 +6,10 @@ import Fallback from "./Fallback";
 
 interface Params {
     words : Word[],
-    onPrev : () => void,
-    onNext : () => void,
     disablePrev : boolean
 }
 
-export default function WordContainer({ words, onPrev, onNext, disablePrev = false } : Params) {
+export default function WordContainer({ words, disablePrev = false } : Params) {
     const isWordsEmpty = () : boolean => words == null || words.length == 0;
 
     return (
@@ -25,8 +23,6 @@ export default function WordContainer({ words, onPrev, onNext, disablePrev = fal
                 }
 
             <NavButtons 
-                onNext={onNext} 
-                onPrev={onPrev}
                 disablePrev={disablePrev}
             />
 
