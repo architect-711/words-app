@@ -4,9 +4,6 @@ export const errorHandler = (
     e : unknown,
     eFn : (error : FetchError) => void
 ) => {
-    console.log(e);
-    console.log(e instanceof Error)
-
     if (e instanceof Error)
         eFn(buildFE(e.message, e.name, 'Unknown'))
     else
