@@ -90,3 +90,17 @@ export const find = async (
         errorHandler(e, eFn);
     }
 }
+
+export const deleteWordById = async (
+    id : number,
+    eFn : (err : FetchError) => void,
+    okFn : (res : AxiosResponse<void>) => void
+) : Promise<void> => {
+    try {
+        const r = await WordsService.deleteById(id);
+
+        handleBackendError(r, eFn, okFn);
+    } catch (e) {
+        errorHandler(e, eFn);
+    }
+}

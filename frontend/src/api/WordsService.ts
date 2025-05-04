@@ -8,6 +8,7 @@ export default class WordsService {
     public static readonly UDPATE    : string = `${HOST}/api/words`
     public static readonly POST      : string = `${HOST}/api/words`
     public static readonly FIND      : string = `${HOST}/api/words/find`
+    public static readonly DELETE    : string = `${HOST}/api/words/`
 
     public static async getAll(page : number = 0, size : number = 10): ServiceResponse<Word[]> {
         return this._get(this.GET, {
@@ -43,5 +44,9 @@ export default class WordsService {
 
     private static async _get<T>(url : string, params? : AxiosRequestConfig) : ServiceResponse<T> {
         return await axios.get<T>(url, params);
+    }
+
+    public static async deleteById(id: number) : ServiceResponse<void> {
+        return await axios.delete(this.DELETE + id);
     }
 }
