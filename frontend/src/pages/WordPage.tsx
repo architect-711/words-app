@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { FetchError, Word, WordForm } from "../types/global";
 import Fallback from "../components/words/Fallback";
 import WordCard from "../components/word_card/WordCard";
-import { fetchWordById, updateWord } from "../api/fetchers";
+import {buildFuns, fetchWordById, updateWord} from "../api/fetchers";
 import { buildFallbackMessage } from "../utils/error";
 
 export default function WordPage() {
@@ -15,11 +15,11 @@ export default function WordPage() {
     const handleFetchError = (error : FetchError) => setFetchError(error);
     
     const onSave = (f : WordForm) : void => {
-        updateWord(f, setFetchError, _ => window.location.reload());
+        updateWord(f, buildFuns(setFetchError, _ => window.location.reload()));
     }
 
     useEffect(() => {
-        fetchWordById(Number(id), handleFetchError, r => setWord(r.data));
+        fetchWordById(Number(id), buildFuns(handleFetchError, r => setWord(r.data)));
     }, []);
 
     return (

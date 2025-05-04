@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { FetchError, Language, Word, WordForm } from '../../types/global';
 import styles from './WordCard.module.css';
-import { fetchLanguages, updateWord } from '../../api/fetchers';
+import {buildFuns, fetchLanguages, updateWord} from '../../api/fetchers';
 import Fallback from '../words/Fallback';
 import WordCardContent from './WordCardContent';
 import { EMPTY_WORD } from '../../utils/word';
@@ -19,7 +19,7 @@ const WordCard = ({
     const [error, setError] = useState<FetchError | null>(null);
 
     useEffect(() => {
-        fetchLanguages(setError, r => setLangs(r.data));
+        fetchLanguages(buildFuns(setError, r => setLangs(r.data)));
     }, []);
 
     return (

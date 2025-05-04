@@ -1,14 +1,12 @@
 import { useEffect, useState } from "react";
-import { FetchError, Language, Word, WordsPagFetchParams } from "../types/global";
+import { FetchError, Language, Word } from "../types/global";
 import Search from "../components/search/Search";
 import Fallback from "../components/words/Fallback";
-import {deleteWordById, fetchLanguages, fetchWords, find} from "../api/fetchers";
+import {buildFuns, deleteWordById, fetchLanguages, find} from "../api/fetchers";
 import WordContainer from "../components/words/WordsContainer";
 import { buildFallbackMessage } from "../utils/error";
-import { createSearchParams, useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { getParams } from "../utils/params";
-
-const defaultParams : WordsPagFetchParams = { page : 0 , size : 10, lang: '', title: ''};
 
 export default function WordsPage() {
     const [words, setWords]           = useState<Word[]>([]);
@@ -22,14 +20,7 @@ export default function WordsPage() {
     const handleError = (error : FetchError) : void => setFetchErrors([ ...fetchErrors, error ]);
 
     const fetchWords = () : void => {
-        find(
-            handleError,
-            r => setWords(r.data),
-            page,
-            size,
-            title,
-            lang
-        );
+        find(buildFuns(handleError, r => setWords(r.data)), page, size, title, lang);
     }
 
     const onDelete = (id : number) : void => {
@@ -41,12 +32,15 @@ export default function WordsPage() {
             }]);
         }
 
-        deleteWordById(id, e => setFetchErrors([...fetchErrors, e]), () => setWords(words.filter(w => w.id !== id)));
+        deleteWordById(id, buildFuns(
+            e => setFetchErrors([...fetchErrors, e]),
+            () => setWords(words.filter(w => w.id !== id))
+        ));
     }
 
     useEffect(() => {
         fetchWords();
-        fetchLanguages(handleError, r => setLanguages(r.data)); 
+        fetchLanguages({ eFn : handleError, okFn:  r => setLanguages(r.data)} );
     }, [page]);
 
     return (
