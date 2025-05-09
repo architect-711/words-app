@@ -6,12 +6,21 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Set;
 
 @RestController  @RequestMapping("/api/groups")
 @RequiredArgsConstructor
 public class GroupController {
     private final GroupService groupService;
+
+    @GetMapping
+    public ResponseEntity<List<GroupDto>> getAllGroups(
+            @RequestParam(value = "size", defaultValue = "10") Integer size,
+            @RequestParam(value = "page", defaultValue = "0") Integer page
+    ) {
+        return groupService.getAllGroups(size, page);
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<GroupDto> getGroupById(@PathVariable(name = "id") Long id) {

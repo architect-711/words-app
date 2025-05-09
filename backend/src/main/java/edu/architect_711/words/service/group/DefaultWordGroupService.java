@@ -8,6 +8,7 @@ import edu.architect_711.words.entities.mapper.GroupMapper;
 import edu.architect_711.words.repository.GroupRepository;
 import edu.architect_711.words.service.OffsetCalculator;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.groups.Default;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -66,6 +67,11 @@ public class DefaultWordGroupService implements GroupService {
         return ResponseEntity.ok( wordsIds );
     }
 
+    @Override
+    public ResponseEntity<List<GroupDto>> getAllGroups(@Min(value = 0) Integer size, @Min(value = 0) Integer page) {
+        return buildOk( mapToDto( groupRepository.paginatedFind((long) size, OffsetCalculator.regular((long) size, (long) page)) ) );
+    }
+
     private static GroupDto mapToDto(GroupEntity entity) {
         return mapToDto( List.of(entity)).getFirst() ;
     }
@@ -74,7 +80,7 @@ public class DefaultWordGroupService implements GroupService {
         return groups.stream().map(mapper::toDto).collect(Collectors.toList());
     }
 
-    private static ResponseEntity<GroupDto> buildOk(GroupDto groupDto) {
-        return ResponseEntity.ok(groupDto);
+    private static <T> ResponseEntity<T> buildOk(T t) {
+        return ResponseEntity.ok(t);
     }
 }
