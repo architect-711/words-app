@@ -7,6 +7,7 @@ import edu.architect_711.words.entities.dto.WordDto;
 import edu.architect_711.words.entities.mapper.WordMapper;
 import edu.architect_711.words.repository.LanguageRepository;
 import edu.architect_711.words.repository.WordRepository;
+import edu.architect_711.words.service.OffsetCalculator;
 import jakarta.validation.Valid;
 import jakarta.validation.groups.Default;
 import lombok.RequiredArgsConstructor;
@@ -96,7 +97,7 @@ public class DefaultWordService implements WordService {
             throw new IllegalArgumentException("Size or page is invalid");
         }
 
-        final int offset = calcOffset(page, size);
+        final int offset = Math.toIntExact(OffsetCalculator.regular((long) size, (long) page));
         final List<WordEntity> res = new ArrayList<>();
 
         if (!title.isBlank() && !lang.isBlank())
@@ -114,10 +115,6 @@ public class DefaultWordService implements WordService {
             return read(size, page);
 
         return ResponseEntity.ok().body(entityListToDto(res));
-    }
-
-    private static int calcOffset(final int size, final int page) {
-        return page * size;
     }
 
     private ResponseEntity<WordDto> buildOkResponse(WordEntity wordEntity) {
