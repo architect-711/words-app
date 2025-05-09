@@ -32,7 +32,7 @@ public interface WordRepository extends JpaRepository<WordEntity, Long> {
             LIMIT :limit OFFSET :offset
             """)
     List<WordEntity> findAllPaginatedById(Long id, Long limit, Long offset);
-
+// TODO fix naming, page -> offset
     @Query(
             nativeQuery = true, value = """
             SELECT word.id,
