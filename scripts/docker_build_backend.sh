@@ -5,8 +5,6 @@ source utils.sh
 # populate with prod env vars
 source_prod
 
-IMAGE_TITLE=$DOCKER_REGISTRY/$BACKEND_IMAGE_NAME
-
 # Build docker container
 docker compose build spring_backend
 # fucking Docker sometimes produces dangling images
