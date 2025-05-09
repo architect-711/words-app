@@ -7,6 +7,7 @@ import Usecase from './Usecase';
 
 const REMEMBER_LANG_KEY = 'remember_lang_choice';
 
+
 const WordCardContent = ({
     word, 
     langs,
@@ -17,14 +18,24 @@ const WordCardContent = ({
     onSave : (f : WordForm) => void
 }) => { 
     const [form, setForm] = useState<WordForm>(() => {
-            let item = localStorage.getItem(REMEMBER_LANG_KEY);
+            const data: WordForm= {
+                ...word,
+                language : getActiveSelect()
+            }
     
-            word.language = ( item == null || item.length <= 0 ) 
-                ? word.language 
-                : item
-    
-            return word
+            return data;
     });
+
+    function getActiveSelect() : string {
+        const item = localStorage.getItem(REMEMBER_LANG_KEY);
+
+        if ( word.language !== null && word.language.length > 1 )
+            return word.language;
+        else if ( item !== null && item.length > 0 )
+            return item;
+
+        return word.language;
+    }
 
     const reset = () : void => setForm(word);
     const onRemove = (u : string) => {
