@@ -2,6 +2,7 @@ package edu.architect_711.words.exception;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.env.Environment;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 import edu.architect_711.words.entities.dto.ExceptionDescription;
@@ -23,7 +24,9 @@ public class DefaultExceptionResponseBuilder implements ExceptionResponseBuilder
         return new ExceptionResponseDto(
                 LocalDateTime.now(),
                 env.getProperty(ed.getCode(), DEFAULT_MESSAGE),
-                description);
+                description,
+                ed.getStatus().value()
+        );
     }
 
     @Override
@@ -31,7 +34,9 @@ public class DefaultExceptionResponseBuilder implements ExceptionResponseBuilder
         return new ExceptionResponseDto(
                 LocalDateTime.now(),
                 env.getProperty(DEFAULT_EX_CODE, DEFAULT_MESSAGE),
-                exception.getMessage());
+                exception.getMessage(),
+                HttpStatus.BAD_REQUEST.value()
+        );
     }
 
 }

@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 import java.time.LocalDateTime;
 
@@ -18,4 +19,6 @@ public class ExceptionResponseDto {
     private String message;
     @NotBlank
     private String description;
+    @NonNull
+    private Integer status;
 }
