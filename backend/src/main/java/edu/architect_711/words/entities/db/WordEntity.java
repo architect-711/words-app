@@ -1,22 +1,22 @@
 package edu.architect_711.words.entities.db;
 
-import edu.architect_711.words.entities.Word;
 import io.hypersistence.utils.hibernate.type.array.ListArrayType;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
-import org.hibernate.annotations.Type;
 
 
 @Entity
 @Table(name = "word")
 @NoArgsConstructor
+@AllArgsConstructor
 @Data
-public class WordEntity implements Word {
+public class WordEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -24,8 +24,9 @@ public class WordEntity implements Word {
     @Column(nullable = false, unique = true)
     private String title;
 
-    @Column(nullable = false, name = "translation")
-    private String translation;
+    @Type(ListArrayType.class)
+    @Column(nullable = false, name = "translation", columnDefinition = "varchar[]")
+    private List<String> translations;
 
     @Column(nullable = false, name = "description")
     private String description;
@@ -44,22 +45,9 @@ public class WordEntity implements Word {
     @Column(columnDefinition = "timestamp")
     private LocalDateTime localDateTime;
 
-    public WordEntity(
-            String title,
-            String translation,
-            String description,
-            List<String> useCases,
-            LanguageEntity languageEntity
-    ) {
-        this.title = title;
-        this.translation = translation;
-        this.description = description;
-        this.languageEntity = languageEntity;
-        this.useCases = useCases;
-        this.localDateTime = LocalDateTime.now();
-    }
+    @Column(name = "transcription")
+    private String transcription;
 
-    @Override
     public String getLanguage() {
         return languageEntity.getTitle();
     }
