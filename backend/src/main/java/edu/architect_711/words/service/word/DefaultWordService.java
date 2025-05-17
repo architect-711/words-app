@@ -1,24 +1,27 @@
 package edu.architect_711.words.service.word;
 
-import edu.architect_711.words.controller.service.WordService;
 import edu.architect_711.words.entities.db.LanguageEntity;
 import edu.architect_711.words.entities.db.WordEntity;
+import edu.architect_711.words.entities.dto.BaseGroupDto;
 import edu.architect_711.words.entities.dto.WordDto;
 import edu.architect_711.words.entities.mapper.WordMapper;
 import edu.architect_711.words.repository.LanguageRepository;
 import edu.architect_711.words.repository.WordRepository;
-import edu.architect_711.words.service.OffsetCalculator;
+import jakarta.persistence.EntityExistsException;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import jakarta.validation.groups.Default;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import static edu.architect_711.words.entities.mapper.WordMapper.toDto;
+import static edu.architect_711.words.entities.mapper.WordMapper.toEntity;
+import static edu.architect_711.words.service.OffsetCalculator.regular;
 
 @Service
 @RequiredArgsConstructor
@@ -28,34 +31,63 @@ public class DefaultWordService implements WordService {
     private final WordRepository wordRepository;
     private final LanguageRepository languageRepository;
 
-    private final static WordMapper wordMapper = new WordMapper();
+    // TODO there was @Transactional before
+    @Override
+    public List<WordDto> getAll(@NonNull Integer page, @NonNull Integer size) {
+        return wordRepository
+                .findAllPaginated(size, regular(size, page))
+                .stream()
+                .map(WordMapper::toDto)
+                .toList();
+    }
 
     @Override
-    public ResponseEntity<List<WordDto>> read(Integer size, Integer page) {
-        final List<WordEntity> foundWordEntities = wordRepository.findAll(PageRequest.of(page, size)).getContent();
+    public List<WordDto> search(
+            @NonNull Integer page,
+            @NonNull Integer size,
+            @NonNull String title,
+            @NonNull String language
+    ) {
+        final int OFFSET = regular(size, page);
+        final QueriedWordsSearcher queriedWordsSearcher = new QueriedWordsSearcher(wordRepository, OFFSET, size, title, language);
 
-        return ResponseEntity.ok(entityListToDto(foundWordEntities));
+        queriedWordsSearcher.search();
+
+        return queriedWordsSearcher.getFound().stream().map(WordMapper::toDto).toList();
+    }
+
+    @Override
+    public WordDto getById(@NonNull Long id) {
+        return wordRepository
+                .findById(id)
+                .map(WordMapper::toDto)
+                .orElse(null);
+    }
+
+    @Override
+    public void delete(@NonNull List<Long> ids) {
+        ids.forEach(wordRepository::deleteById);
+    }
+
+    @Override
+    public void delete(@NonNull Long id) {
+        wordRepository.deleteById(id);
     }
 
     @Override
     @Validated({Default.class, WordDto.OnCreate.class})
-    public ResponseEntity<WordDto> create(@Valid WordDto wordDto) {
+    public @NonNull WordDto save(@Valid @NonNull WordDto wordDto) throws EntityExistsException {
         final LanguageEntity languageEntity = languageRepository.safeFindByTitle(wordDto.getLanguage());
 
-        wordDto.setUseCases(getValidUseCases(wordDto.getUseCases()));
+        final WordEntity wordEntity = toEntity(wordDto, languageEntity);
+        wordEntity.setUseCases(getValidUseCases(wordDto.getUseCases()));
 
-        return buildOkResponse(wordRepository.save(
-                wordMapper.toEntity(wordDto, languageEntity)
-        ));
-    }
-
-    private static List<String> getValidUseCases(final List<String> raw) {
-        return raw == null ? List.of() : raw.stream().filter(w -> w != null && !w.isBlank()).toList();
+        return toDto(wordRepository.save(wordEntity));
     }
 
     @Override
     @Validated({Default.class, WordDto.OnCreated.class})
-    public ResponseEntity<WordDto> update(@Valid WordDto wordDto) {
+    public @NonNull WordDto update(@Valid @NonNull WordDto wordDto) throws EntityNotFoundException {
         final WordEntity wordEntity = wordRepository.safeFindWordById(wordDto.getId());
 
         if (!wordDto.getLanguage().equals(wordEntity.getLanguage())) {
@@ -65,67 +97,32 @@ public class DefaultWordService implements WordService {
         }
 
         wordEntity.setTitle(wordDto.getTitle());
-        wordEntity.setTranslation(wordDto.getTranslation());
+        wordEntity.setTranslations(wordDto.getTranslations());
+        wordEntity.setTranscription(wordDto.getTranscription());
         wordEntity.setDescription(wordDto.getDescription());
         wordEntity.setUseCases(getValidUseCases(wordDto.getUseCases()));
 
-        return buildOkResponse(wordRepository.save(wordEntity));
+        return toDto(wordRepository.save(wordEntity));
     }
 
     @Override
-    public ResponseEntity<?> delete(Long id) {
-        wordRepository.deleteById(id);
-
-        return ResponseEntity.ok().build();
-    }
-
-    @Override
-    public ResponseEntity<List<WordDto>> findByTitle(String title) {
-        return ResponseEntity.ok(entityListToDto(wordRepository.findByTitleApproximates(title, 5, 0)));
-    }
-
-    @Override
-    public ResponseEntity<List<WordDto>> findByLang(final String lang) {
-        return ResponseEntity.ok(entityListToDto(wordRepository.findPaginatedByLangAprx(lang, 5, 0)));
-    }
-
-    @Override
-    public ResponseEntity<List<WordDto>> find(final int size, final int page,
-        final String title, final String lang
-    ) {
-        if (size < 0 || page < 0) {
-            throw new IllegalArgumentException("Size or page is invalid");
+    public List<BaseGroupDto> getGroupsTitles(@NonNull Long wordId) throws EntityNotFoundException {
+        if (!wordRepository.existsById(wordId)) {
+            throw new EntityNotFoundException("Word with id " + wordId + " not found");
         }
 
-        final int offset = Math.toIntExact(OffsetCalculator.regular((long) size, (long) page));
-        final List<WordEntity> res = new ArrayList<>();
-
-        if (!title.isBlank() && !lang.isBlank())
-            res.addAll(wordRepository
-                .findPaginatedByLangAprx(lang, size, offset)
-                .stream()
-                .filter(osya -> osya.getTitle().contains(title))
-                .toList()
-            );
-        else if (!title.isBlank())
-            res.addAll(wordRepository.findByTitleApproximates(title, size, offset));
-        else if (!lang.isBlank())
-            res.addAll(wordRepository.findPaginatedByLangAprx(lang, size, offset));
-        else
-            return read(size, page);
-
-        return ResponseEntity.ok().body(entityListToDto(res));
+        return wordRepository.findWordGroupTitles(wordId);
     }
 
-    private ResponseEntity<WordDto> buildOkResponse(WordEntity wordEntity) {
-        return ResponseEntity.ok(wordMapper.toDto(wordEntity));
+    /**
+     * The {@code useCases} in {@link WordDto} might be null or blank,
+     * so get rid of blank lines and return an empty list if it's null
+     * @param raw the raw useCases came from the DTO
+     * @return not null {@link List} of use cases, might be empty
+     */
+    @NonNull
+    private static List<String> getValidUseCases(final List<String> raw) {
+        return raw == null ? List.of() : raw.stream().filter(w -> w != null && !w.isBlank()).toList();
     }
 
-    private static List<WordDto> entityListToDto(final List<WordEntity> entities) {
-        return entities.stream().map(wordMapper::toDto).toList();
-    }
-
-    public ResponseEntity<WordDto> getById(Long id) {
-        return ResponseEntity.ok(wordMapper.toDto(wordRepository.safeFindWordById(id)));
-    }
 }
