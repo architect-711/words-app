@@ -1,6 +1,5 @@
 package edu.architect_711.words.entities.db;
 
-import edu.architect_711.words.entities.Group;
 import io.hypersistence.utils.hibernate.type.array.ListArrayType;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -8,11 +7,11 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
 
 import java.time.LocalDateTime;
-import java.util.Set;
+import java.util.List;
 
 @Entity @NoArgsConstructor @Data
 @Table(name = "word_groups")
-public class GroupEntity implements Group {
+public class GroupEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -23,7 +22,7 @@ public class GroupEntity implements Group {
 
     @Type(ListArrayType.class)
     @Column(nullable = true, name = "words_ids", columnDefinition = "bigint[]")
-    private Set<Long> wordsIds;
+    private List<Long> wordsIds;
 
     @Column(columnDefinition = "timestamp")
     private LocalDateTime created;
@@ -31,13 +30,13 @@ public class GroupEntity implements Group {
     public GroupEntity(
             String title,
             String description,
-            Set<Long> wordsIds,
+            List<Long> wordsIds,
             LocalDateTime created
     ) {
         this.title = title;
         this.description = description;
         this.wordsIds = wordsIds;
-        this.created = created == null ? LocalDateTime.now() : created;
+        this.created = created; // TODO REVERT IF THAT SHIT DOESN'T SET THE current_timestamp
     }
 
 }
