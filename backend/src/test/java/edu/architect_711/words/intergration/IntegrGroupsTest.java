@@ -1,19 +1,19 @@
 package edu.architect_711.words.intergration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.architect_711.words.controller.service.GroupService;
-import edu.architect_711.words.controller.service.WordService;
 import edu.architect_711.words.entities.db.GroupEntity;
 import edu.architect_711.words.entities.dto.GroupDto;
 import edu.architect_711.words.entities.dto.WordDto;
 import edu.architect_711.words.repository.GroupRepository;
-import edu.architect_711.words.service.OffsetCalculator;
+import edu.architect_711.words.service.group.DefaultWordGroupService;
+import edu.architect_711.words.service.word.DefaultWordService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
@@ -44,19 +44,19 @@ public class IntegrGroupsTest {
     @Autowired
     private GroupRepository groupRepository;
     @Autowired
-    WordService wordService;
+    DefaultWordService wordService;
 
     @Autowired
     private ObjectMapper objectMapper;
     @Autowired
-    private GroupService groupService;
+    private DefaultWordGroupService groupService;
 
     private static GroupDto SAMPLE() {
         return new GroupDto(
                 null,
                 "test_title_" + LocalDateTime.now(),
                 "desc",
-                Set.of(),
+                List.of(),
                 null);
     }
 
@@ -88,12 +88,12 @@ public class IntegrGroupsTest {
     @Test
     public void should_ok__save_with_some_words() throws Exception {
         final int size = 5, page = 0;
-        final List<WordDto> words = wordService.find(size, page, "", "").getBody();
+        final List<WordDto> words = wordService.search(size, page, "", "").stream().toList();
         assertNotNull(words);
         assertEquals(size, words.size());
 
         final GroupDto toBeSaved = SAMPLE();
-        toBeSaved.setWordsIds(words.stream().map(WordDto::getId).collect(Collectors.toSet()));
+        toBeSaved.setWordsIds(words.stream().map(WordDto::getId).collect(Collectors.toList()));
 
         MvcResult mvcResult = reqPost(SAVE_URL, toBeSaved, status().isOk());
 
@@ -132,7 +132,7 @@ public class IntegrGroupsTest {
 
     @Test
     public void should_ok__update() throws Exception {
-        final GroupEntity payload = groupRepository.paginatedFind(1L, OffsetCalculator.regular(1L, 1L)).getFirst();
+        final GroupEntity payload = groupRepository.findAll(PageRequest.of(0, 1)).getContent().getFirst(); //findAll(1, OffsetCalculator.regular(1, 1)).getFirst();
         assertNotNull(payload);
 
         final String newTitle = "updated_test_title_" + LocalDateTime.now();
@@ -171,7 +171,7 @@ public class IntegrGroupsTest {
     public void should_fail__get_words_by_id() throws Exception {
         MvcResult mvcResult = mockMvc
                 .perform(get("/api/groups/1/words")
-                        .param("page", "20")
+                        .param("offset", "20")
                         .param("size", "600"))
                 .andDo(print())
                 .andExpect(status().isOk())
