@@ -1,12 +1,11 @@
 package edu.architect_711.words.entities.db;
 
-import edu.architect_711.words.entities.Language;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity @Table(name = "language") @NoArgsConstructor @Data
-public class LanguageEntity implements Language {
+public class LanguageEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
