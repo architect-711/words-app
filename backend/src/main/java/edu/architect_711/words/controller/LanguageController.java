@@ -1,7 +1,7 @@
 package edu.architect_711.words.controller;
 
 import edu.architect_711.words.entities.dto.LanguageDto;
-import edu.architect_711.words.controller.service.LanguageService;
+import edu.architect_711.words.service.language.LanguageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -19,7 +19,7 @@ public class LanguageController {
 
     @GetMapping
     public ResponseEntity<List<LanguageDto>> read() {
-        return languageService.findAll();
+        return ResponseEntity.ok(languageService.findAll());
     }
 
 }
