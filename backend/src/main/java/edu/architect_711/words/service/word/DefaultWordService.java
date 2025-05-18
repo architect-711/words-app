@@ -21,7 +21,7 @@ import java.util.List;
 
 import static edu.architect_711.words.entities.mapper.WordMapper.toDto;
 import static edu.architect_711.words.entities.mapper.WordMapper.toEntity;
-import static edu.architect_711.words.service.OffsetCalculator.regular;
+import static edu.architect_711.words.service.OffsetCalculator.offset;
 
 @Service
 @RequiredArgsConstructor
@@ -34,11 +34,7 @@ public class DefaultWordService implements WordService {
     // TODO there was @Transactional before
     @Override
     public List<WordDto> getAll(@NonNull Integer page, @NonNull Integer size) {
-        return wordRepository
-                .findAllPaginated(size, regular(size, page))
-                .stream()
-                .map(WordMapper::toDto)
-                .toList();
+        return toDto(wordRepository.findAllPaginated(size, offset(size, page)));
     }
 
     @Override
@@ -48,7 +44,7 @@ public class DefaultWordService implements WordService {
             @NonNull String title,
             @NonNull String language
     ) {
-        final int OFFSET = regular(size, page);
+        final int OFFSET = offset(size, page);
         final QueriedWordsSearcher queriedWordsSearcher = new QueriedWordsSearcher(wordRepository, OFFSET, size, title, language);
 
         queriedWordsSearcher.search();
