@@ -3,13 +3,17 @@ package edu.architect_711.words.repository;
 import edu.architect_711.words.entities.db.WordEntity;
 import edu.architect_711.words.entities.dto.BaseGroupDto;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface WordRepository extends JpaRepository<WordEntity, Long> {
+import static edu.architect_711.words.repository.WordSpecifications.containingTitle;
+
+public interface WordRepository extends JpaRepository<WordEntity, Long>, JpaSpecificationExecutor<WordEntity> {
     @Query(
             nativeQuery = true,
             value = """
@@ -20,30 +24,14 @@ public interface WordRepository extends JpaRepository<WordEntity, Long> {
     )
     List<WordEntity> findAllPaginated(@Param("size") int size, @Param("offset") int offset);
 
-    @Query(
-            nativeQuery = true,
-            value = """
-            select * from word
-            where title like '%:title%'
-            limit :size
-            offset :offset
-            """
-    )
-    List<WordEntity> findByTitleApproximates(@Param("title") String title, @Param("size") int size, @Param("offset") int offset);
-
     default WordEntity safeFindWordById(Long id) throws EntityNotFoundException {
         return findById(id).orElseThrow(() -> new EntityNotFoundException("WordEntity not found with id: " + id));
     }
 
     @Query(
             nativeQuery = true, value = """
-            select word.id,
-                   word.title,
-                   word.translation,
-                   word.description,
-                   word.language_id,
-                   word.use_cases,
-                   word.local_date_time
+            select
+                word.*
             from
                 word
             inner join
@@ -51,15 +39,15 @@ public interface WordRepository extends JpaRepository<WordEntity, Long> {
             on
                 word.language_id = language.id
             where
-                language.title like '%:lang%'
+                language.title like :lang
             limit
                 :size
             offset
                 :offset;
             """
     )
-    List<WordEntity> findPaginatedByLangApproximately(@Param("lang") String lang,
-                                                      @Param("size") int size, @Param("offset") int offset);
+    List<WordEntity> findAllByLanguagePaginated(@Param("lang") String lang,
+                                                @Param("size") int size, @Param("offset") int offset);
 
     @Query(
             nativeQuery = true,
@@ -73,5 +61,9 @@ public interface WordRepository extends JpaRepository<WordEntity, Long> {
             """
     )
     List<BaseGroupDto> findWordGroupTitles(@Param("id") Long wordId);
+
+    default List<WordEntity> findAllByTitlePaginated(String title, int size, int page) {
+        return findAll(containingTitle(title), PageRequest.of(page, size)).getContent();
+    }
 
 }
