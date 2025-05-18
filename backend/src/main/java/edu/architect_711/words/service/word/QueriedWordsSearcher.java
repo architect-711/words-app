@@ -6,8 +6,10 @@ import jakarta.validation.constraints.Min;
 import lombok.NonNull;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
+
+import static edu.architect_711.words.service.OffsetCalculator.page;
 
 public record QueriedWordsSearcher(@NonNull WordRepository wordRepository,
                                    @NonNull @Min(0) Integer offset,
@@ -18,39 +20,36 @@ public record QueriedWordsSearcher(@NonNull WordRepository wordRepository,
     private static final Set<WordEntity> found = new HashSet<>();
 
     public void search() {
+        found.clear();
+        found.addAll(determine());
+    }
+
+    private List<WordEntity> determine() {
         final boolean bothNotBlank = !title.isBlank() && !language.isBlank();
 
-        if (bothNotBlank)
-            findByAll();
-        else if (!title.isBlank())
-            findByTitleOnly();
-        else if (!language.isBlank())
-            findByLangOnly();
+        if (bothNotBlank) return findByAll();
+        else if (!title.isBlank()) return findByTitleOnly();
+        else if (!language.isBlank()) return findByLangOnly();
+        return wordRepository.findAllPaginated(size, offset);
     }
 
-    private void findByAll() {
-        found.addAll(wordRepository
-                .findPaginatedByLangApproximately(language, offset, size)
+    private List<WordEntity> findByAll() {
+        return wordRepository
+                .findAllByTitlePaginated(title, size, page(offset, size))
                 .stream()
-                .filter(e -> e.getTitle().contains(title))
-                .collect(Collectors.toSet())
-        );
+                .filter(word -> word.getLanguage().equals(language))
+                .toList();
     }
 
-    private void findByTitleOnly() {
-        found.addAll(wordRepository
-                .findByTitleApproximates(title, offset, size)
-        );
+    private List<WordEntity> findByTitleOnly() {
+        return wordRepository.findAllByTitlePaginated(title, size, page(offset, size)); //findAll(containingTitle(title), PageRequest.of(page(offset, size), size)).getContent();
     }
 
-    private void findByLangOnly() {
-        found.addAll(wordRepository
-                .findPaginatedByLangApproximately(language, offset, size)
-        );
+    private List<WordEntity> findByLangOnly() {
+        return wordRepository.findAllByLanguagePaginated(language, size, offset);
     }
 
     public Set<WordEntity> getFound() {
         return found;
     }
-
 }
