@@ -21,10 +21,11 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import static edu.architect_711.words.entities.mapper.WordMapper.toDto;
-import static edu.architect_711.words.service.OffsetCalculator.regular;
+import static edu.architect_711.words.service.OffsetCalculator.offset;
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -39,6 +40,7 @@ public class IntegrationWordsTest {
     private GroupRepository groupRepository;
 
     private final static Long REALLY_UNEXISTING_ID = 1_000_000_000L;
+    private final static String REALLY_EXISTING_LANGUAGE = "English";
 
     private final static Integer DEFAULT_PAGE_SIZE = 10;
     private final static Integer DEFAULT_PAGE_NUMBER = 0;
@@ -55,7 +57,7 @@ public class IntegrationWordsTest {
                 List.of("a", "b"),
                 "English",
                 null,
-                "/alSe'b/"
+                "/alSe's/"
         );
     }
 
@@ -67,7 +69,7 @@ public class IntegrationWordsTest {
 
     @NonNull
     private WordEntity safeFindExistingWord() {
-        final WordEntity first = wordRepository.findAllPaginated(1, regular(1, 1)).getFirst();
+        final WordEntity first = wordRepository.findAllPaginated(1, offset(1, 1)).getFirst();
 
         if (first == null)
             throw new IllegalStateException("Couldn't find some really existing word");
@@ -123,7 +125,7 @@ public class IntegrationWordsTest {
      */
     @Test
     public void should_ok__delete_by_id() {
-        WordEntity first = wordRepository.findAllPaginated(1, regular(1, DEFAULT_PAGE_NUMBER)).getFirst();
+        WordEntity first = wordRepository.findAllPaginated(1, offset(1, DEFAULT_PAGE_NUMBER)).getFirst();
 
         assertNotNull(first);
         wordService.delete(first.getId());
@@ -146,7 +148,7 @@ public class IntegrationWordsTest {
      */
     @Test
     public void should_ok__delete_ids() {
-        final List<WordEntity> all = wordRepository.findAllPaginated(3, regular(3, DEFAULT_PAGE_NUMBER));
+        final List<WordEntity> all = wordRepository.findAllPaginated(3, offset(3, DEFAULT_PAGE_NUMBER));
 
         all.forEach(wordEntity -> assertDoesNotThrow(() -> wordService.delete(wordEntity.getId())));
     }
@@ -161,7 +163,7 @@ public class IntegrationWordsTest {
      */
     @Test
     public void should_ok__get_by_id() {
-        final WordEntity first = wordRepository.findAllPaginated(1, regular(1, DEFAULT_PAGE_NUMBER)).getFirst();
+        final WordEntity first = wordRepository.findAllPaginated(1, offset(1, DEFAULT_PAGE_NUMBER)).getFirst();
         assertNotNull(first);
 
         wordService.getById(first.getId());
@@ -224,12 +226,89 @@ public class IntegrationWordsTest {
     }
 
 
+
+    /**
+     * Testing the {@link WordService#search(Integer, Integer, String, String)}
+     */
+    @Test
+    public void should_ok__search__only_paginated() {
+        if (wordRepository.count() < 10)
+            throw new IllegalStateException("This test case requires 10 words");
+
+        int page, size;
+        page = 0;
+        size = 5;
+
+        final List<WordDto> response1 = wordService.search(page, size, "", "");
+
+        searchResultAssertions(response1, size);
+
+        final List<WordDto> response2 = wordService.search(++page, size, "", "");
+
+        searchResultAssertions(response2, size);
+
+        // check for the same words, may happen if pagination was implemented not properly
+        for (final WordDto word1 : response1) {
+            final Optional<WordDto> foundSame = response2.stream().filter(word2 -> word2.getId().equals(word1.getId())).findFirst();
+
+            assertFalse(foundSame.isPresent());
+        }
+
+    }
+
+    @Test
+    public void should_ok__search__return_empty_list() {
+        final List<WordDto> search = assertDoesNotThrow(() -> wordService.search((int) wordRepository.count() + 1, 10, "", ""));
+
+        assertTrue(search.isEmpty());
+    }
+    @Test
+    public void should_ok__search__return_nothing_when_no_such_title() {
+        final String UNEXISTING_TITLE = "\uD83E\uDD21" + (Math.random() * System.nanoTime());
+
+        final List<WordDto> search = wordService.search(DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE, UNEXISTING_TITLE, "");
+
+        assertTrue(search.isEmpty());
+    }
+    @Test
+    public void should_ok__search__find_by_title() {
+        final WordEntity wordEntity = safeFindExistingWord();
+
+        final List<WordDto> search = wordService.search(DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE, wordEntity.getTitle(), "");
+
+        assertNotNull(search);
+        assertFalse(search.isEmpty());
+        assertEquals(wordEntity.getTitle(), search.getFirst().getTitle());
+    }
+    @Test
+    public void should_ok__search__find_by_title_paginated() {
+        final List<WordDto> foundBylEnglishLanguage = wordService.search(DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE, "", REALLY_EXISTING_LANGUAGE);
+
+        searchResultAssertions(foundBylEnglishLanguage, DEFAULT_PAGE_SIZE);
+        foundBylEnglishLanguage.forEach(goga -> assertEquals(REALLY_EXISTING_LANGUAGE, goga.getLanguage()));
+    }
+    @Test
+    public void should_ok__search__find_by_all() {
+        final WordEntity wordEntity = safeFindExistingWord();
+
+        final List<WordDto> english = wordService.search(DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE, wordEntity.getTitle(), wordEntity.getLanguage());
+
+        searchResultAssertions(english, english.size());
+    }
+    private static void searchResultAssertions(final List<WordDto> result, final int size) {
+        assertNotNull(result);
+        assertFalse(result.isEmpty());
+        assertEquals(size, result.size());
+    }
+
+
+
     /**
      * Testing the {@link WordService#getGroupsTitles(Long)}
      */
     @Test
     public void should_ok__get_group_titles() { // TODO fix, it doesn't work
-        List<GroupEntity> groups = groupRepository.findAllWhereWordsIdsNotNull(1, regular(1, DEFAULT_PAGE_NUMBER));
+        List<GroupEntity> groups = groupRepository.findAllWhereWordsIdsNotNull(1, offset(1, DEFAULT_PAGE_NUMBER));
         GroupEntity group;
 
         if (groups.isEmpty() || (group = groups.getFirst()).getWordsIds().isEmpty())
@@ -241,15 +320,6 @@ public class IntegrationWordsTest {
 
         assertFalse(baseGroupDtos.isEmpty());
         assertEquals(group.getTitle(), baseGroupDtos.getFirst().getTitle());
-
-    }
-
-
-    /**
-     * Testint the {@link WordService#search(Integer, Integer, String, String)}
-     */
-    @Test
-    public void should_ok__search() {
 
     }
 }
