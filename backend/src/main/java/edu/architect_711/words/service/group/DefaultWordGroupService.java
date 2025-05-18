@@ -18,7 +18,7 @@ import java.util.Optional;
 
 import static edu.architect_711.words.entities.mapper.GroupMapper.toDto;
 import static edu.architect_711.words.entities.mapper.GroupMapper.toEntity;
-import static edu.architect_711.words.service.OffsetCalculator.regular;
+import static edu.architect_711.words.service.OffsetCalculator.offset;
 
 @Service @RequiredArgsConstructor
 @Validated
@@ -70,6 +70,6 @@ public class DefaultWordGroupService implements GroupService {
     public @NonNull List<Long> getWordIds(@NonNull Long id, @NonNull Integer size, @NonNull Integer page) {
         groupRepository.safeFindById(id);
 
-        return groupRepository.findPaginatedWordsIds(id, size, regular(size, page));
+        return groupRepository.findPaginatedWordsIds(id, size, offset(size, page));
     }
 }
