@@ -132,7 +132,7 @@ public class IntegrGroupsTest {
 
     @Test
     public void should_ok__update() throws Exception {
-        final GroupEntity payload = groupRepository.findAll(PageRequest.of(0, 1)).getContent().getFirst(); //findAll(1, OffsetCalculator.regular(1, 1)).getFirst();
+        final GroupEntity payload = groupRepository.findAll(PageRequest.of(0, 1)).getContent().getFirst();
         assertNotNull(payload);
 
         final String newTitle = "updated_test_title_" + LocalDateTime.now();
